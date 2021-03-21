@@ -1,0 +1,53 @@
+<%- include('../partials/header.ejs')%>
+<%- include('../partials/banner-top.ejs')%>
+<style>
+    .person{
+        float:left;
+    }
+    .member{
+        float:left;
+        padding:20px;
+        box-sizing:border-box;
+        width:25%;
+        min-height: 420px;
+        min-width: 150px;
+    }
+    </style>
+<div class='bannerimagecen2'>
+    <div class='bannerimgtint2'>
+      <div class='container'>
+          <div style='text-align:center'>
+<div class='formtitle'>
+    Find out about Auction House
+</div>
+<div class='form-page'>
+    <div style='padding:40px 20px;color:#777;'>
+    <p>Auction House UK is a network of property auctioneers who cover the whole of the country. We operate over 40 auctions rooms nationwide, holding in excess of 200 auctions and selling over 3,000 properties every single year. We believe in selling at a local, regional and national level, and that local properties sell better to local buyers, which is why we operate auction rooms across England, Wales and Scotland. Each of the Auction House members are well respected and experts in their region. This means they can personally carry out valuations on your property, with a full knowledge of the surrounding area.</p>
+
+<p>The whole Auction House family are record breakers and award winners. Our sales figures over the years have continued to grow, gaining us the title of the UK’s number one residential auctioneers. In addition to this, the teams have consistently won numerous awards, judged by peers within the property industry, including Best Auctioneer, Residential Auction House of the Year, and Best Franchise.</p>
+<p>Interested in joining us?</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class='container'>
+<%
+var i = 0;
+members.forEach(m=>{
+    if(i==5){
+        i=0;
+        %><div style='clear:both;'></div><%
+    }
+    %><div class='member'><img src="https://img.auctionhouse.uk.net/files/national/staff/<%-m.image%>" style='width:100%;' class="staff-image img-responsive image-centered" alt="Auction House"><h3 class="staff-name mt-0 mb-0"><%-m.name%></h3>
+    <h4 class="staff-title mt-0"><%-m.position%></h4></div><%
+})
+%>
+<div style='clear:both;'></div>
+</div>
+
+
+</div>
+</div>
+<%- include('../partials/footer.ejs')%>

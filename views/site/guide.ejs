@@ -1,0 +1,80 @@
+<%- include('../partials/header.ejs')%>
+<%- include('../partials/banner-top.ejs')%><div class='bannerimagecen2'>
+    <div class='bannerimgtint2'>
+      <div class='container'>
+          <div style='text-align:center'>
+<div class='formtitle'>
+  Your questions, answered.
+</div>
+<div class='form-page'>
+  <div class="form-page-content">
+    <div style='text-align:center;'>
+      We pride ourselves in being your property auction experts. With teams across the country, we use our local knowledge to deliver national results, and now we want to share that knowledge with you. This information centre aims to answer all the frequently asked questions we receive about auction, debunk the myths and explain why auction is the best way to buy and sell all types of property and land.
+      <div class="inputWithIconButton" style='margin:30px 0px;'><input class='search-input sitetxt-ib' id='valuation-postcode' type='text' placeholder='Ask a question'/><i class="fa fa-search fa-lg fa-fw" aria-hidden="true"></i><button id='btntest'>SEARCH</button></div>
+ 
+    </div>
+  </div>
+    <div class="tabs">
+    
+
+      <% 
+      categories =[{id:1,name:"General Questions"},{id:2,name:"Buying at Auction"},{id:3,name:"Selling at Auction"}]  
+      var isChecked = '';
+      categories.forEach(function(cat){
+        isChecked = '';
+        if(cat.id==1) isChecked = ' checked ';
+        %>
+        
+        <div class="tab">
+          <input type="radio" id="tab-<%-cat.id%>" name="tab-group-1" autocomplete="off" <%-isChecked%>>
+          <label for="tab-<%-cat.id%>"><%-cat.name%></label>
+          <div class="content">
+            <%
+            var count = 0;
+            faqs.forEach(q=>{
+              if(q.category==cat.id){
+                count++;
+              }
+            })
+            var split = count/2;
+            count = 0;
+            var lista = [];
+            var listb = [];
+            faqs.forEach(q=>{
+              if(q.category==cat.id){
+                
+                if(count<split){
+                  lista.push(q)
+                }else{
+                  listb.push(q)
+                }
+                count++;
+              }
+            })
+            %>
+            <div class='split-2'><%lista.forEach(q=>{
+              %><input type="checkbox" id="title<%-q.id%>" class="faq" autocomplete="off"/><label for="title<%-q.id%>" class='faq-question'><%-q.question%></label> <div class="faq-answer"><%-q.answer%></div><%
+            })%></div>
+            <div class='split-2'><%listb.forEach(q=>{
+              %><input type="checkbox" id="title<%-q.id%>" class="faq"  autocomplete="off"/><label for="title<%-q.id%>" class='faq-question'><%-q.question%></label> <div class="faq-answer"><%-q.answer%></div><%
+            })%></div>
+            <div style='clear:both'></div>
+          </div>
+         
+        </div>
+        <%
+      })
+
+      %>
+      <div style='clear:both;'></div>
+   </div>
+</div>
+</div>
+</div>
+</div>
+</div> 
+<div style='clear:both;'></div>
+
+</div>
+
+<%- include('../partials/footer.ejs')%>

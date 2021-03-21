@@ -1,0 +1,106 @@
+<%- include('../partials/header.ejs')%>
+<style>
+    .errorstr{
+        color:crimson;
+    }
+    </style>
+<div class='bannerimagecen2'>
+    <div class='bannerimgtint2'>
+      <div class='container'>
+          <div style='text-align:center'>
+<div class='formtitle'>
+    Book your <strong>free</strong> valuation
+</div>
+<div class='form-page'>
+    <div id='formstatus'></div>
+    <div class='inrow'>
+        <div class='inrow-33'>
+            <input type='text' class='sitetxta' id='firstname' placeholder='First name'/>
+        </div>
+        <div class='inrow-33'>
+            <input type='text' class='sitetxta' id='lastname' placeholder='Last name'/>
+        </div>
+        <div class='inrow-33'>
+            <input type='text' class='sitetxta' id='emailaddr' placeholder='Email address'/>
+        </div>
+    </div>
+    <div class='inrow'>
+        <div class='inrow-33'>
+            <input type='text' class='sitetxta' id='telephone' placeholder='Telephone'/>
+        </div>
+        <div class='inrow-33'>
+            <input type='text' class='sitetxta' id='addrline1' placeholder='Address Line 1' value='<%-addr1%>'/>
+        </div>
+        <div class='inrow-33'>
+            <input type='text' class='sitetxta' id='addrline2' placeholder='Address Line 2' value='<%-addr2%>'/>
+        </div>
+    </div>  
+    <div class='inrow'>
+        <div class='inrow-33'>
+            <input type='text' class='sitetxta' id='town' placeholder='Town' value='<%-town%>'/>
+        </div>
+        <div class='inrow-33'>
+            <input type='text' class='sitetxta' id='postcode' placeholder='Postcode' value='<%-postcode%>'/>
+        </div>
+        <div class='inrow-33'>
+            
+        </div>
+    </div>
+    <div class='inrow'>
+        <div class='inrow-100'><textarea class='sitetxta' id='additionalinfo' rows=5 placeholder="Additional Information"></textarea></div>
+    </div>
+    <div class='inrow'>
+        <div class='inrow-33'>
+           
+        </div>
+        <div class='inrow-33'>
+        </div>
+        <div class='inrow-33'>
+            <button id='btnSubmit' class='sitebtn-small btnright' >Submit Form</button>
+        </div>
+       
+    </div>
+    <div style='clear:both;margin-bottom:30px;'></div>
+</div>
+</div>
+</div>
+</div>
+</div> 
+
+<script>
+    $('#btnSubmit').click(function(){
+        var error = 0;
+        var errormsgs = []
+        var firstname = $('#firstname').val()
+        if(!firstname){error++;errormsgs.push('First Name is Required*')}
+        var lastname = $('#lastname').val()
+        if(!lastname){error++;errormsgs.push('Last Name is Required*')}
+        var email = $('#emailaddr').val()
+        if(!email){error++;errormsgs.push('E-Mail address is Required*')}
+        var telephone = $('#telephone').val()
+        if(!telephone){error++;errormsgs.push('Telephone Number is Required*')}
+        var addr1 =  $('#addrline1').val()
+        var addr2 =  $('#addrline2').val()
+        var town =  $('#town').val()
+        var postcode =  $('#postcode').val()
+        var info =  $('#additionalinfo').val()
+
+        if(error){
+            var msg = '<div class="inrow" style="padding:20px 40px;">';
+            errormsgs.forEach(m=>{
+                msg+='<div class="errorstr">'+m+'</div>'
+            })
+            msg+= '</div>'
+            $('#formstatus').html(msg)
+        }else{
+            $.post('/savequery',{firstname,lastname,email,telephone,addr1,addr2,town,postcode,info},function(data){
+                if(data.status){
+                    window.location = '/thank-you'
+                }
+            },'json')
+        }
+        //window.location = '/thank-you'
+    })
+</script>
+<%- include('../partials/general-menu.ejs')%>
+<%- include('../partials/footer.ejs')%>

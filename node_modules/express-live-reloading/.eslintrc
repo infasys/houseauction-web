@@ -1,0 +1,33 @@
+{
+
+  "plugings": [],
+  "extends": [],
+
+    "env": {
+        "es6": true,
+        "node": true,
+    } ,
+
+    "parseOptions": {
+        "ecmaVersion": 6
+    } ,
+
+    "rules": {
+
+        "getter-return": true,
+        "no-dupe-keys": true,
+        "no-irregular-whitespace": true,
+        "no-setter-return": true,
+        "accessor-pairs": true,
+        "no-alert": true,
+        "no-empty-function": true,
+        "no-eval": true,
+        "no-extend-native": true,
+        "no-proto": true,
+        "no-return-await": true,
+        "no-with": true,
+        "strict": true,
+        "yoda": false,
+        "max-params": 4
+    }
+}

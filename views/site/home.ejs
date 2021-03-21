@@ -1,0 +1,144 @@
+<%- include('../partials/header.ejs')%>
+
+<div class="banner-top">
+    <div class="banner-top-bg2"></div> 
+  <div class="container">
+  <div class="banner-top-left">
+    <a href="/valuation" class="valuationlink">Book your free valuation <span>→</span></a>
+  </div>
+  <div class="banner-top-right">
+    <i class="fab fa-facebook-square"></i> <i class="fab fa-twitter-square"></i> <i class="fab fa-instagram"></i>
+  </div>
+  </div>
+  <div style="clear:both;"></div>
+  </div>
+  <div class="bannerimagecen">
+    <div class="bannerimgtint">
+      <div class="container">
+  <div class="bannermessage">
+    Book your <strong>free</strong> valuation
+  </div>
+  <div class="valuation-box">
+    <div id="postcodeenter">
+    <div class="inputWithIcon"><input class="search-input sitetxt" id="valuation-postcode" type="text" placeholder="Location, e.g. NW3"><i class="fa fa-search fa-lg fa-fw" aria-hidden="true"></i></div><button id="btnsearch" class="sitebtn-small right">Search</button>
+    <div id="postcoderesults"></div>
+    </div>
+    <div id="postcodeselection"></div>
+    <div style="clear:both;"></div>
+  </div>
+  </div>
+  </div>
+  </div>
+  <%- include('../partials/general-menu.ejs')%>
+  <div style='clear:both;'></div>
+  <div style='text-align: center;padding:80px;'>
+    <div class='signupbox'>Save properties, track auctions, get real-time status alerts Sign up<a href='/account/register'><button class='sitebtn-small'>Sign Up</button></a></div>
+    </div>
+    <div id='auctionlots'>
+    </div>
+
+  <script>
+    var spinner ='<div class="sk-chase"><div class="sk-chase-dot"></div><div class="sk-chase-dot"></div><div class="sk-chase-dot"></div><div class="sk-chase-dot"></div><div class="sk-chase-dot"></div><div class="sk-chase-dot"></div></div>';
+
+    getAuctionLots8();
+    function getAuctionLots8(){
+        $.post('/auction-lots8',{},function(data){
+            $('#auctionlots').html(data)
+        })
+    }
+    function valid_postcode(postcodetxt) {
+    postcodetxt = postcodetxt.replace(/\s/g, "");
+    var regex = /^(([gG][iI][rR] {0,}0[aA]{2})|((([a-pr-uwyzA-PR-UWYZ][a-hk-yA-HK-Y]?[0-9][0-9]?)|(([a-pr-uwyzA-PR-UWYZ][0-9][a-hjkstuwA-HJKSTUW])|([a-pr-uwyzA-PR-UWYZ][a-hk-yA-HK-Y][0-9][abehmnprv-yABEHMNPRV-Y]))) {0,}[0-9][abd-hjlnp-uw-zABD-HJLNP-UW-Z]{2}))$/i;
+    return regex.test(postcodetxt);
+  }
+
+  $("#valuation-postcode").keyup(function(event) {
+    if (event.keyCode === 13) {
+        $("#btnsearch").click();
+    }
+});
+
+    $('#btnsearch').click(function(){
+        $('#postcoderesults').html('')
+        var postcode = $('#valuation-postcode').val()
+        postcode = postcode.replace(/\s/g, "");
+        if(!valid_postcode(postcode)){
+            $('#postcoderesults').html('*Postcode seems invalid')
+         //   $.post('')
+        }else{
+            postcodesearch(postcode)
+        }
+    })
+
+    function handlepostcodereposne(mypostcodedata){
+        var statusbox = document.getElementById('postcodeselection');
+        if(mypostcodedata){
+            if(mypostcodedata.status){
+                statusbox.innerHTML='';
+                if(mypostcodedata.myaddrs){
+                    $('#postcodeenter').hide()
+                    myopts = '<div class="select"><select id="myaddropts">';
+                    mypostcodedata.myaddrs.forEach(function(addr,index){
+                        
+                        myopts += '<option value="'+index+'">'+addr.newlbl+'</option>'
+                    })
+                    myopts += '</select></div><button id="btnselectpost" class="sitebtn btnright">Select</button>'
+                    statusbox.innerHTML+=myopts
+
+                    var addressoptionsSelect = document.getElementById('myaddropts')
+                    $('#btnselectpost').click(function(){
+                        mypostcodedata.myaddrs.forEach(function(addr,index){
+                            if(index==addressoptionsSelect.value){
+                                var searchcriterea = addr.door;
+                                if(addr.premises){
+                                    searchcriterea = addr.premises
+                                }
+                                $.post('/postcodedetailed',{postcode:mypostcodedata.postalcode,door:searchcriterea},function(data){
+                                    console.log(data)
+                                    if(data.addresses[0]){
+                                        var myaddr = data.addresses[0];
+                                        var info = encodeURI('town='+myaddr.town_or_city+'&addr1='+myaddr.line_1+'&addr2='+myaddr.line_2+'&postcode='+data.postcode)
+                                         window.location = '/valuation?'+info;
+                                    }
+                                },'json')
+                              
+                            }
+                        })
+                       
+                    })
+                }
+            }else{
+                statusbox.innerHTML='<div class="postcodestatusmsg">'+mypostcodedata.message+'</div>';
+            }
+        }
+    }
+
+    
+    function postcodesearch(postcode){
+        var statusbox = document.getElementById('postcoderesults');
+        statusbox.innerHTML=spinner+'<div class="postcodestatusmsggreen">Fetching postcode results</div>';
+        postcode = postcode.replace(/\s/g, "");
+        $.post('/postcode',{postcode:postcode},function(data){
+            statusbox.innerHTML='';
+            console.log(data)
+            handlepostcodereposne(data)
+        })
+   /*     postcodetxt = postcodeval.replace(/\s/g, "");
+                    s
+                    lastpostcodeteststr = postcodetxt
+                    var finished = false;
+                var mypostcodeerrmsg = '';
+                var mypostcodedata = {}
+                var timerdone = false
+                    if(finished) { handlepostcodereposne(mypostcodedata,letter,mypostcodeerrmsg); }
+                $.post('/postcode',{postcode:postcodetxt},function(data){
+                    
+                    postcodewaiting = false;
+                    finished = true;
+                   mypostcodedata=data
+                   if(timerdone){handlepostcodereposne(mypostcodedata,letter)}
+                },'json').fail(function(error) {finished = true; if(timerdone){ handlepostcodereposne(undefined,letter,'ERROR UNKNOWN')}  });
+            }*/
+}
+</script>
+<%- include('../partials/footer.ejs')%>

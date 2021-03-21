@@ -1,0 +1,54 @@
+
+    <style>
+  
+    </style>
+    <div class='logincover' id='logindialog'>
+    <div id='loginbox'>
+        <div style='float:right;' id='closelogin'><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABmJLR0QA/wD/AP+gvaeTAAABzUlEQVRYhe3Wy27TYBAF4A+2ZAkRECpuFeVdemFL6RMAZYHaF2FHEQ9QhRYJBDwILCo2sKDsoV2FEMzin8iRaxzbKeqiPZKl5J8zM8dje2Y4w2nHuYb8OdzDIm7Ef/iGr3iPN9g/LoFj9LCFIbIp1wh9XD+u5Cs4iOADbOM+FnAhrgWshm0Q3AMsz5r8iXRHmXRXN2v43MKOvBrrbZOvRIDfeNrCfyN8R1pUoicve5vkkyIy/MSVJo4v5WWfFbsRa6uuw5xUuoHyZ/4Q3ZLzbtiKuB2xhlJlp2JdUrxdYnsUtk8FEd04y4JTRL/CdgQfgrxaYptMNBZRdlbEWtjf1RHwOch3/mEvJpyWnNQnMuzVEXAY5E4F5xI+yrvfHi5X8DvBOywazpeQszoqS1A1V8Z5/tQJdOKP4MRfwsf+32dY1ieO4JrUNAbSYCmiaSOa17ARwQtJ8U5dhwq8jljPmzhdlQ+jjRmSb0aMH6o/01Isy8dxGxGb8nG82MIfaS6MF5JdabBMw7y87CPppZ4JS9I8H69kfTzAXanDdeL3Gl7hl7zsre+8iIt4pt5SOpRmf60FpOla3pNWtSVpV5hcy79Ia/lbfG8Y9wynGH8BHnKpr/YwVJ8AAAAASUVORK5CYII="/></div>
+        <div style='clear:both'></div>
+        <div class='boxmenu-50'><div class='active' id='loginmenu'>Login</div></div><div class='boxmenu-50'><div  id='registrationmenu'>Register</div></div>
+        <div id='logincontext'>
+            <div style='text-align: center;font-weight: 600;font-size: 24px;'>Login</div>
+        <input type='text' class='myinput' placeholder="Username"/>
+        <input type='password' class='myinput'  placeholder="Password"/>
+        <button class='loginbtn'>Log In</button>
+        </div>
+        <div id='registrationcontext'>
+            <div style='text-align: center;font-weight: 600;font-size: 24px;'>Registration</div>
+            <input type='text' class='myinput' placeholder="First name"/>
+            <input type='text' class='myinput' placeholder="Last name"/>
+        <input type='text' class='myinput' placeholder="Email Address"/>
+        <input type='password' class='myinput'  placeholder="Password"/>
+        <button class='registerbtn'>Register</button>
+        </div>
+    </div>
+    <script>
+        $(document).keydown(function(event) { 
+  if (event.keyCode == 27) { 
+    $('#logindialog').hide();
+  }
+});
+
+function show_regbox(){
+    $('#logindialog').show()
+    $('#loginmenu').removeClass('active')
+    $('#registrationmenu').addClass('active')
+            $('#registrationcontext').show();
+            $('#logincontext').hide();
+}
+function show_loginbox(){
+    $('#logindialog').show()
+    $('#loginmenu').addClass('active')
+    $('#registrationmenu').removeClass('active')
+            $('#registrationcontext').hide();
+            $('#logincontext').show();
+}
+
+$('#closelogin').click(function(){
+    $('#logindialog').hide();
+})
+        $('#loginlink').click(show_loginbox)
+        $('#registrationlink').click(show_regbox)
+        $('#registrationmenu').click(show_regbox)
+        $('#loginmenu').click(show_loginbox)
+    </script>
