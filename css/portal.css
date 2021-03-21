@@ -1,0 +1,297 @@
+@charset "UTF-8";
+/* You can add global styles to this file, and also import other style files */
+@import url("https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Open+Sans+Condensed:ital,wght@0,300;0,700;1,300&family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700&family=Roboto+Condensed:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Roboto+Mono:wght@300;400;500;600;700&family=Roboto+Slab:wght@100;200;300;400;500;600;700;800;900&family=Roboto:wght@300;400;500;700&display=swap");
+/*
+    font-family: 'DM Mono', monospace;
+    font-family: 'Open Sans', sans-serif;
+    font-family: 'Open Sans Condensed', sans-serif;
+    font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto Condensed', sans-serif;
+    font-family: 'Roboto Mono', monospace;
+    font-family: 'Roboto Slab', serif;
+
+*/
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-font-smoothing: unset;
+  -moz-osx-font-smoothing: grayscale;
+  font-smooth: antialiased;
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  backface-visibility: hidden;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  background: #f2f2f2;
+  margin: 0;
+  font-family: "Open Sans", sans-serif;
+  font-size: 14px;
+}
+
+header {
+  box-shadow: 0px 15px 10px -15px #c7c7c7;
+}
+
+.navbar-nav > li {
+  float: left;
+  padding: 6px 3px;
+  padding-right: 14px;
+}
+
+.navbar-nav > li:hover {
+  background: #ffe4c0;
+  color: #fff;
+}
+
+.navbar-nav > li:hover > a {
+  color: #000;
+  font-weight: 400;
+}
+
+.navbar-nav {
+  float: left;
+  margin: 0;
+}
+
+.navbar-nav .open .dropdown-menu {
+  padding: 0px;
+  position: absolute;
+  top: 100%;
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.nav li > a {
+  color: #000;
+}
+
+li.activePage > a {
+  color: #000;
+}
+
+.nav li > a {
+  font-family: "Fira Sans", sans-serif;
+}
+
+.nav li > a:hover {
+  text-decoration: none;
+}
+
+.navbar {
+  padding: 0px;
+  background: #fff;
+}
+
+.dash-box {
+  margin-top: 30px;
+  box-sizing: border-box;
+  background: #fff;
+  /* border:1px solid #ddd; */
+  box-shadow: rgba(0, 0, 0, 0.133) 0px 3.2px 7.2px 0px, rgba(0, 0, 0, 0.11) 0px 0.6px 1.8px 0px;
+}
+
+.dash-title {
+  padding: 6px 8px;
+  font-size: 14px;
+  background: #ddd;
+  color: #000;
+  font-weight: 500;
+}
+
+.dash-content {
+  padding: 20px;
+}
+
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  outline: 0;
+  box-shadow: none;
+  border: 0 !important;
+  background: #fff;
+  background-image: none;
+}
+
+/* Remove IE arrow */
+select::-ms-expand {
+  display: none;
+}
+
+/* Custom Select */
+.select {
+  position: relative;
+  display: flex;
+  height: 3em;
+  line-height: 3;
+  overflow: hidden;
+  border-radius: 0.25em;
+  margin-bottom: 25px;
+}
+
+select {
+  flex: 1;
+  padding: 0 0.5em;
+  color: #000;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+option {
+  font-size: 16px;
+}
+
+/* Arrow */
+.select::after {
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  content: " ";
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0 1em;
+  background: #c6c6c6;
+  cursor: pointer;
+  pointer-events: none;
+  -webkit-transition: 0.25s all ease;
+  -o-transition: 0.25s all ease;
+  transition: 0.25s all ease;
+}
+
+/* Transition */
+.select:hover::after {
+  color: #000;
+}
+
+.sitetxt-ib {
+  padding: 10px 16px;
+  box-sizing: border-box;
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.inputWithIconButton input[type=text] {
+  padding-left: 60px;
+  padding-right: 180px;
+  box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.inputWithIconButton {
+  position: relative;
+  display: inline-block;
+}
+
+.inputWithIconButton i {
+  position: absolute;
+  left: 0;
+  top: 8px;
+  padding: 9px 8px;
+  color: #cd1638;
+  transition: 0.3s;
+  border-right: 2px solid #eee;
+}
+
+.inputWithIconButton button {
+  position: absolute;
+  right: 1px;
+  top: 1px;
+  bottom: 20px;
+  width: 120px;
+  box-sizing: border-box;
+  background: #cd1638;
+  color: #fff;
+  transition: 0.3s;
+  border: none;
+  outline: none;
+  font-size: 16px;
+}
+
+.inputWithIconButton button:hover {
+  background: #ff1638;
+}
+
+.myinputsection {
+  display: none;
+  margin-top: 100px;
+}
+
+.myinputrow {
+  width: 500px;
+  margin: 25px auto;
+  font-size: 18px;
+  color: #777;
+}
+
+.mytxt {
+  border-radius: 7px;
+  font-size: 16px;
+  width: 100%;
+  border: 1px solid #ddd;
+  outline: none;
+  padding: 1em;
+  color: #000;
+  margin-top: 10px;
+  font-family: "Open Sans", sans-serif;
+}
+
+.select {
+  margin-top: 10px;
+}
+
+.inrow-30-padr {
+  float: left;
+  width: 30%;
+  box-sizing: border-box;
+  padding-right: 10px;
+}
+
+.inrow-70 {
+  float: left;
+  width: 70%;
+}
+
+.inrow-30 {
+  float: left;
+  width: 30%;
+}
+
+.inrow-70-padr {
+  float: left;
+  width: 70%;
+  box-sizing: border-box;
+  padding-right: 10px;
+}
+
+.inrow-33 {
+  float: left;
+  width: 33%;
+}
+
+.inrow-33-padr {
+  float: left;
+  width: 33%;
+  box-sizing: border-box;
+  padding-right: 10px;
+}
+
+.sitebtn-small {
+  color: #fff;
+  background: #cd1638;
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 700;
+  border-radius: 8px;
+  box-shadow: none;
+  border: none;
+  outline: none;
+  margin-top: 20px;
+  cursor: pointer;
+}
+.sitebtn-small:hover {
+  background: #b82b35;
+}
+
+/*# sourceMappingURL=portal.css.map */

@@ -389,7 +389,7 @@ ul.nav> li ul {
 #cat-auctionresults{
   background-image: url('/images/kam-idris-_HqHX3LBN18-unsplash.jpg');
 }
-.sitetxta{
+.sitetxta{font-family: 'Open Sans', sans-serif;
   padding:12px;
   border:1px solid #ddd;
   resize: none;
@@ -561,4 +561,72 @@ font-weight:500;
 	font-weight: 900;
 content: " \f107";
 
+}
+
+
+
+
+
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  outline: 0;
+  box-shadow: none;
+  border: 0 !important;
+  background: #fff;
+  background-image: none;
+}
+/* Remove IE arrow */
+select::-ms-expand {
+  display: none;
+}
+/* Custom Select */
+.select {
+  position: relative;
+  display: flex;
+  height: 3em;
+  line-height: 3;
+  overflow: hidden;
+  border-radius: .25em;
+  margin-bottom:25px;
+}
+select {
+  flex: 1;
+  padding: 0 .5em;
+  color: #000;
+  cursor: pointer;
+}
+option{
+    font-size:16px;;
+}
+/* Arrow */
+.select::after {
+  font-family: "Font Awesome 5 Free";
+	font-weight: 900;
+  content: " \f107";
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0 1em;
+  background: #c6c6c6;
+  cursor: pointer;
+  pointer-events: none;
+  -webkit-transition: .25s all ease;
+  -o-transition: .25s all ease;
+  transition: .25s all ease;
+}
+/* Transition */
+.select:hover::after {
+  color: #000;
+}
+
+#myaddropts {
+    padding: 12px;
+    border: 1px solid #ddd;
+    resize: none;
+    width: 100%;
+    font-size: 16px;
+    box-sizing: border-box;
 }

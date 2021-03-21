@@ -9,14 +9,14 @@
         <div class='boxmenu-50'><div class='active' id='loginmenu'>Login</div></div><div class='boxmenu-50'><div  id='registrationmenu'>Register</div></div>
         <div id='logincontext'>
             <div style='text-align: center;font-weight: 600;font-size: 24px;'>Login</div>
-        <input type='text' class='myinput' placeholder="Username"/>
-        <input type='password' class='myinput'  placeholder="Password"/>
-        <button class='loginbtn'>Log In</button>
+        <input type='text'  id='txtusername' class='myinput' placeholder="Username"/>
+        <input type='password'   id='txtpassword'class='myinput'  placeholder="Password"/>
+        <button class='loginbtn' id='loginbtn'>Log In</button>
         </div>
         <div id='registrationcontext'>
             <div style='text-align: center;font-weight: 600;font-size: 24px;'>Registration</div>
-            <input type='text' class='myinput' placeholder="First name"/>
-            <input type='text' class='myinput' placeholder="Last name"/>
+            <input type='text' id='txtusername' class='myinput' placeholder="First name"/>
+            <input type='text' id='txtpassword' class='myinput' placeholder="Last name"/>
         <input type='text' class='myinput' placeholder="Email Address"/>
         <input type='password' class='myinput'  placeholder="Password"/>
         <button class='registerbtn'>Register</button>
@@ -28,6 +28,18 @@
     $('#logindialog').hide();
   }
 });
+
+$('#loginbtn').click(function(){
+    console.log('test')
+    var username = $('#txtusername').val()
+    var password = $('#txtpassword').val()
+    $.post('/account/login_auth',{username,password},function(data){console.log(data)
+        if(data.status){
+            console.log('move')
+            window.location.href = '/portal/dashboard'
+        }
+    },'json')
+})
 
 function show_regbox(){
     $('#logindialog').show()

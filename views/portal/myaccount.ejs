@@ -1,0 +1,37 @@
+<%- include('../partials/menu-portal.ejs')%>
+
+  <div class='myinputrow'>
+    E-Mail Address / Username<br/>(Please contact Auction House to change E-Mail)
+    <input id='txtforename' class='mytxt' type='txt'  value='<%-username%>' placeholder='E-Mail Address' readonly/>
+  </div>
+  <div class='myinputrow'>
+    Password Reset
+    <input id="txtpassword" class="mytxt" type="password" value="" placeholder='New Passowrd'/>
+    <input id="txtpasswordconfirm" class="mytxt" type="password" value="" placeholder='Password Confirm'/>
+  </div>
+  <div class='myinputrow'>
+    <button class="sitebtn-small" style='float:right' id="btnupdatepassword">Update Password</button>
+  </div>
+<script>
+  $('#btnupdatepassword').click(function(){
+    console.log('start')
+    var pass1 = $('#txtpassword').val();
+    var pass2 = $('#txtpasswordconfirm').val();
+    var error  = false;
+    var msg = '';
+    if(pass1.length<4){
+      error= true
+      msg = 'Password length does not meet requirements'
+    }else if (pass1!=pass2){
+      error= true
+      msg = 'Passwords do not match'
+    }
+    if(!error){
+      $.post('/account/updatepassword',{password:pass1},function(){
+        $('#statusreponse').html('<div class="statusmsg">Password Updated Successfully</div>')
+      },'json')
+    }else{
+      $('#statusreponse').html('<div class="statuserr">'+msg+'</div>')
+    }
+  })
+  </script>

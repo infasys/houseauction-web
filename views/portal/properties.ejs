@@ -1,0 +1,102 @@
+<%- include('../partials/menu-portal.ejs')%>
+<style>
+    .banner{
+        background: url('branding/pngtree-hand-drawn-cartoon-house-print-ad-image_148888.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        height:400px;
+        width:100%;
+    }
+    .submenu{
+        margin:10px 30px;
+        padding:10px 20px;
+        border-bottom:2px solid #000;
+    }
+    .mitem{
+        display: inline-block;
+        margin-right:20px;
+        cursor: pointer;
+    }
+    .right{
+        float:right;
+    }
+    .lotitem{
+        float:left;
+        background: #fff;
+        width:25%;
+        max-width:240px;
+        min-width:140px;
+        margin:30px 0px 30px 30px;
+        cursor: pointer;
+        box-sizing: border-box;
+        border:1px solid #ccc;
+    }
+    .lotitem:hover{
+        border:2px solid c8102e;
+        box-sizing: border-box;
+
+    }
+    .lotno{
+        height:30px;
+        text-align: center;
+        background-color: #c8102e;
+        color:#fff;
+    }
+    .lotPrice{
+        padding:10px;
+        text-align: center;
+        background-color: #c8102e;
+        color:#fff;
+        text-align: center;
+        font-size: 12px;;
+
+    }
+    .lotDesc{
+        min-height:85px;
+        color:#333;
+        text-align: center;
+        padding:16px;
+        overflow: hidden;
+        font-size: 15px;
+    }
+    .lotitmlstimg{
+        width: 100%;
+padding-top: 70%;
+background-repeat: no-repeat;
+background-size: cover;
+box-sizing: border-box;
+background-position: center;
+    }
+
+</style>
+    <h4>My Saved List</h4>
+            <%
+            const formatToCurrency = amount => {
+              return "£" + amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,");
+            };
+            
+            lots.forEach(data=>{
+                %>
+                <a href='/portal/lot/details/<%-data.id%>'>
+                    <div class='lotitem'>
+                <%
+                if(data.bid_interest)
+                {
+                    %><div style='padding:10px;'> Bidding Enabled</div><%
+                }
+                %>
+               
+                <div class='lotno'>Lot <%-data.id%><%-data.bid_interest%></div>
+             <!--   <img src='data.uri' style='height:190px;' /> -->
+                <div class='lotitmlstimg' style='background-image: url(<%-data.uri%>);'></div>
+                <div class='lotPrice'>*Guide | <%-formatToCurrency(data.price)%> + (plus fees)</div>
+                <div class='lotDesc'><%-data.propname%></div>
+                <div style='clear:both'></div>
+            </div>
+            
+            </a>
+            <%})%>
+            
+        
+        <div style='clear:both'></div>
+    </div>

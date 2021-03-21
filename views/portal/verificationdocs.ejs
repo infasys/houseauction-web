@@ -1,0 +1,129 @@
+<%- include('../partials/menu-portal.ejs')%>
+<style>
+  #myaddropts{
+    max-width:350px;
+  }
+  .uploadentrytype{
+        background: #bed7d0;
+        border: 1px solid #ccc;
+padding: 6px 14px;
+margin-bottom: 10px;
+font-size: 10px;;
+    }
+    .uploadres{
+      display: inline;
+    }
+    .uploadres>img{
+      height:40px;
+    }
+    .uploadres>a>img{
+      height:40px;
+    }
+   #previousaddressentry {
+    display: none;
+    border: 1px solid #9a9a9a;
+    background: #9ab1bf;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 20px;
+    zoom: 90%;
+}
+.mylbl{
+    display: inline-block;
+    min-width: 400px;
+    font-size:16px;
+}
+
+  </style>
+<div style='padding:20px;'>
+<div class='info' style='font-size: 16px;'>
+<p>Everyone hoping to bid in an auction needs to have photographic ID together with a proof of residency. If you are the successful bidder, the auctions team will take copies of your ID, and they may carry out electronic ID verification as well, in order to meet the HMRC Anti-Money Laundering Regulations. Remote bidders (Telephone/Proxy/Online) will also need to provide this ID before their bid can be accepted.</p>
+<h3>Photographic ID</h3>
+<ul>
+<li>Current signed passport</li>
+<li>EU member state identity card</li>
+<li>Current photo card driving licence</li>
+<li>Armed Forces ID card</li>
+<li>Firearms or shotgun certificate</li>
+</ul>
+<h3>Proof of Residency</h3>
+<ul>
+<li>Utility bill/statement – dated within past 3 months</li>
+<li>Mortgage statement from a recognised lender – dated within past 3 months</li>
+<li>Bank, building society or credit union statement – dated within past 3 months</li>
+<li>Local council or housing association rent card</li>
+<li>Current UK / EU Drivers Licence (paper version)</li>
+</ul>
+</div>
+<%verificationDocTypes.forEach(v=>{%>
+
+  <div class='uploadentrytype'>
+    <label class='mylbl' style='width:130px;'><%-v.name%>:</label>
+    <input type="file" id="myfile-<%-v.id%>" name="myfile" class="rm-input" autocomplete='off' style='margin-right:10px;'/>
+    <input type="button" class="mybtn" value="upload" onClick="uploadFile('<%-v.id%>')" class="rm-button" />
+    <div id='uploadeddocresults-<%-v.id%>' class='uploadres'>
+      <% docs.forEach(d=>{
+        if(d.doctypeid==v.id){%>
+          <a href='<%-d.uri%>'> <img src='<%-d.uri%>' /></a>
+          <%}
+        })%>
+
+    </div>
+</div>
+<%})%>
+<div>
+</div>
+</div>
+<script>
+
+ var uploadedfilelist = []
+ 
+ function uploadFile(uploadtypeid){
+     var url = "/myimguploadsingle";
+     var archivoSeleccionado = document.getElementById("myfile-"+uploadtypeid);
+     var file = archivoSeleccionado.files[0];
+     if(file){
+     var fd = new FormData();
+     fd.append("myfile", file);
+     var xmlHTTP= new XMLHttpRequest()
+     xmlHTTP.uploadtypeid = uploadtypeid
+     xmlHTTP.addEventListener("load", transferCompleteFunction, false);
+     xmlHTTP.addEventListener("error", uploadFailed, false);
+     xmlHTTP.addEventListener("abort", uploadCanceled, false);
+     xmlHTTP.open("POST", url, true);
+     //xmlHTTP.setRequestHeader('book_id','10');
+     xmlHTTP.send(fd);
+     }
+ }
+ 
+ function transferCompleteFunction(evt){
+     var uploadtypeid = evt.currentTarget.uploadtypeid
+     var filenamesresponse = JSON.parse(evt.target.responseText)
+     console.log(filenamesresponse)
+
+     filenamesresponse.forEach(f=>{
+       $.post('/portal/fileuploaddetails',{filename:f,doctype:uploadtypeid},function(data){console.log(data)},'json')
+     })
+     filenamesresponse.forEach(f=>{
+       uploadedfilelist.push({filename:f,doctype:uploadtypeid})
+     })
+     uploadedfilelist.forEach(f=>{
+       console.log('uploadeddocresults-'+f.doctype)
+      document.getElementById('uploadeddocresults-'+f.doctype).innerHTML=''
+     })
+     uploadedfilelist.forEach(f=>{
+       document.getElementById('uploadeddocresults-'+f.doctype).innerHTML+='<img src="'+f.filename.uri+'" onerror="this.onerror=null; this.src=\'/lib/icns/ukcreditheader.png\'" class="uploadpreviewimg"/>'
+     })
+ }   
+
+function uploadFailed(evt) {
+    console.log('Upload Failed')
+  }
+
+  function uploadCanceled(evt) {
+    console.log('Upload Cancelled')
+  }
+  $('#btnsavenxt').click(function(){
+  window.location='/portal/solicitor'
+})
+</script>

@@ -1,0 +1,168 @@
+<%- include('../partials/menu-portal.ejs')%>
+<script src="/dob-picker/dobpicker.js"></script>
+
+</style>
+<div class='myinputsection' id='section-1'>
+    <div class='myinputrow'>
+        Bidding Profile
+    <div class="select">
+        <select  id='opttitle' autocomplete="off">
+        <option value='' placeholder="Title">Please Select</option>
+        <option value='1' <%if(customer.title==1){ %>selected<% }%> >Bidding as an individual</option>
+        <option value='2' <%if(customer.title==2){ %>selected<% }%> >Bidding as an Company</option>
+      </select>
+    </div>
+    </div>
+</div>
+
+
+<div class='myinputsection' id='section-2'>
+<div class='myinputrow'>
+    Title
+<div class="select">
+    <select  id='opttitle' autocomplete="off">
+    <option value='' placeholder="Title">Select Title</option>
+    <option value='1' <%if(customer.title==1){ %>selected<% }%> >Mr</option>
+    <option value='2' <%if(customer.title==2){ %>selected<% }%> >Mrs</option>
+    <option value='3' <%if(customer.title==3){ %>selected<% }%> >Miss</option>
+    <option value='4' <%if(customer.title==4){ %>selected<% }%> >Ms</option>
+    <option value='5' <%if(customer.title==5){ %>selected<% }%> >Other</option>
+  </select>
+</div>
+</div>
+<div class='myinputrow'>
+    First name
+    <input id='txtforename' class='mytxt' type='txt'  value='<%-customer.forename%>' placeholder='firstname'/>
+</div>
+<div class='myinputrow'>
+    Last name
+    <input id='txtsurname' class='mytxt' type='txt'value='<%-customer.surname%>' placeholder='lastname'/>
+</div>
+<div class='myinputrow'>
+    Middle name
+    <input id='txtmiddlename' class='mytxt' type='txt' value='<%-customer.middlename%>' placeholder='middlename'/>
+</div>
+<div class='myinputrow'>
+    Email addresss
+    <input id='txtemail' readonly class='mytxt' type='txt'  value='<%-customer.username%>' placeholder='email address'/>
+</div>
+<div class='myinputrow'>
+    Mobile
+    <input id='txtmobile' class='mytxt' type='txt' value='<%-customer.mobile%>'  placeholder='mobile'/>
+</div>
+
+</div>
+
+
+<div class='myinputsection' id='section-3'>
+    <div class='myinputrow'>
+        Postcode Search
+        <div class="inputWithIconButton" style='margin-top:10px;'><input class='search-input sitetxt-ib' id='postcodesearchboxP' type='text'  class='mytxt' placeholder='Postcode' /><i class="fa fa-search fa-lg fa-fw" aria-hidden="true"></i><button id='postcodesearchbtnP'>Search</button></div>
+    </div>
+
+    <div class='myinputrow'>
+        <input id='txtpremP' autocomplete="off" type='text' class='mytxt' placeholder="premesis"/>
+      </div>
+      <div class='myinputrow'>
+        <div class='inrow-30-padr'>
+        <input id='txtdoorP' class='mytxt' type='txt'  autocomplete="off"  placeholder="door"/>
+        </div>
+        <div class='inrow-70'>
+        <input id='txtstreetP' class='mytxt' type='txt'  autocomplete="off"  placeholder="street"/>
+        </div>
+    <div style='clear:both'></div>
+      </div>
+      <div class='myinputrow'>
+        <input id='txttownP' class='mytxt' type='txt'autocomplete="off" placeholder="town"/>
+      </div>
+      <div class='myinputrow'>
+        <input id='txtdistrictP' class='mytxt' type='txt' autocomplete="off"  placeholder="District"/>
+      </div>
+      <div class='myinputrow'>
+        <div class='inrow-70-padr'>
+        <input  id='txtcountyP' class='mytxt' type='txt' autocomplete="off"    placeholder="County"/>
+        </div>
+        <div class='inrow-30'>
+            <input id='txtpostcodeP'  class='mytxt' type='txt'  autocomplete="off"    placeholder="postcode"/>
+        </div>
+        <div style='clear:both'></div>
+        </div>
+      <div class='myinputrow' >
+        <input  id='txtcountryP' class='mytxt' type='txt' autocomplete="off"  placeholder="country"/>
+      </div>
+</div>
+
+<div class='myinputsection' id='section-4'>
+      <div class='myinputrow'>
+          Date of Birth
+          <div style='clear:both'></div>
+        <div class='inrow-33-padr'>
+            <div class='select'><select id="dobday"></select></div>
+            </div>
+            <div class='inrow-33-padr'>
+            <div class='select'><select id="dobmonth"></select></div>
+            </div>
+            <div class='inrow-33'>
+            <div class='select'><select id="dobyear"></select></div>
+            </div>
+    <div style='clear:both'></div>
+      </div>
+      <div class='myinputrow'>
+          National Insurance Number
+        <input id='txtnino' class='mytxt' type='txt' placeholder='National Insurance Number' value='<%-customer.nationalinsurance%>'/>
+
+      </div>
+      <div class='myinputrow'>
+          Driving License
+        <input id='txtdrivinglicense' placeholder='Driving License Number' class='mytxt' type='txt' value='<%-customer.drivinglicense%>'/>
+    </div>
+      <div class='myinputrow'>
+          Passport Number
+        <input id='txtpassportno' placeholder='Passport Number' class='mytxt' type='txt' value='<%-customer.passport%>'/>
+
+        </div>
+</div>
+<div class='myinputrow'><button id='btnNext' style='float:right'>Next</button></div>
+<script>
+
+$(document).ready(function() {
+				$.dobPicker({
+					daySelector: '#dobday', /* Required */
+					monthSelector: '#dobmonth', /* Required */
+					yearSelector: '#dobyear', /* Required */
+          <%
+          if(customer.dob){
+            console.log(customer.dob)
+            var d = new Date(customer.dob)
+            const monthNames = ["January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"
+];
+var mymonth =  monthNames[d.getMonth()];
+console.log(d.getFullYear())
+            %>
+					dayDefault: '<%-d.getDate()%>', /* Optional */
+					monthDefault: '<%-mymonth%>', /* Optional */
+					yearDefault: '<%-d.getFullYear()%>', /* Optional */
+          <%}
+          %>
+					minimumAge: 18, /* Optional */
+					maximumAge: 200 /* Optional */
+				});
+			});
+     
+var customerid = "<%-customer.id%>";
+var spinner ='<div class="sk-chase"><div class="sk-chase-dot"></div><div class="sk-chase-dot"></div><div class="sk-chase-dot"></div><div class="sk-chase-dot"></div><div class="sk-chase-dot"></div><div class="sk-chase-dot"></div></div>';
+
+
+
+function isValidDate(d) {
+  return d instanceof Date && !isNaN(d);
+}
+var mysectionid = 1;
+$('#btnNext').click(function(){
+  $('#section-'+mysectionid).hide()
+  mysectionid++;
+  $('#section-'+mysectionid).show()
+})
+$('#section-'+mysectionid).show()
+</script>
