@@ -11,8 +11,11 @@ router.get('/portal',authCheck, (req, res) => {
 	res.redirect('/portal/dashboard');
 });
 
-router.get('/portal/dashboard',authCheck, (req, res) => {
-	res.render('portal/dashboard',{msg:'',menusel:1});
+router.get('/portal/dashboard',authCheck,async (req, res) => {
+	var myuserid = req.session.userid;
+	var results = await db.getCustomerById(myuserid)
+	var customer = results[0]
+	res.render('portal/dashboard',{msg:'',menusel:1,customer});
 });
 
 router.get('/portal/properties',authCheck,async (req, res) => {
@@ -169,7 +172,23 @@ router.get('/portal/profile',authCheck, async (req, res) => {
 		members = await db.getCompanyMembersByCompanyId(customer.companyid)
 	}
 	var addrs = await db.getAddressHistoryByUserId(myuserid)
-	res.render('portal/profile',{customer,addrs,members:members,mysel:1,menusel:3});
+	var amlchecks = await db.getAMLReportsByUser(myuserid)
+	res.render('portal/profile',{customer,amlchecks,addrs,members:members,mysel:1,menusel:3});
+});
+router.get('/portal/profileedit',authCheck, async (req, res) => {
+	var myuserid = req.session.userid;
+	if(req.session.memberid){
+		myuserid = req.session.memberid;	
+	}
+	var results = await db.getCustomerById(myuserid)
+	var customer = results[0]
+	var members = [];
+	if(customer.companyid){
+		members = await db.getCompanyMembersByCompanyId(customer.companyid)
+	}
+	var addrs = await db.getAddressHistoryByUserId(myuserid)
+	var amlchecks = await db.getAMLReportsByUser(myuserid)
+	res.render('portal/profileedit',{customer,amlchecks,addrs,members:members,mysel:1,menusel:3});
 });
 router.get('/portal/verificationdetails',authCheck, async (req, res) => {
 	var myuserid = req.session.userid;

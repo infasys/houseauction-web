@@ -23,11 +23,18 @@
         </div>
     </div>
     <script>
-        $(document).keydown(function(event) { 
+$(document).keydown(function(event) { 
   if (event.keyCode == 27) { 
     $('#logindialog').hide();
   }
 });
+
+$('#txtpassword').keyup(function(event) { 
+  if (event.keyCode == 13) { 
+    event.preventDefault()
+    $('#loginbtn').click()
+  }
+})
 
 $('#loginbtn').click(function(){
     console.log('test')

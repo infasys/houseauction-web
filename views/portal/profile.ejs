@@ -5,474 +5,58 @@
 <script src="/js/profile_save.js"></script>
 <script src="/js/postcode_search.js" defer></script>
 <style>
-  .menutitem{
-
-  }
-  .sectionError{
-    color:rgb(199, 0, 0);
-    font-weight: 700;
-    font-size: 14px;
-    min-height: 20px;;
-  }
+.cmimg {
+   
+    height: 100px;
+    border-radius: 100%;
+    box-sizing: border-box;
+    margin: 20px;
+}
 </style>
-<div style=' width:800px;margin:30px auto 10px auto;'>
-  <div class="progress-bar-wrapper"></div>
-</div>
 
-
-<div class='myinputsection' id='section-1'>
-  <div class='myinputrow'>
-  <div class='sectionError' id='error-1'></div>
-  </div>
-    <div class='myinputrow'>
-        Bidding Profile
-    <div class="select">
-        <select  id='optbiddingtype' autocomplete="off"  placeholder="Title">
-        <option value=''>Please Select</option>
-        <option value='1' >Bidding as an individual</option>
-        <option value='2'>Bidding as an Company</option>
-      </select>
+<div style='padding:20px;'>
+  <div style='padding:20px;background-color: #f8f9fa;;box-shadow: 0 0.2rem 0.6rem 0 rgba(0,0,0,.075);'>
+    <div><a href='/portal/profileedit'>Edit</a></div>
+    <div class='profilebox'>
+      <div style='text-align: center;'><img src="/images/user.gif" class="cmimg"></div>
+      <div style='text-align: center;font-weight:900;font-size: 24px;'><%-customer.forename%> <%-customer.surname%></div>
+      <div><%-customer.mobile%></div>
+      <div><%-customer.username%></div>
     </div>
-    </div>
-</div>
-<div class='myinputsection' id='section-2'>
-  <div class='myinputrow'>
-    <div class='sectionError' id='error-2'></div>
-    </div>
-  <div class='myinputrow'>
-    Company Name
-    <input id='txtCompanyName' class='mytxt' type='txt'  value='' placeholder='Company Name'/>
-</div>
-  <div class='myinputrow'>
-      Company Details
-  <div class="select">
-      <select  id='opttitle' autocomplete="off" placeholder="Entitiy Type">
-      <option value='' >Entitiy Type</option>
-      <option value='1' <%if(customer.title==1){ %>selected<% }%> >Sole Trader</option>
-      <option value='2' <%if(customer.title==2){ %>selected<% }%> >Partnership</option>
-      <option value='3' <%if(customer.title==2){ %>selected<% }%> >Limited Company</option>
-    </select>
-  </div>
-  </div>
-  <div class='myinputrow'>
-    Company Address
-    <textarea class='mytxt' rows=6></textarea>
-</div>
-</div>
-
-<div class='myinputsection' id='section-3'>
-  <div class='myinputrow'>
-    <div class='sectionError' id='error-3'></div>
-    </div>
-<div class='myinputrow'>
-    Title
-<div class="select">
-    <select  id='opttitle' autocomplete="off">
-    <option value='' placeholder="Title">Select Title</option>
-    <option value='1' <%if(customer.title==1){ %>selected<% }%> >Mr</option>
-    <option value='2' <%if(customer.title==2){ %>selected<% }%> >Mrs</option>
-    <option value='3' <%if(customer.title==3){ %>selected<% }%> >Miss</option>
-    <option value='4' <%if(customer.title==4){ %>selected<% }%> >Ms</option>
-    <option value='5' <%if(customer.title==5){ %>selected<% }%> >Other</option>
-  </select>
-</div>
-</div>
-<div class='myinputrow'>
-    First name
-    <input id='txtforename' class='mytxt' type='txt'  value='<%-customer.forename%>' placeholder='firstname'/>
-</div>
-<div class='myinputrow'>
-    Last name
-    <input id='txtsurname' class='mytxt' type='txt'value='<%-customer.surname%>' placeholder='lastname'/>
-</div>
-<div class='myinputrow'>
-    Middle name
-    <input id='txtmiddlename' class='mytxt' type='txt' value='<%-customer.middlename%>' placeholder='middlename'/>
-</div>
-<div class='myinputrow'>
-    Mobile
-    <input id='txtmobile' class='mytxt' type='txt' value='<%-customer.mobile%>'  placeholder='mobile'/>
-</div>
-
-</div>
-
-
-<div class='myinputsection' id='section-4'>
-  <div class='myinputrow'>
-    <div class='sectionError' id='error-4'></div>
-    </div>
-    <div class='myinputrow'>
-        Postcode Search
-        <div class="inputWithIconButton" style='margin-top:10px;'><input class='search-input sitetxt-ib' id='postcodesearchboxN' type='text'  class='mytxt' placeholder='Postcode' /><i class="fa fa-search fa-lg fa-fw" aria-hidden="true"></i><button id='postcodesearchbtnN'>Search</button></div>
-    </div>
-    <div class='myinputrow'>
-      <div id="postcodesearch_statusN"></div>
-    </div>
-    <div class='myinputrowaddr'>
-        <input id='txtpremN' autocomplete="off" type='text' class='mytxt' value='<%-customer.premises%>' placeholder="premesis"/>
-      </div>
-      <div class='myinputrowaddr'>
-        <div class='inrow-30-padr'>
-        <input id='txtdoorN' class='mytxt' type='txt'  autocomplete="off"   value='<%-customer.door%>'   placeholder="door"/>
-        </div>
-        <div class='inrow-70'>
-        <input id='txtstreetN' class='mytxt' type='txt'  autocomplete="off"  value='<%-customer.street%>'  placeholder="street"/>
-        </div>
-    <div style='clear:both'></div>
-      </div>
-      <div class='myinputrowaddr'>
-        <input id='txttownN' class='mytxt' type='txt'autocomplete="off"  value='<%-customer.town%>' placeholder="town"/>
-      </div>
-      <div class='myinputrowaddr'>
-        <input id='txtdistrictN' class='mytxt' type='txt' autocomplete="off"   value='<%-customer.district%>' placeholder="District"/>
-      </div>
-      <div class='myinputrowaddr'>
-        <div class='inrow-70-padr'>
-        <input  id='txtcountyN' class='mytxt' type='txt' autocomplete="off"  value='<%-customer.county%>'   placeholder="County"/>
-        </div>
-        <div class='inrow-30'>
-            <input id='txtpostcodeN'  class='mytxt' type='txt'  autocomplete="off"    value='<%-customer.postcode%>'   placeholder="postcode"/>
-        </div>
-        <div style='clear:both'></div>
-        </div>
-      <div class='myinputrowaddr' >
-        <input  id='txtcountryN' class='mytxt' type='txt' autocomplete="off"   value='<%-customer.country%>' placeholder="country"/>
-      </div>
-</div>
-<div class='myinputsection' id='section-5'>
-  <div class='myinputrow'>
-    <div class='sectionError' id='error-5'></div>
-    </div>
-  <div class='myinputrow'>
-    Please provide a 5 Year Address history, please include your Correspondence Addresss.
-  </div>
-
-  <div>
-     <style>
-      .addrPick{
-        text-align: center;
-        display: inline-block;
-        border:1px solid #ccc;
-        background:#fff;
-        border-radius: 10px;
-        margin: 5px 0px 0px 5px;
-        height:120px;
-        width:150px;
-        vertical-align: middle;
-        cursor: pointer;
-        overflow: hidden;
-        
-      } .addrPick:hover{
-        background-color: #e3d3be;
-      }
+    <div>
+      <%
+      var c = customer;
+      var addrBuilder = (c.premises?c.premises+'<br/>': '')+ (c.door?c.door+' ':'')+(c.street+'<br/>')+ (c.town?c.town+'<br/>': '')+(c.county?c.county+', ': '')+c.postcode
       
-      .addrboxlbl{
-        font-weight: 700;
-        background-color: #dedede;
-        padding:5px;
-      }
-      .addrcontent{
-        padding:10px;
-        overflow: hidden;
-      }
-      #addrHistoryLoaded{
-        width:500px;margin:0px auto;
-      }
-     
-      </style>
-      <div style='' id='addrHistoryLoaded'>
-       
-      </div>
-  </div>
-
-
-  <div class='myinputrow'>
-    <div class='sectionError' id='error-6'></div>
-    <div id='specialfunctionaddrhistory'></div>
-      Postcode Search
-      <div class="inputWithIconButton" style='margin-top:10px;'><input class='search-input sitetxt-ib' id='postcodesearchboxP' type='text'  class='mytxt' placeholder='Postcode' /><i class="fa fa-search fa-lg fa-fw" aria-hidden="true"></i><button id='postcodesearchbtnP'>Search</button></div>
-  </div>
-  <div class='myinputrow'>
-    <div id="postcodesearch_statusP"></div>
-  </div>
-  <div class='myinputrowaddr'>
-      <input id='txtpremP' autocomplete="off" type='text' class='mytxt' placeholder="premesis"/>
-    </div>
-    <div class='myinputrowaddr'>
-      <div class='inrow-30-padr'>
-      <input id='txtdoorP' class='mytxt' type='txt'  autocomplete="off"  placeholder="door"/>
-      </div>
-      <div class='inrow-70'>
-      <input id='txtstreetP' class='mytxt' type='txt'  autocomplete="off"  placeholder="street"/>
-      </div>
-  <div style='clear:both'></div>
-    </div>
-    <div class='myinputrowaddr'>
-      <input id='txttownP' class='mytxt' type='txt'autocomplete="off" placeholder="town"/>
-    </div>
-    <div class='myinputrowaddr'>
-      <input id='txtdistrictP' class='mytxt' type='txt' autocomplete="off"  placeholder="District"/>
-    </div>
-    <div class='myinputrowaddr'>
-      <div class='inrow-70-padr'>
-      <input  id='txtcountyP' class='mytxt' type='txt' autocomplete="off"    placeholder="County"/>
-      </div>
-      <div class='inrow-30'>
-          <input id='txtpostcodeP'  class='mytxt' type='txt'  autocomplete="off"    placeholder="postcode"/>
-      </div>
-      <div style='clear:both'></div>
-      </div>
-    <div class='myinputrowaddr' >
-      <input  id='txtcountryP' class='mytxt' type='txt' autocomplete="off"  placeholder="country"/>
-    </div>
-    <div class='myinputrow' >
-      Please Enter the Month and Year Started
-      <div class='inrow-50-padr'>
-      <div class='select'><select id='txtStartYear' autocomplete='off'>
-        <%
-        var years = [1995,1996,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021];
-        years.forEach(x=>{%>
-          <option value='<%-x%>'><%-x%></option>
-        <%})%>
-      </select>
-      </div>
-      </div>
-      <div class='inrow-50'>
-      <div class='select'>
-  <select id='txtStartMonth' autocomplete='off'>
-    <%
-    var months = [{id:1,name:'January'},{id:2,name:'Febuary'},{id:3,name:'March'},{id:4,name:'April'},{id:5,name:'May'},{id:6,name:'June'},{id:7,name:'July'},{id:8,name:'August'},{id:9,name:'September'},{id:10,name:'October'},{id:11,name:'November'},{id:12,name:'December'}];
-    months.forEach(x=>{%>
-      <option value='<%-x.id%>'><%-x.name%></option>
-    <%})%>
-  </select>
-  </div>
-  </div>
-  <div style='clear:both;'></div>
-    </div>
-    <div class='myinputrow' >
-      <button class='sitebtn-small maxed' style='background:#0d7d03;' id='btnSaveAndAdd'>Save and another</button>
-    </div>
-</div>
-<div class='myinputsection' id='section-6'>
-  <div class='myinputrow'>
-  <div class='sectionError' id='error-6'></div>
-  </div>
-      <div class='myinputrow'>
-          Date of Birth
-          <div style='clear:both'></div>
-        <div class='inrow-33-padr'>
-            <div class='select'><select id="dobday"></select></div>
-            </div>
-            <div class='inrow-33-padr'>
-            <div class='select'><select id="dobmonth"></select></div>
-            </div>
-            <div class='inrow-33'>
-            <div class='select'><select id="dobyear"></select></div>
-            </div>
-    <div style='clear:both'></div>
-      </div>
-      <div class='myinputrow'>
-          National Insurance Number
-        <input id='txtnino' class='mytxt' type='txt' placeholder='National Insurance Number' value='<%-customer.nationalinsurance%>'/>
-
-      </div>
-      <div class='myinputrow'>
-          Driving License
-        <input id='txtdrivinglicense' placeholder='Driving License Number' class='mytxt' type='txt' value='<%-customer.drivinglicense%>'/>
-    </div>
-      <div class='myinputrow'>
-          Passport Number
-        <input id='txtpassportno' placeholder='Passport Number' class='mytxt' type='txt' value='<%-customer.passport%>'/>
-
-        </div>
-</div>
-<div class='myinputrow'><button id='btnPrev' class='sitebtn-small' style='float:left'>Previous</button><button id='btnNext' class='sitebtn-small' style='float:right'>Next</button></div>
-<div style='clear:both; margin-bottom:200px;'></div>
-<script>
-
-$(document).ready(function() {
-				$.dobPicker({
-					daySelector: '#dobday', /* Required */
-					monthSelector: '#dobmonth', /* Required */
-					yearSelector: '#dobyear', /* Required */
-        
-					minimumAge: 18, /* Optional */
-					maximumAge: 200 /* Optional */
-				});
-
-
-        <%
-          if(customer.dob){
-            console.log(customer.dob)
-            var d = new Date(customer.dob)
-           %> 
-           console.log()
-           $("#dobday").val('<%-d.getDate()%>').change();
-           $("#dobmonth").val('<%-d.getMonth()%>').change();
-           $("#dobyear").val('<%-d.getFullYear()%>').change();
-           <%
-          }%>
-
+      if(addrBuilder){
+      %>
       
-			});
-     
-var customerid = "<%-customer.id%>";
-var spinner ='<div class="sk-chase"><div class="sk-chase-dot"></div><div class="sk-chase-dot"></div><div class="sk-chase-dot"></div><div class="sk-chase-dot"></div><div class="sk-chase-dot"></div><div class="sk-chase-dot"></div></div>';
+    <div style='border:1px solid #ccc;padding:10px 20px;background:#fff;font-size:16px;'>
+      <%-addrBuilder%>
+    </div>
+    <%}%>
+    <div>
+      <div class="widget-content">
+          <table class="fit vtop infotable" style="table-layout:fixed;">
+          <tr><th style='width:60%;'>Address</th><th>Postcode</th><th>Year</th><th>Month</th></tr>
+          <%addrs.forEach(a=>{
+            var tmp = a.premises ? a.premises +', '+ a.door : a.door
+            var addrlbl = tmp+' '+ a.street+','+a.town
+            %><tr><td><%-addrlbl%></td><td><%-a.postcode%></td><td><%-a.start_year%></td><td><%-a.start_month%></td></tr><%
+          })
+          %>
+         </table>
 
+  </div>
 
-
-
-var mysectionid = 1;
-
-
-var isCompany = false;
-
-
-
-
-
-$('#btnNext').click(function(){
-  processSection(mysectionid)
-
-})
-
-
-
-function moveNext(){
-  for(var i = 0;i<list.length;i++){
-    if(i>mysectionid){
-      var idName = getCurrentStep(i+1);
-      idName = idName.replace(/\s+/g, '-').toLowerCase();
-      $('#'+idName).removeClass('visited').removeClass('current')
-    }
-  }
-  var currentStatus = document.getElementById('current-status')
-  currentStatus.style.transition = 'width 1000ms linear';
-  $('#section-'+mysectionid).hide()
-  mysectionid++;
-  if(mysectionid==2){
-    if(isCompany){
-
-    }else{
-      mysectionid++;
-    }
-  }
-  $('#section-'+mysectionid).show()
-  var idName = getCurrentStep(mysectionid);
-  idName = idName.replace(/\s+/g, '-').toLowerCase();
-  var percentage = ((mysectionid-1)*100)/(list.length-1);
-  console.log(percentage)
-  $('.current-status').width(percentage+'%')
-  var renderingWaitDelay = 1000;
-  setTimeout(function() {
-    $('.section').removeClass('current')
-  $('#'+idName).addClass('visited').addClass('current')
-      }, renderingWaitDelay);
-}
-
-
-
-
-$('#section-'+mysectionid).show()
-
-var list = [
-  {name:'Bidding Profile Type',id:1},
-  {name:'Contact Details',id:3},
-  {name:'Correspondence Address',id:4},
-  {name:'Address History',id:5},
-  {name:'Additional Information',id:6}
-]
-
-
-function getCurrentStep(id){
-  var name = ''
-list.forEach(l=>{
-  if(l.id==id){
-    name = l.name;
-  }
-})
-return name;
-}
-
-$('#btnPrev').click(function(){
-  $('#section-'+mysectionid).hide()
-  mysectionid--;
-  $('#section-'+mysectionid).show()
-  for(var i = 0;i<list.length;i++){
-    if(i>mysectionid){
-      var idName = getCurrentStep(i+1);
-      idName = idName.replace(/\s+/g, '-').toLowerCase();
-      $('#'+idName).removeClass('visited').removeClass('current')
-    }
-  }
-
-  var idName = getCurrentStep(mysectionid);
-  idName = idName.replace(/\s+/g, '-').toLowerCase();
- 
-  var percentage = ((mysectionid-1)*100)/(list.length-1);
-  console.log(percentage)
-  $('.current-status').width(percentage+'%')
-  var renderingWaitDelay = 1000;
-  setTimeout(function() {
-    $('.section').removeClass('current')
-  $('#'+idName).addClass('visited').addClass('current')
-      }, renderingWaitDelay);
-
-
-
-})
-
-function drawProgressBar(){
-  var mylist = []
-list.forEach(l=>{
-  mylist.push(l.name);
-})
-  $('.progress-bar-wrapper').html('')
-  ProgressBar.init(mylist,
-getCurrentStep(mysectionid),
-  'progress-bar-wrapper'
-);
-
-}
-drawProgressBar()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-var addrs = <%-JSON.stringify(addrs)%>
-
-loadOldAddresses(addrs)
-
-
-
-function deleteAddr(id){
-  $.post('/profile/deleteAddr',{id:id},function(data){
-    loadOldAddresses(data.addrs)   
-  },'json')
-}
-
-
-
-
-
-
-
-
-
-</script>
+</div>
+          <div style='text-align:right;'><button id='btnRun' class='sitebtn-small'>Run AML Credit Check</button></div>
+        <table class="fit vtop infotable" style="table-layout:fixed;">
+          <tbody>
+            <tr><th style='width:320px;'>Date</th><th style='width:160px;'>Report Name</th><th  style='width:60px;'>Score</th><th>Status</th><th>details</th></tr>
+            
+            <%amlchecks.forEach(a=>{
+              %><tr><td><i class='icocmp'>a.rundate</i></td><td><%-a.profilename%></td><td><%-a.score%></td><td><%-a.bandtext%></td><td><a href='/aml/details/<%-a.id%>'>details</a></td></tr><%
+            })%>
+        </table>
+      </div>

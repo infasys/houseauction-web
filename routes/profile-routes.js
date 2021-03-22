@@ -17,6 +17,15 @@ router.post('/profile/updateCompany',authCheck,async(req,res)=>{
 	res.json({status:true})
 })
 
+router.post('/profile/verifycode',authCheck,async(req,res)=>{
+	var c = req.body
+	var myuserid = req.session.userid;
+    var results = await db.verifycode(myuserid,req.body.verficationcode);
+
+	res.json(results)
+})
+
+
 router.post('/profile/updatecustomer',authCheck,async(req,res)=>{
 	var c = req.body
 	var myuserid = req.session.userid;

@@ -12,6 +12,11 @@
         font-weight: 400;
         margin-bottom:10px;
     }
+    .sectionError{
+    color:rgb(199, 0, 0);
+    font-weight: 700;
+    font-size: 14px;
+  }
 </style>
 <div style='padding:30px;'>
     <div class='info' style='font-size: 13px;'>
@@ -22,14 +27,18 @@
                 <p>Auction House would like to ensure that your process of working with us is smooth as posible. This portal allows you to do meet the prerequests to bid for a property.</p>
             </div>
         </div>
-        <div class='dash-box'>
+        <% if(!customer.isVerified){%>
+       <div class='dash-box' id='verifyboxmain'>
             <div class='dash-title'>E-Mail Verification Pending *</div>
             <div class='dash-content'  style='text-align: center;''>
+                <div id='verficationcoderequest'>
                 <p>Your account still requires verification, you should have recieved a link with a code:</p>
-                <div style='width:300px;margin:0px auto;text-align: center;'><input type='text' class='mytxt' placeholder="verification code" /><button class='sitebtn-small maxed' style=''>Verify</button></div>
+                <div style='width:300px;margin:0px auto;text-align: center;'><div id='error-code' class='sectionError'></div><input id='verficationcode' type='text' class='mytxt' placeholder="verification code" style='text-align:center;box-sizing: border-box;font-weight:700'/><button class='sitebtn-small maxed' id='btnVerify'>Verify</button></div>
                 <div style='clear:both'></div>
+                </div>
             </div>
         </div>
+        <%}%>
         <div class='dash-box'>
             <div class='dash-title'>Online Bidding Eligibility</div>
             <div class='dash-content'>
@@ -53,3 +62,29 @@
         </div>
     </div>
 </div>
+
+<script>
+$(function(){
+
+    $('#btnVerify').click(function(){
+        $('#error-code').html('')
+        var verficationcode = $('#verficationcode').val()
+        if(verficationcode.length==6){
+            $.post('/profile/verifycode',{verficationcode},function(data){
+                console.log(data)
+                if(data.status){
+
+                    $('#verficationcoderequest').html('DONE')
+                    $('#verifyboxmain').html('')
+                }else{
+                    $('#error-code').html('Looks like your the code does not match')
+                }
+            },'json')
+        }else{
+            $('#error-code').html('Looks like your missing digits')
+        }
+    })
+
+
+})
+</script>

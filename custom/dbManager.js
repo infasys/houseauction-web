@@ -141,7 +141,26 @@ changeAccountType(userid){
     })
   })
 }
+verifycode(userid,code){
+  return new Promise((resolve,reject)=>{
+    db.query('select * from customers where id = ?',[userid], function (err, result) {
+      if (err) throw err;
+      if(result[0]){
+        var user = result[0]
+        if(user.verificationcode==code){
+          db.query('update customers set isVerified = 1 where id = ?',[userid], function (err, result) {
+            if (err) throw err;
+            resolve({status:true})
 
+          })
+          
+        }else{
+          resolve({status:false})
+        }
+      }
+    })
+  })
+}
 getCompanyById(companyid){
   return new Promise((resolve,reject)=>{
     db.query('select * from company where id = ?',[companyid], function (err, result) {
