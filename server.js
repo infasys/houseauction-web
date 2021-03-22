@@ -8,6 +8,7 @@ const path = require('path');
 const {v4:uuidv4} = require('uuid');
 app.use('/css', express.static('css'))
 app.use('/images', express.static('images'))
+app.use('/js', express.static('js'))
 app.use(express.static(path.join(__dirname, 'public')));
 app.set('views', path.join(__dirname, 'views'));
 app.use(bodyParser.json());

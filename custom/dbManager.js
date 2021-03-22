@@ -78,6 +78,16 @@ updateHistoryAddr(userid,id,addr,startYear,startMonth){
     })
   })
 }
+
+deleteCustomerAddressHistory(userid,addrid){
+  return new Promise((resolve,reject)=>{
+   
+    db.query('delete from address_history where customerid=? and id = ?',[userid,addrid], function (err, result) {
+      if (err) throw err;
+      resolve(result)
+    })
+  })
+}
 getAddressHistoryByUserId(userid){
   return new Promise((resolve,reject)=>{
         db.query('select * from  address_history where customerid = ? order by start_year DESC,start_month DESC',[userid], function (err, result) {
@@ -124,13 +134,13 @@ changeAccountType(userid){
     db.query(`insert into company (name) values ('')`,(err,result)=>{
       if (err) throw err;
       var companyid = result.insertId;
-      db.query('update customers set companyid = ? where id = ?',[companyid,userid], (err,result) =>{
+      db.query('update customers set companyid = ?,iscompany=true where id = ?',[companyid,userid], (err,result) =>{
         if (err) throw err;
         resolve(result)
       })
     })
   })
-} 
+}
 
 getCompanyById(companyid){
   return new Promise((resolve,reject)=>{
@@ -151,6 +161,22 @@ getCompanyMembersByCompanyId(companyid){
 updateCustomerDetails(userid,title,forename,surname,middlename,telephone,mobile,address){
   return new Promise((resolve,reject)=>{
     db.query(`update customers set title=?,forename=?,surname=?,middlename=?,telephone=?,mobile=?,premises=?,door=?,street=?,town=?,district=?,county=?,postcode=?,country=? where id= ? `,[title,forename,surname,middlename,telephone,mobile,address.premises,address.door,address.street,address.town,address.district,address.county,address.postcode,address.country,userid], function (err, result) {
+      if (err) throw err;
+      resolve(result)
+    })
+  })
+}
+updateCustomerAddress(userid,address){
+  return new Promise((resolve,reject)=>{
+    db.query(`update customers set premises=?,door=?,street=?,town=?,district=?,county=?,postcode=?,country=? where id= ? `,[address.premises,address.door,address.street,address.town,address.district,address.county,address.postcode,address.country,userid], function (err, result) {
+      if (err) throw err;
+      resolve(result)
+    })
+  })
+}
+updateCustomerDetailsNoAddr(userid,title,forename,surname,middlename,mobile){
+  return new Promise((resolve,reject)=>{
+    db.query(`update customers set title=?,forename=?,surname=?,middlename=?,mobile=? where id= ? `,[title,forename,surname,middlename,mobile,userid], function (err, result) {
       if (err) throw err;
       resolve(result)
     })

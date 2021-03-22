@@ -59,44 +59,70 @@
         overflow: hidden;
         font-size: 15px;
     }
-    .lotitmlstimg{
+    .lotitmlstimgtd{
         width: 100%;
-padding-top: 70%;
+padding-top: 50%;
 background-repeat: no-repeat;
 background-size: cover;
 box-sizing: border-box;
 background-position: center;
     }
+.assetrow td{
+    background-color: #f8f9fa;
+    border:none;
+    border-bottom: 1px solid #dae0e3;
+    padding:0px;
+}
 
+.myTable{
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+
+}
+.imgcont{
+    box-sizing: border-box;
+    padding:20px  !important;
+}
+.assetrowmain td{
+    background-color: #fff;
+}
 </style>
-    <h4>My Saved List</h4>
-            <%
-            const formatToCurrency = amount => {
-              return "£" + amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,");
-            };
-            
-            lots.forEach(data=>{
-                %>
-                <a href='/portal/lot/details/<%-data.id%>'>
-                    <div class='lotitem'>
-                <%
-                if(data.bid_interest)
-                {
-                    %><div style='padding:10px;'> Bidding Enabled</div><%
-                }
-                %>
-               
-                <div class='lotno'>Lot <%-data.id%><%-data.bid_interest%></div>
-             <!--   <img src='data.uri' style='height:190px;' /> -->
-                <div class='lotitmlstimg' style='background-image: url(<%-data.uri%>);'></div>
-                <div class='lotPrice'>*Guide | <%-formatToCurrency(data.price)%> + (plus fees)</div>
-                <div class='lotDesc'><%-data.propname%></div>
-                <div style='clear:both'></div>
-            </div>
-            
-            </a>
-            <%})%>
-            
-        
+
+    <div style='padding:20px;'>   
+        <div id='myproperties'>
+
+        </div>
         <div style='clear:both'></div>
     </div>
+
+<script>
+    var lots = <%-JSON.stringify(lots)%>;
+    const formatToCurrency = amount => {
+        return "£" + amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,");
+    };
+    /*
+    var lotstr =''
+    lots.forEach(l=>{
+        lotstr +="<a href='/portal/lot/details/"+l.id+"''><div class='lotitem'>";
+        if(l.bid_interest){lotstr +="<div style='padding:10px;'> Bidding Enabled</div>";}
+        lotstr +="<div class='lotno'>Lot "+l.id+l.bid_interest+"</div>"
+        lotstr +="<div class='lotitmlstimg' style='background-image: url("+l.uri+");'></div><div class='lotPrice'>*Guide | "+formatToCurrency(l.price)+"+ (plus fees)</div><div class='lotDesc'>"+l.propname+"</div><div style='clear:both'></div> </div></a>"
+      
+    })
+    $('#myproperties').html(lotstr);
+*/
+
+    var lotstr ='<table class="myTable">'
+        lotstr +="<tr class='assetrowmain'>";
+        lotstr +="<td style='width:200px;'d>&nbsp;</td><td><div class='lotPric'>*Guide | + (plus fees)</div></td><td><div class='lotDesc'></div></td>"
+        lotstr +="</tr>";
+    lots.forEach(l=>{
+        lotstr +="<tr class='assetrow'>";
+        lotstr +="<td class='imgcont'><div class='lotitmlstimgtd' style='background-image: url("+l.uri+");'>&nbsp;</div></td><td><div class='lotPric'>*Guide | "+formatToCurrency(l.price)+"+ (plus fees)</div></td><td><div class='lotDesc'>"+l.propname+"</div></td>"
+        lotstr +="</tr>";
+    })
+     lotstr +='</table>'
+    console.log(lotstr)
+    $('#myproperties').append(lotstr);
+</script>

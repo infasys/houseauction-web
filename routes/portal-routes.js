@@ -168,7 +168,8 @@ router.get('/portal/profile',authCheck, async (req, res) => {
 	if(customer.companyid){
 		members = await db.getCompanyMembersByCompanyId(customer.companyid)
 	}
-	res.render('portal/profile',{customer:customer,members:members,mysel:1,menusel:3});
+	var addrs = await db.getAddressHistoryByUserId(myuserid)
+	res.render('portal/profile',{customer,addrs,members:members,mysel:1,menusel:3});
 });
 router.get('/portal/verificationdetails',authCheck, async (req, res) => {
 	var myuserid = req.session.userid;
@@ -244,16 +245,6 @@ router.post('/portal/updateHistoryAddr',authCheck, async (req, res) => {
 	var results = await db.updateHistoryAddr(myuserid,req.body.id,req.body.address,req.body.startYear,req.body.startMonth)
 	res.json({status:true})
 });
-router.post('/portal/addHistoryAddr',authCheck, async (req, res) => {
-	var myuserid = req.session.userid;
-	if(req.session.memberid){
-		myuserid = req.session.memberid;	
-	}
-	var results = await db.addHistoryAddr(myuserid,req.body.address,req.body.startYear,req.body.startMonth)
-	var myid = results.insertId
-	res.json({status:true,id:myid})
-});
-
 router.get('/portal/addCompanyMember',authCheck, async (req, res) => {
 	res.render('portal/addMember')
 });

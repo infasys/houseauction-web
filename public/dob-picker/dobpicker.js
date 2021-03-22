@@ -28,7 +28,7 @@ jQuery.extend({
 		dayElement.append("<option value=\"\">" + params.dayDefault + "</option>");
 		for (var i = 1; i <= 31; i++) {
 			var day = "" + i;
-			var value = i > 9 ? "" + i : "0" + i;
+			var value = i ;
 			dayElement.append("<option value=\"" + value + "\">" + day + "</option>");
 		}
 
@@ -50,7 +50,7 @@ jQuery.extend({
 		monthElement.append("<option value=\"\">" + params.monthDefault + "</option>");
 		for (var i = 1; i <= 12; i++) {
 			var month = months[i - 1];
-			var value = i > 9 ? "" + i : "0" + i;
+			var value = i ;
 			monthElement.append("<option value=\"" + value + "\">" + month + "</option>");
 		}
 
@@ -78,13 +78,13 @@ jQuery.extend({
 				monthElement.find("option").removeAttr("disabled");
 			} else if (day == 30) {
 				monthElement.find("option").removeAttr("disabled");
-				monthElement.find("option[value=\"02\"]").attr("disabled", "disabled");
+				monthElement.find("option[value=\"2\"]").attr("disabled", "disabled");
 			} else if(day == 31) {
 				monthElement.find("option").removeAttr("disabled");
-				monthElement.find("option[value=\"02\"]").attr("disabled", "disabled");
-				monthElement.find("option[value=\"04\"]").attr("disabled", "disabled");
-				monthElement.find("option[value=\"06\"]").attr("disabled", "disabled");
-				monthElement.find("option[value=\"09\"]").attr("disabled", "disabled");
+				monthElement.find("option[value=\"2\"]").attr("disabled", "disabled");
+				monthElement.find("option[value=\"4\"]").attr("disabled", "disabled");
+				monthElement.find("option[value=\"6\"]").attr("disabled", "disabled");
+				monthElement.find("option[value=\"9\"]").attr("disabled", "disabled");
 				monthElement.find("option[value=\"11\"]").attr("disabled", "disabled");
 			}
 
