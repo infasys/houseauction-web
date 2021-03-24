@@ -1,0 +1,71 @@
+<%- include('../partials/header.ejs')%>
+<style>
+#errormsg{
+    padding:20px;
+    font-weight: 700;
+    font-size: 16px;
+    color:darkred
+}
+</style>
+
+
+<div class='bannerimagecen2'>
+    <div class='bannerimgtint2' style='height:100%;'>
+      <div class='container'>
+          <div style='text-align:center'>
+<div class='form-page-container'>
+    <div class='form-page-inner' style='width:500px;margin: 0px auto;padding:20px;text-align: center;'>
+    <form action="/account/register" method="post">
+        <p>
+            Register
+        </p>
+    <div id='errormsg'><%-msg%></div>
+    <div class=''>
+        <input type='text' class='sitetxta'  name="firstname"  placeholder='First Name'/>
+    </div>
+    <div class=''>
+        <input type='text' class='sitetxta'  name="lastname"  placeholder='Last Name'/>
+    </div>
+    <div class=''>
+        <input type='text' class='sitetxta'  name="Email"  placeholder='E-Mail Address'/>
+    </div>
+    
+    <div class=''>
+       
+        <input type='password' class='sitetxta'  name="Password"  placeholder='Password'/>
+    </div>
+    <div class='inrow'>
+    </div>
+    <div style='clear:both;'></div>
+
+</form>	
+<div style='color:#777;text-align:left;'>
+    <p>
+        By registering you can benefit from three different services: -
+    </p>
+    <ul>
+        <li>
+            You can set up your own My Auction House list of Saved Properties that can be securely accessed anytime.
+            We will update the property content with any changes to the details and you will have a link to Download
+            Legal Documents for each of your saved properties.
+        </li>
+        <li>
+            You can register to join our Property Alerts Email Service which will send you details of all new auction
+            lots that match your personal requirements as soon as they are listed, together with price and status changes.
+        </li>
+        <li>
+            You can book to receive Auction House Newsletters and Updates to keep you informed with market reports, group
+            results, new auction rooms and other service information.
+        </li>
+    </ul>
+</div>
+<div style='text-align: right;padding:20px;box-sizing: border-box;'>
+    <button class='sitebtn-small' >Register</button>
+    </div>
+    <div style='clear:both;'></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div> 

@@ -7,7 +7,7 @@ function processSection(id){
     }else if(id==4){
         saveCustomerAddress(id)
     }else if(id==5){
-        //saveCustomerAddress(id)
+        moveNext()
     }else if(id==6){
         saveCustomerVerification(id)
     }

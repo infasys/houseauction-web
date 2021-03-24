@@ -54,12 +54,12 @@ require("fs").readdirSync(routesPath).forEach(function(file) {
   let r = require("./routes/" + file);
      app.use('/',r)
  }); 
-/*
+
  const livereload =require('livereload')
  const livereloadMiddleware  =require('connect-livereload')
  const hotServer = livereload.createServer({
   // Reload on changes to these file extensions.
-  exts: [ 'ejs', 'mustache' ],
+  exts: [ 'ejs', 'mustache','css' ],
   // Print debug info
   debug: true
 });
@@ -68,7 +68,7 @@ require("fs").readdirSync(routesPath).forEach(function(file) {
 hotServer.watch(__dirname);
 
  app.use(livereloadMiddleware());
-*/
+
 app.listen(port, () => {
     console.log(`Server started on Port ${port}`);
 });

@@ -1,0 +1,13 @@
+<%maps.forEach(m=>{%>
+    <div style='margin-top:10px;'>
+      <img src='<%-m.uri%>' style='width:100%;'/>
+    </div>
+  <%})%>
+</div>
+<div>
+  <%catalogs.forEach(m=>{%>
+    <div style='margin-top:10px;'><div style='color:#fff; background:#c60000;padding:3px 8px;font-weight:600;font-size:14px;margin-bottom:10px;'>Catalog</div>
+      <a href='<%-m.uri%>'>Catalog Download</a>
+    </div>
+  <%})%>
+</div>

@@ -1,17 +1,6 @@
 <%- include('../partials/header.ejs')%>
 
-<div class="banner-top">
-    <div class="banner-top-bg2"></div> 
-  <div class="container">
-  <div class="banner-top-left">
-    <a href="/valuation" class="valuationlink">Book your free valuation <span>→</span></a>
-  </div>
-  <div class="banner-top-right">
-    <i class="fab fa-facebook-square"></i> <i class="fab fa-twitter-square"></i> <i class="fab fa-instagram"></i>
-  </div>
-  </div>
-  <div style="clear:both;"></div>
-  </div>
+<%- include('../partials/banner-top.ejs')%>
   <div class="bannerimagecen">
     <div class="bannerimgtint">
       <div class="container">
@@ -20,7 +9,7 @@
   </div>
   <div class="valuation-box">
     <div id="postcodeenter">
-    <div class="inputWithIcon"><input class="search-input sitetxt" id="valuation-postcode" type="text" placeholder="Location, e.g. NW3"><i class="fa fa-search fa-lg fa-fw" aria-hidden="true"></i></div><button id="btnsearch" class="sitebtn-small right">Search</button>
+    <div class="inputWithIcon"><input class="search-input sitetxt" id="valuation-postcode" type="text" placeholder="Location, e.g. NW3"><i class="fa fa-search fa-lg fa-fw" aria-hidden="true"></i></div><button id="btnsearch" class="sitebtn-small right" style='margin-top:20px;'>Search</button>
     <div id="postcoderesults"></div>
     </div>
     <div id="postcodeselection"></div>
@@ -32,7 +21,7 @@
   <%- include('../partials/general-menu.ejs')%>
   <div style='clear:both;'></div>
   <div style='text-align: center;padding:80px;'>
-    <div class='signupbox'>Save properties, track auctions, get real-time status alerts Sign up<a href='/account/register'><button class='sitebtn-small'>Sign Up</button></a></div>
+    <div class='signupbox'>Save properties, track auctions, get real-time status alerts Sign up<a href='/account/register'><button class='sitebtn-small' style='margin-left:20px;'>Sign Up</button></a></div>
     </div>
     <div id='auctionlots'>
     </div>

@@ -4,14 +4,13 @@
     max-width:350px;
   }
   .uploadentrytype{
-        background: #bed7d0;
-        border: 1px solid #ccc;
+        background: rgb(223, 238, 219);
 padding: 6px 14px;
-margin-bottom: 10px;
+margin-bottom: 30px;
 font-size: 10px;;
+min-height:80px;;
     }
     .uploadres{
-      display: inline;
     }
     .uploadres>img{
       height:40px;
@@ -33,12 +32,19 @@ font-size: 10px;;
     min-width: 400px;
     font-size:16px;
 }
-
+.uploadcat{
+  background-color: #fff;
+  padding:20px;
+  box-sizing: border-box;
+  margin:20px 0px;
+}
   </style>
-<div style='padding:20px;'>
+<div style='padding:30px;'>
+  <p>Everyone hoping to bid in an auction needs to have photographic ID together with a proof of residency. If you are the successful bidder, the auctions team will take copies of your ID, and they may carry out electronic ID verification as well, in order to meet the HMRC Anti-Money Laundering Regulations. Remote bidders (Telephone/Proxy/Online) will also need to provide this ID before their bid can be accepted.</p>
+  <div class='uploadcat'>
+  <h3>Photographic ID</h3>
+  <div class='inrow-30-padr'>
 <div class='info' style='font-size: 16px;'>
-<p>Everyone hoping to bid in an auction needs to have photographic ID together with a proof of residency. If you are the successful bidder, the auctions team will take copies of your ID, and they may carry out electronic ID verification as well, in order to meet the HMRC Anti-Money Laundering Regulations. Remote bidders (Telephone/Proxy/Online) will also need to provide this ID before their bid can be accepted.</p>
-<h3>Photographic ID</h3>
 <ul>
 <li>Current signed passport</li>
 <li>EU member state identity card</li>
@@ -46,7 +52,35 @@ font-size: 10px;;
 <li>Armed Forces ID card</li>
 <li>Firearms or shotgun certificate</li>
 </ul>
-<h3>Proof of Residency</h3>
+</div>
+</div>
+<div class='inrow-70'>
+<%verificationDocTypes.forEach(v=>{
+  
+  if(v.verification_category==1){
+   %>
+ 
+   <div class='uploadentrytype'>
+     <label class='mylbl' style='width:130px;'><%-v.name%>:</label>
+     <input type="file" id="myfile-<%-v.id%>" name="myfile" class="rm-input" autocomplete='off' style='margin-right:10px;'/>
+     <input type="button" class="mybtn" value="upload" onClick="uploadFile('<%-v.id%>')" class="rm-button" />
+     <div id='uploadeddocresults-<%-v.id%>' class='uploadres'>
+       <% docs.forEach(d=>{
+         if(d.doctypeid==v.id){%>
+           <a href='<%-d.uri%>'> <img src='<%-d.uri%>' /></a>
+           <%}
+         })%>
+ 
+     </div>
+ </div>
+ <%}})%>
+ </div>
+ <div style='clear:both;'></div>
+ </div>
+ <div class='uploadcat'>
+ <h3>Proof of Residency</h3>
+ <div class='inrow-30-padr'>
+
 <ul>
 <li>Utility bill/statement – dated within past 3 months</li>
 <li>Mortgage statement from a recognised lender – dated within past 3 months</li>
@@ -55,7 +89,11 @@ font-size: 10px;;
 <li>Current UK / EU Drivers Licence (paper version)</li>
 </ul>
 </div>
-<%verificationDocTypes.forEach(v=>{%>
+<div class='inrow-70'>
+<%verificationDocTypes.forEach(v=>{
+  
+ if(v.verification_category==2){
+  %>
 
   <div class='uploadentrytype'>
     <label class='mylbl' style='width:130px;'><%-v.name%>:</label>
@@ -70,8 +108,10 @@ font-size: 10px;;
 
     </div>
 </div>
-<%})%>
-<div>
+<%}})%>
+
+</div>
+<div style='clear:both;'></div>
 </div>
 </div>
 <script>

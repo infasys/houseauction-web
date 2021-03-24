@@ -3,7 +3,6 @@
     <header>
         <link rel="stylesheet" href="/css/default.css">
         <link rel="stylesheet" href="/css/login.css">
-        <link rel="stylesheet" href="/css/guide.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/fontawesome.min.css" integrity="sha512-shT5e46zNSD6lt4dlJHb+7LoUko9QZXTGlmWWx0qjI9UhQrElRb+Q5DM7SVte9G9ZNmovz2qIaV7IWv0xQkBkw==" crossorigin="anonymous" />
@@ -73,18 +72,20 @@
                                     <li><a href="/contact-us">Contact Us</a></li>
                                 </ul>
                             </li>
-                            <li>
-                                <a href='#' id='loginlink'>Login</a>
-                            </li>
-                            <li>
-                                <a href='#' id='registrationlink'>Register</a>
-                            </li>
+                            <%if(isuser){%>
+                                <li><a href="/portal/dashboard" title="My Account">My Account</a></li>
+                            <%}else{%>
+                                <li>
+                                    <a href='/account/log-in'>Login</a>
+                                </li>
+                                <li>
+                                    <a href='/account/register'>Register</a>
+                                </li>     <%}%>
+                          
         </ul>
       </nav>
       </div>
       <div style='clear:both'></div>
     </header>
-
-<%- include('../partials/loginbox.ejs')%>
 </div>
     

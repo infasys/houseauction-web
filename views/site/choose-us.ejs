@@ -4,18 +4,37 @@
     .mypoint {
     background-repeat: no-repeat;
     display: inline-block;
-    padding: 14px 0px;
+    padding: 20px 0px;
     background-size: contain;
     background-image: url('/images/housebullet.png');
     color: #fff;
     text-align: center;
-    width: 40px;
-    height: 40px;
+    width: 60px;
+height: 70px;
     box-sizing: border-box;
     font-weight: 700;
+    vertical-align: middle;
 }
     .lititle{
         display: inline-block;
+    }
+    .bulletpoint{
+        padding:20px;
+        font-size: 20px;
+        vertical-align: middle;
+        color: #464646;
+    }
+    .bulletpoint>.header{
+        color: #ae3634;
+        padding:20px;
+        font-size: 32px;
+        font-weight: 700;
+        vertical-align: middle;
+        display: inline-block;
+    }
+    .bulletpoint>.comments{
+        margin-top: 10px;;
+        font-style: italic;
     }
 </style>
 <div class='bannerimagecen2'>
@@ -26,32 +45,9 @@
     Find out about Auction House
 </div>
 <div class='form-page'>
-    <div style='padding:40px 20px;color:#777;'>
-        <div>
-            <div><div class='mypoint' style='float:left;'>1</div><div class='lititle'>Award Winning<br/>
-                We have won numerous industry awards over the past five years, including gaining the title of Residential Auction House of the Year and Franchise/Network Group of the Year on multiple occasions, voted for by industry peers.
-
-'Being named as Best Auctioneer is a huge accolade and a recognition that Auction House has consistently out-performed others, and is seen across the industry as one of its most impressive operators.'
-            </div>
-        </div></div>
-        <div>
-            <div><div class='mypoint'>2</div><div class='lititle'>Award Winning<br/>
-                We have won numerous industry awards over the past five years, including gaining the title of Residential Auction House of the Year and Franchise/Network Group of the Year on multiple occasions, voted for by industry peers.
-
-'Being named as Best Auctioneer is a huge accolade and a recognition that Auction House has consistently out-performed others, and is seen across the industry as one of its most impressive operators.'
-            </div>
-        </div></div>
-
-        <div>
-            <div><div class='mypoint'>13</div><div class='lititle'>Award Winning<br/>
-                We have won numerous industry awards over the past five years, including gaining the title of Residential Auction House of the Year and Franchise/Network Group of the Year on multiple occasions, voted for by industry peers.
-
-'Being named as Best Auctioneer is a huge accolade and a recognition that Auction House has consistently out-performed others, and is seen across the industry as one of its most impressive operators.'
-            </div>
-        </div></div>
-
-
-
+    <div class='form-page-content' style='font-size: 16px; padding:80px;text-align: center;color:#777;'>
+    As with estate agents, there are many auction houses to choose from nationwide; however Auction House has become the most popular choice for buying and selling by auction.
+    </div>
 
 
         <div>
@@ -59,11 +55,44 @@
 
 <div style='clear:both;'></div>
 </div>
+
 </div>
-</div>
-</div>
+
 </div>
 </div>
 
-
+</div>
+</div>
+<div style='clear:both;'></div>
+<div class='mycontainer'>
+<div id='notesholder'></div>
+</div>
+<script>
+    var notes = [
+        {name:'Award Winning',text:'We have won numerous industry awards over the past five years, including gaining the title of Residential Auction House of the Year and Franchise/Network Group of the Year on multiple occasions, voted for by industry peers.', comments:'Being named as Best Auctioneer is a huge accolade and a recognition that Auction House has consistently out-performed others, and is seen across the industry as one of its most impressive operators.'},
+        {name:'Market Leaders',text:'With over 3,000 auction lots sold each year, we are the market leader for property auctioneers nationally. Our network of regional members comprises of successful auction houses across the country, many of whom are market leaders in their own areas.', comments:'Local property should always be sold in region by experts who understand auctions and know the area. They will always do a better job and get a higher price. I think that is why Auction House is so successful.'},
+        {name:'Local, Regional, National',text:'We have 40 auction rooms across the length and breadth of the UK, which allow us to market your property to local, regional and national buyers.', comments:'Local property should always be sold in region by experts who understand auctions and know the area. They will always do a better job and get a higher price. I think that is why Auction House is so successful.'},
+        {name:'Well Known, Trusted and Respected',text:'Our auction rooms are operated by experienced local businesses, who are already well known and respected in the local area. The auction teams have a wealth of knowledge and an extensive contact list of interested buyers in their region. ', comments:'Not only do they know the area and the local property market, but Auction House also has an extensive register of active buyers. These are drawn from both their auction activities and their estate agency registers. Auction House sells more auction properties to end users, and local people who improve them for their own occupation, or as a rental investment.'},
+        {name:'Higher Prices',text:'Evidence shows that properties achieve higher sale prices at professional regional auction rooms than they do at centralise metropolitan auctions. With our use of regional auctions, it will allow you to achieve the best possible price for your property.', comments:'Property sells for more money closer to home, which is why everyone appoints local estate agents. The same applies to selling by auction – choosing a regional auctioneer makes sense and you will be glad that you did.'},
+        {name:'More Successful',text:'Year after year, Auction House regularly outperforms other regional auctioneers, with our success rate often exceeding the national auctions average too.', comments:'Anyone thinking of selling by auction needs to look at success rates. The fact Auction House is amongst the most successful across the country makes them the obvious first choice in your area.'},
+        {name:'All Property Types',text:'We have specialists throughout our network of auction rooms that allow us to be able to consider any property type for inclusion in our auctions. So whether you have residential, commercial, investment or an unusual property to sell, we will be able to help.', comments:'Auction House is the only national auctioneer with a network of regional auction rooms and the only company running professional auctions in widespread locations across the country. If you want to sell your property through a local auction room, give them a call.'},
+        {name:'Area Knowledge',text:'Unlike out-of-area auction rooms, our teams inspect all properties in person and are able to offer informed guidance to selling your property, including setting guide prices and reserves.', comments:'I don\'t see how anyone can know the value of a property without visiting it, seeing its condition and its surroundings. Not only that but how can they sell it effectively without knowing the opportunities that it offers.'},
+        {name:'Strong Marketing',text:'We have developed a powerful package of marketing and promotion for properties. Using specialist local knowledge, regional promotion and national publicity, we are able to generate more interest and create a competitive bidding environment in our auction rooms. For those unable to attend the auction, we offer the facility of telephone and proxy bids, as well as online live streaming of our auctions where possible.', comments:'We like their marketing approach, we have been impressed by their newsletters and the easy access they provide to legal packs and other information. I think they are very professional and helpful to buyers.'},
+        {name:'Continual Development',text:'As market leaders for traditional auction, we have been in the prime position to continue to expand the method of selling via auction. This has led us to develop our Online Auction platform, combining eBay style internet bidding with conditional auction rules.', comments:'The modern method of Conditional Auctions’ has already proved popular in the North of England, it opens up the market for better condition mortgageable property to be sold to first time buyers, families and B2L investors.'}
+        ]
+        var comments = [
+            {text:'I was more than happy with the service I received from Auction House. The process was efficient, professional, friendly and totally stress free from start to finish.',name:'J Smith, Norwich, Norfolk'},
+            {text:'I was delighted that you assisted with the sale of my property, above the reserve price and within 4 weeks of it going in to the auction system.',name:'Kelvin Norris, Leeds'},
+            {text:'I sold my property at an Auction House auction and all I can say is WONDERFUL service! Thanks so much again for making it so easy and stress-free for me.',name:'Kate James, London'},
+            {text:'A lovely user-friendly experience! I\'m not very technical, yet found your website to be easy to use and a great source of information',name:'Emma Broome, Manchester'}
+        ]
+        var notesStr = ''
+        var i = 0;
+        notes.forEach(function(n){
+            i++
+            notesStr+="<div class='bulletpoint'><div class='mypoint' >"+i+"</div><div class='header'>"+n.name+"</div><div>"+n.text+"</div><div class='comments'>"+n.comments+"</div></div>";
+            
+        })
+        $('#notesholder').html(notesStr);
+</script>
 <%- include('../partials/footer.ejs')%>

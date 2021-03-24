@@ -9,7 +9,6 @@
         padding:20px;
         box-sizing:border-box;
         width:25%;
-        min-height: 420px;
         min-width: 150px;
     }
     </style>
@@ -32,14 +31,15 @@
 </div>
 </div>
 </div>
-<div class='container'>
+<div class='container' style='margin-top:30px;margin:30px auto 20px auto;max-width:1200px;'>
+<style>
+    .staff-title {
+        height: 40px;;
+    }
+    </style>
 <%
 var i = 0;
 members.forEach(m=>{
-    if(i==5){
-        i=0;
-        %><div style='clear:both;'></div><%
-    }
     %><div class='member'><img src="https://img.auctionhouse.uk.net/files/national/staff/<%-m.image%>" style='width:100%;' class="staff-image img-responsive image-centered" alt="Auction House"><h3 class="staff-name mt-0 mb-0"><%-m.name%></h3>
     <h4 class="staff-title mt-0"><%-m.position%></h4></div><%
 })

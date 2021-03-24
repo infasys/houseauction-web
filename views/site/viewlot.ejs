@@ -1,0 +1,192 @@
+<%- include('../partials/header.ejs')%>
+<%
+const formatToCurrency = function numberWithCommas(x) {
+  return "£" +x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}/*
+const formatToCurrency = amount => {
+  return "£" + amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,");
+};*/
+%>
+<style>
+  body{
+    background:#fff;
+  }
+</style>
+<div style='margin-top:60px;'></div>
+<div class='lottitle shadow-md' style='box-sizing: border-box;'>
+    <div class='mycontainer'>
+    <div style="display: table-cell;vertical-align: middle;height:80px; background-color:rgb(245, 245, 245);border-right:3px solid red;">
+    <div class='propertylotno' style='display:inline;vertical-align: middle;padding-right:20px;width: 500px;'>
+        Lot No. <%-property.id%></br><div style='display:inline-block;font-weight:500;font-size:16px;'>Residential - Flats/Aparatment</div></div>
+
+    
+    </div>
+    <div style="display: table-cell;vertical-align: middle;height:80px; background-color:rgb(245, 245, 245);">
+        <div class='propertyheader' style='display:inline;vertical-align: middle;padding-left:40px;'><%-property.name%></div>
+    </div>
+</div>
+</div>
+<div class='mycontainer' style='margin-top:30px;'>
+    <div class='leftpanel'>
+<div  class="slideshow-container">
+    <%
+    var i = 0;
+    var count = images.length
+    images.forEach(f=>{i++%>
+        <div class="mySlides fademe">
+            <div class="numbertext"><%-i%> / <%-count%></div>
+            <img src="<%-f.uri%>" class='photoimg'>
+          <!--  <div class="text">Caption Text</div>-->
+          </div>
+    <%})%>
+    
+    <a class="prev" onclick="plusSlides(-1)">&larr;</a>
+    <a class="next" onclick="plusSlides(1)">&rarr;</a>
+    <div class='mydots' style="text-align:center">
+        <%
+        var i =0;
+        images.forEach(f=>{ i++;%>
+        <span class="dot" onclick="currentSlide(<%-i%>)"></span>
+        <%})%>
+      </div>
+</div>
+<div class='imglist'>
+  <div class='imglistinside'  id='imgList'>
+  <%
+  var i =0;
+  images.forEach(f=>{i++;%>
+      <div style='background-image:url(<%-f.uri%>);' class='myimglistitm' onclick="currentSlide(<%-i%>)"></div>
+  
+  <%})%>
+  </div>
+  <a class="nextScroll" onclick="sideScroll('right')">&#10095;</a>
+  <a class="prevScroll" onclick="sideScroll('left')">&#10094;</a>
+   
+</div>
+ 
+</div>
+<div class='rightpanel'>    
+    
+    <div class="propertymainprice" style='text-align:right;'><span style='font-weight:500;font-size: 22px;'>*Guide Price</span>&nbsp;<%-formatToCurrency(property.price)%></div>
+   
+    <div class='propertytitle'><%-property.header%></div>
+<div class='catdesc'><%-property.description%></div>
+<div>
+<%
+    var i =0;
+    details.forEach(f=>{
+        if(f.details){
+          var mytmpclass='catgeneral'
+          if(f.title=='Additional Fees'){
+            mytmpclass='cathighlight'
+          }
+          %>
+            <div class='<%-mytmpclass%>'><div class='cattitle'><%-f.title%></div><div class='catdesc'><%-f.details%></div></div>
+            <%  }
+    })%>
+ 
+</div>
+
+
+<div style='height:300px;width:100%;' id="map"></div>
+  
+</div>
+<div style='clear:both;margin-bottom:200px;'></div>
+</div>
+<script>
+
+
+
+  var propertyid = "<%-property.id%>";
+var slideIndex = 1;
+showSlides(slideIndex);
+
+// Next/previous controls
+function plusSlides(n) {
+  showSlides(slideIndex += n);
+}
+
+// Thumbnail image controls
+function currentSlide(n) {
+  showSlides(slideIndex = n);
+}
+
+function showSlides(n) {
+  var i;
+  var slides = document.getElementsByClassName("mySlides");
+  var dots = document.getElementsByClassName("dot");
+  if (n > slides.length) {slideIndex = 1}
+  if (n < 1) {slideIndex = slides.length}
+  for (i = 0; i < slides.length; i++) {
+      slides[i].style.display = "none";
+  }
+  for (i = 0; i < dots.length; i++) {
+      dots[i].className = dots[i].className.replace(" active", "");
+  }
+  slides[slideIndex-1].style.display = "block";
+  dots[slideIndex-1].className += " active";
+}
+function sideScroll(direction){
+  var element = document.getElementById('imgList')
+  var step = 10;
+  var distance =301;
+  var speed = 3;
+    scrollAmount = 0;
+    console.log(direction)
+    var slideTimer = setInterval(function(){
+        if(direction == 'left'){
+            element.scrollLeft -= step;
+        } else {
+            element.scrollLeft += step;
+        }
+        scrollAmount += step;
+        if(scrollAmount >= distance){
+          console.log('DONE');
+            window.clearInterval(slideTimer);
+        }
+    }, speed);
+}
+
+$('#btnAddFav').click(function(){
+  $.post('/addtofav',{propertyid:propertyid},function(data){
+    console.log(data)
+    location.reload();
+  },'json')
+})
+$('#btnRemoveFav').click(function(){
+  $.post('/removefromfav',{propertyid:propertyid},function(data){
+    console.log(data)
+    location.reload();
+  },'json')
+})
+$('#btnBidDeposit').click(function(){
+  $.post('/addBidDeposit',{propertyid:propertyid},function(data){
+    console.log(data)
+    location.reload();
+  },'json')
+})
+$('#btnRemoveBidDeposit').click(function(){
+  $.post('/removeBidDeposit',{propertyid:propertyid},function(data){
+    console.log(data)
+    location.reload();
+  },'json')
+})
+</script>
+<%console.log(property)%>
+<script>
+  let map;
+
+function initMap() {
+  map = new google.maps.Map(document.getElementById("map"), {
+    center: { lat: <%-property.latitude%>, lng: <%-property.longitude%>},
+    zoom: 16,
+  });
+}
+
+</script>
+
+<script async
+    src="https://maps.googleapis.com/maps/api/js?key=<%-apikey%>&callback=initMap">
+</script>
+
+<%- include('../partials/footer.ejs')%>

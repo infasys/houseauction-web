@@ -3,17 +3,29 @@
 <link href="/progress-bar-master/example/css/main.css" rel="stylesheet" />
 <script src="/progress-bar-master/progress-bar.js"></script>
 <script src="/js/profile_save.js"></script>
+<script src="/js/profile_edit.js"></script>
 <script src="/js/postcode_search.js" defer></script>
 <style>
-  .menutitem{
-
-  }
   .sectionError{
     color:rgb(199, 0, 0);
     font-weight: 700;
     font-size: 14px;
     min-height: 20px;;
   }
+  .sitebtn-small2 {
+    color: #fff;
+    font-family: "Open Sans", sans-serif;
+    background: #1680cd;
+    padding: 8px 20px;
+    font-size: 12px;
+    font-weight: 700;
+    border-radius: 3px;
+    box-shadow: none;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    min-width: 80px;
+}
 </style>
 <div style=' width:800px;margin:30px auto 10px auto;'>
   <div class="progress-bar-wrapper"></div>
@@ -287,7 +299,7 @@
 
         </div>
 </div>
-<div class='myinputrow'><button id='btnPrev' class='sitebtn-small' style='float:left'>Previous</button><button id='btnNext' class='sitebtn-small' style='float:right'>Next</button></div>
+<div class='myinputrow'><button id='btnPrev' class='sitebtn-small2' style='float:left'>Previous</button><button id='btnNext' class='sitebtn-small2' style='float:right'>Next</button></div>
 <div style='clear:both; margin-bottom:200px;'></div>
 <script>
 
@@ -323,53 +335,14 @@ var spinner ='<div class="sk-chase"><div class="sk-chase-dot"></div><div class="
 
 
 
-var mysectionid = 1;
-
-
 var isCompany = false;
 
 
 
 
 
-$('#btnNext').click(function(){
-  processSection(mysectionid)
-
-})
 
 
-
-function moveNext(){
-  for(var i = 0;i<list.length;i++){
-    if(i>mysectionid){
-      var idName = getCurrentStep(i+1);
-      idName = idName.replace(/\s+/g, '-').toLowerCase();
-      $('#'+idName).removeClass('visited').removeClass('current')
-    }
-  }
-  var currentStatus = document.getElementById('current-status')
-  currentStatus.style.transition = 'width 1000ms linear';
-  $('#section-'+mysectionid).hide()
-  mysectionid++;
-  if(mysectionid==2){
-    if(isCompany){
-
-    }else{
-      mysectionid++;
-    }
-  }
-  $('#section-'+mysectionid).show()
-  var idName = getCurrentStep(mysectionid);
-  idName = idName.replace(/\s+/g, '-').toLowerCase();
-  var percentage = ((mysectionid-1)*100)/(list.length-1);
-  console.log(percentage)
-  $('.current-status').width(percentage+'%')
-  var renderingWaitDelay = 1000;
-  setTimeout(function() {
-    $('.section').removeClass('current')
-  $('#'+idName).addClass('visited').addClass('current')
-      }, renderingWaitDelay);
-}
 
 
 

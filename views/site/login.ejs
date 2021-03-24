@@ -5,17 +5,18 @@
     font-weight: 700;
     color:darkred;
 }
+body{
+    background-color: #fff;
+    overflow: hidden;
+}
 </style>
 
-
 <div class='bannerimagecen2'>
-    <div class='bannerimgtint2'>
+    <div class='bannerimgtint2' style='height:100%;'>
       <div class='container'>
           <div style='text-align:center'>
-<div class='formtitle'>
-    Log In
-</div>
-<div class='form-page'>
+<div class='form-page-container'>
+    <div class='form-page-inner' style='width:500px;margin: 0px auto;padding:20px;text-align: center;'>
   <div style='padding:20px;box-sizing: border-box;color:#777;'>
     <p>
         Login
@@ -27,14 +28,14 @@
     %>
 </div>
     <form action="/account/authenticate" method="post">
-    <div class='inrow-50'>
+    <div class=''>
         <input type='text' class='sitetxta'  name="Email"  placeholder='E-Mail Address'/>
     </div>
-    <div class='inrow-50'>
+    <div class=''>
         <input type='password' class='sitetxta'  name="Password"  placeholder='Password'/>
     </div>
     <div style='clear:both;'></div>
-     <div style='text-align: right;padding:20px;box-sizing: border-box;'>
+     <div style='text-align: right;'>
     <button class='sitebtn-small' >Sign In</button>
     </div>
     <div class='form-anchor' style='padding:20px;box-sizing: border-box;'><a href="/account/forgotten-password" title="Forgotten login details.">Forgotten Password?</a></div>
@@ -45,11 +46,5 @@
 </div>
 </div>
 </div>
+</div>
 </div> 
-
-
-
-<%- include('../partials/general-menu.ejs')%>
-
-
-<%- include('../partials/footer.ejs')%>
