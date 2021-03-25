@@ -1,0 +1,68 @@
+<style>
+    .inrow-25f{
+        padding:5px;
+    }
+</style>
+<div class='contactwrapper' style='padding:5px;box-sizing: border-box; margin:20px 10px;'>
+    <div class='contactbox' style='width:100%;box-sizing: border-box;'>
+        <div style='font-size: 22px;color:#000;font-weight: 700;'>Get in Touch</div>
+        <div id='formstatus'></div>
+    <div class='inrowf'>
+        <div class='inrow-25f'>
+            <input type='text' class='sitetxta' id='firstname' placeholder='First name'/>
+        </div>
+        <div class='inrow-25f'>
+            <input type='text' class='sitetxta' id='lastname' placeholder='Last name'/>
+        </div>
+    </div>
+    <div class='inrowf'>
+        <div class='inrow-25f'>
+            <input type='text' class='sitetxta' id='emailaddr' placeholder='Email address'/>
+        </div>
+        <div class='inrow-25f'>
+            <input type='text' class='sitetxta' id='telephone' placeholder='Telephone'/>
+        </div>
+    </div>
+    <div class='inrowf'>
+        <div class='inrow-25f'>
+            <textarea  class='sitetxta' id='queryaddinfo' placeholder="Enquiry "></textarea>
+        </div>
+    </div>
+    <div>
+        <button id="btnSubmitQueryContact" class="sitebtn-small" style="float:right;margin-right:20px;">Submit Query</button>
+    </div>
+    </div>
+    </div>
+
+
+<script>
+    $('#btnSubmitQueryContact').click(function(){
+        var error = 0;
+        var errormsgs = []
+        var firstname = $('#firstname').val()
+        if(!firstname){error++;errormsgs.push('First Name is Required*')}
+        var lastname = $('#lastname').val()
+        if(!lastname){error++;errormsgs.push('Last Name is Required*')}
+        var email = $('#emailaddr').val()
+        if(!email){error++;errormsgs.push('E-Mail address is Required*')}
+        var telephone = $('#telephone').val()
+        if(!telephone){error++;errormsgs.push('Telephone Number is Required*')}
+        var info =  $('#queryaddinfo').val()
+
+        if(error){
+            var msg = '<div class="inrow" style="padding:20px 40px;">';
+            errormsgs.forEach(m=>{
+                msg+='<div class="errorstr">'+m+'</div>'
+            })
+            msg+= '</div>'
+            $('#formstatus').html(msg)
+        }else{
+            $.post('/savequery',{firstname,lastname,email,telephone,info},function(data){
+                if(data.status){
+                    window.location = '/thank-you'
+                }
+            },'json')
+        }
+        //window.location = '/thank-you'
+    })
+</script>

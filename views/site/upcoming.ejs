@@ -123,9 +123,8 @@ weekday[6] = "Sat";
       <div class='container'>
           <div style='text-align:center'>
 <div class='formtitle'>
-    Log In
 </div>
-<div class='form-page'>
+<div class='form-page' style='margin-bottom:80px;'>
   <div style='padding:20px;box-sizing: border-box;color:#777;'>
     <h1>
         Future Property Auctions across the UK
@@ -186,6 +185,10 @@ line-height: 1.12;
         height:34px;margin-right:5px;
         vertical-align: middle;
     }
+    .lotviewlink{
+      color:#777;
+      font-weight: 700;
+    }
 </style>
 <div class='mycontainer'>
             <table class='simpleTable' style='margin-top:80px;margin-bottom: 200px;'>
@@ -196,7 +199,7 @@ line-height: 1.12;
                 auctions.forEach(data=>{%>
               
                   
-                  <tr class='propertyrow' id='auction-<%-data.id%>'><td><%-gableimg%><span style='font-weight:500'><%-data.name%></span></td><td>Auctioneer</td><td>Venue</td><td><%-calendar%><%-strftime('%A,  %e %b %Y',data.datetime)%></td><td><%-strftime('%l:%M%P',data.datetime)%></td><td><a href="/online/auction/<%-data.id%>" class="lot-icon-16 view-lots-icon-16">View Lots</a></td></tr>
+                  <tr class='propertyrow' id='auction-<%-data.id%>'><td><%-gableimg%><span style='font-weight:500'><%-data.name%></span></td><td>Auctioneer</td><td>Venue</td><td><%-calendar%><%-strftime('%A,  %e %b %Y',data.datetime)%></td><td><%-strftime('%l:%M%P',data.datetime)%></td><td><a href="/online/auction/<%-data.id%>" class="lotviewlink">View Lots <span>→</span></a></td></tr>
               
                 <%})%>
             </table>
