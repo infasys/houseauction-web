@@ -95,6 +95,15 @@ router.get('/auction-lots',async (req, res) => {
       })
 	res.render('site/auction-lots',{lots,msg:''});
 });
+router.get('/online/auction/:id',async (req, res) => {
+
+    var lots = await db.getPropertiesByAuctionId(req.params.id);
+    lots.forEach(p=>{
+        if(!p.img)p.img ='abc/b2c63fa2-dd22-498d-a5f9-162a2523a58b.jpg'
+        p.uri = azBlob.generateSasToken(p.img).uri;
+      })
+	res.render('site/auction-id-lot',{lots,msg:''});
+});
 router.get('/auction-lots-list',async (req, res) => {
     var lots = await db.getProperties();
     lots.forEach(p=>{

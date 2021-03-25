@@ -4,17 +4,22 @@
 <div class='container'>
 <div style='padding:20px 0px;'>
    
-<div class='auctionresultsmenu'>A few auction items <a href='/auction-lots'>see more...</a></div>
 <div class="maindivider" ></div>
+<div class='lotlistwrapper'>
+  <style>
+    .lotitem{
+      min-width: 400px;
+    }
+    </style>
 <%
 const formatToCurrency = amount => {
   return "£" + amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,");
 };
 
-lots.forEach(data=>{%><div class='lotitem'>
+lots.forEach(data=>{%><div class='lotitem '>  
     <div class='lotno'>Lot No.<%-data.id%></div>
  <!--   <img src='data.uri' style='height:190px;' /> -->
-    <div class='lotitmlstimg' style='background-image: url(<%-data.uri%>);'></div>
+    <div class='lotitmlstimg' style='position:relative;background-image: url(<%-data.uri%>);'><div class="ribbon ribbon-top-right"><span>Sold</span></div></div>
    
     <div class='lotDesc'><%-data.propname%></div>
     <div class='lotPrice'>Guide Price <%-formatToCurrency(data.price)%> + fees</div>
@@ -25,5 +30,5 @@ lots.forEach(data=>{%><div class='lotitem'>
 <div class="maindivider" ></div>
 </div>
 </div>
-
+</div>
 <%- include('../partials/footer.ejs')%>

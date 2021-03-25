@@ -1,0 +1,88 @@
+<%- include('../partials/header.ejs')%>
+<%- include('../partials/banner-top.ejs')%>
+<style>
+.lotitmlstimg-list{
+    float:left;
+    height:120px;
+    width:200px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin-right:10px;
+}
+.lotno-list{
+    float:right;
+    font-family: "Roboto", sans-serif;
+    font-weight: 700;
+    color: #000;
+    font-weight: 900;
+    font-size: 18px;
+    padding: 20px;
+}
+
+.lotDesc-list{
+    float:left;
+    font-size:20px;
+    padding:10px;
+}
+.lotitem-list{
+
+    background:#f9f9f9;
+    border-bottom: 1px solid #ddd;;
+}
+.lotPrice{
+    padding:10px;
+}
+.lotlink{
+    padding:10px;
+}
+.lotitem-list:hover{
+    background:#eceaea;
+}
+.mitem{
+    float:right;
+    padding:20px;
+    color:#777;
+    font-size: 20px;;
+  }
+  .mitem a{
+    color:#777;
+    font-size: 18px;
+    font-weight: 500;
+  }
+  .mitem i{
+    display: inline-block;
+    padding-right:10px;
+    font-size: 24px;
+    color: #b82b35;
+  }
+</style>
+<div class="maindivider" style='margin-top:60px;' ></div>
+<div class='mycontainer'>
+   
+    <div class="maindivider" ></div>
+    <div style='clear:both;'></div>
+<%
+const formatToCurrency = amount => {
+  return "£" + amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,");
+};
+
+lots.forEach(data=>{%>
+    <div class='lotitem-list'>
+ 
+    <div class='lotitmlstimg-list' style='background-image: url(<%-data.uri%>);'></div>
+   <div style='float:left;padding:5px 20px;'>
+ 
+    <div class='lotDesc-list'><%-data.propname%></div>
+    <div class='lotPrice'>Guide Price <%-formatToCurrency(data.price)%> + fees</div>
+    <a class='lotlink' href='/lot/details/<%-data.id%>'>Full details  	&#8594; </a>
+    </div>
+
+    <div class='lotno-list'>Lot No.<%-data.id%></div>
+    <div style='clear:both'></div>
+</div>
+
+<%})%>
+
+</div>
+<div style='padding:100px;'></div>
+<%- include('../partials/footer.ejs')%>

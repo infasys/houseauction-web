@@ -455,6 +455,16 @@ getProperties(){
     //db.end();
   })
 }
+getPropertiesByAuctionId(auctionid){
+  return new Promise((resolve,reject)=>{
+  //  db = mysql.createConnection(params);
+    db.query('SELECT  p.*,auctions.* from auctions  left JOIN  auction_properties AS ap ON ap.auctionid = auctions.id left JOIN   (select p.id,p.name as propname,p.town AS ptown,CONCAT(s.forename,", ",s.surname) as sellername,i.img,p.price,p.town,p.county from properties p left join (select propertyid,max(filename) as img from propertyimages group by propertyid) i on i.propertyid = p.id left join customers s on s.id = p.clientid) AS p ON p.id = ap.propertyid where auctions.id =?    ',[auctionid], function (err, result) {
+      if (err) throw err;
+      resolve(result)
+    })
+    //db.end();
+  })
+}
 getPropertiesLimit8(){
   return new Promise((resolve,reject)=>{
   //  db = mysql.createConnection(params);
