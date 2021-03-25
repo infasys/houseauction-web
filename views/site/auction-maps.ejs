@@ -11,13 +11,32 @@
 }
 .lotno-list{
     float:right;
+    font-family: "Roboto", sans-serif;
+    font-weight: 700;
+    color: #000;
+    font-weight: 900;
+    font-size: 18px;
+    padding: 20px;
 }
+
 .lotDesc-list{
     float:left;
     font-size:20px;
+    padding:10px;
 }
 .lotitem-list{
-    padding:20px;
+
+    background:#f9f9f9;
+    border-bottom: 1px solid #ddd;;
+}
+.lotPrice{
+    padding:10px;
+}
+.lotlink{
+    padding:10px;
+}
+.lotitem-list:hover{
+    background:#eceaea;
 }
 .mitem{
     float:right;
@@ -27,16 +46,18 @@
   }
   .mitem a{
     color:#777;
-    font-size: 20px;;
+    font-size: 18px;
+    font-weight: 500;
   }
   .mitem i{
     display: inline-block;
     padding-right:10px;
+    font-size: 24px;
+    color: #b82b35;
   }
 </style>
-<div class="maindivider" ></div>
-<div class='container'>
-<div style='padding:20px 0px;'>
+<div class="maindivider" style='margin-top:60px;' ></div>
+<div class='mycontainer'>
    
     <div class='auctionresultsmenu'><div style='float:right;'><div class='mitem'><a href='/auction-lots'><i class="fa fa-th-large"></i>&nbsp;&nbsp;&nbsp;Grid View</a></div><div class='mitem'> <a href='/auction-maps'><i class="fa fa-map-marker-alt"></i>Map View</a></div><div class='mitem'><a href='/auction-lots-list'><i class="fa fa-list"></i>&nbsp;&nbsp;&nbsp;List View</a></div><div style='clear:both;'></div></div></div>
     <div class="maindivider" ></div>
@@ -62,8 +83,7 @@ lots.forEach(data=>{%>
 </div>
 
 <%})%>
-<div style='clear:both;'></div>
-<div class="maindivider" ></div>
+
 </div>
-</div>
+<div style='padding:100px;'></div>
 <%- include('../partials/footer.ejs')%>
