@@ -283,6 +283,8 @@ footer {
   display: block;
   box-sizing: border-box;
   text-align: center;
+  font-size: 24px;
+  font-weight: 700;
 }
 
 .tab [type=radio] {
