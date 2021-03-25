@@ -24,6 +24,15 @@ class dbManager{
     })
   }
 
+
+  getRooms(){
+    return new Promise((resolve,reject)=>{
+      db.query('select * from auction_rooms', function (err, result) {
+        if (err) throw err;
+        resolve(result)
+      })
+    })
+  }
   getFAQs(){
     return new Promise((resolve,reject)=>{
       db.query('select * from faq', function (err, result) {

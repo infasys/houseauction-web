@@ -137,7 +137,8 @@ router.post('/removefromfav',async (req,res)=>{
 })
 
 router.get('/auction-rooms',async (req,res)=>{
-    res.render('site/auction-rooms');
+    var rooms = await db.getRooms()
+    res.render('site/auction-rooms',{rooms});
 })
 router.get('/auction-online',async (req,res)=>{
     res.render('site/auction-online');
