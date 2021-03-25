@@ -1,6 +1,9 @@
 
 @import 'variables';
 
+.nav{
+  font-size: 16px;
+}
   .nav>li {
     color: #fff;
     display: block;
@@ -38,6 +41,7 @@ ul.nav> li ul {
     min-width: 120px;
     box-sizing: border-box;
     min-width: 200px;
+    font-size: 16px;
   }
   ul li:hover > ul,
   ul li:focus-within > ul,
@@ -60,7 +64,7 @@ ul.nav> li ul {
     color:rgb(157, 157, 157);
   }
   ul.nav> li ul li:hover>a{
-    color:#fff;
+    color:#000;
   }
   .nav>li.hightlight {
     background: #b82b35;

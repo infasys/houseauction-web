@@ -3,6 +3,10 @@ footer{
     background:$bglight;
     color: #575757;
 }
+.lotlistwrapper{
+    display: flex;
+    flex-wrap: wrap;
+}
 .lottitle{
     height:60px;
     padding:10px;
@@ -15,11 +19,12 @@ width: 100%;
     box-shadow: 0 2px 4px -1px rgba(0,0,0,.1),0 2px 4px -1px rgba(0,0,0,.06);
     }
 .lotitem{
-    float:left;
+    flex-wrap: wrap;
     overflow: hidden;
-    width:20%;
+    flex: 0 0 20%;
     padding:20px;
     box-sizing: border-box;
+    vertical-align: top;
 }
 
 .propertymainprice{
@@ -66,8 +71,9 @@ width: 100%;
     overflow: hidden;
     font-size: 13px;
     font-weight: 500;
-    height:40px;
+    height:60px;
     overflow: hidden;
+    vertical-align: middle;
 }
 .lotlink{
     display: block;

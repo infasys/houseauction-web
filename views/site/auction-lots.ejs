@@ -1,11 +1,27 @@
 <%- include('../partials/header.ejs')%>
 <%- include('../partials/banner-top.ejs')%>
-<div class="maindivider" ></div>
+<style>
+  .mitem{
+    float:right;
+    padding:20px;
+    color:#777;
+    font-size: 20px;;
+  }
+  .mitem a{
+    color:#777;
+    font-size: 20px;;
+  }
+  .mitem i{
+    display: inline-block;
+    padding-right:10px;
+  }
+  </style>
 <div class='container'>
 <div style='padding:20px 0px;'>
    
-<div class='auctionresultsmenu'>A few auction items <a href='/auction-lots'>see more...</a></div>
-<div class="maindivider" ></div>
+  <div class='auctionresultsmenu'><div style='float:right;'><div class='mitem'><a href='/auction-lots'><i class="fa fa-th-large"></i>&nbsp;&nbsp;&nbsp;Grid View</a></div><div class='mitem'> <a href='/auction-maps'><i class="fa fa-map-marker-alt"></i>Map View</a></div><div class='mitem'><a href='/auction-lots-list'><i class="fa fa-list"></i>&nbsp;&nbsp;&nbsp;List View</a></div><div style='clear:both;'></div></div></div>
+  <div style='clear:both;'></div>
+<div class='lotlistwrapper'>
 <%
 const formatToCurrency = amount => {
   return "£" + amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,");
@@ -21,8 +37,7 @@ lots.forEach(data=>{%><div class='lotitem'>
     <a class='lotlink' href='/lot/details/<%-data.id%>'>Full details  &nbsp;&nbsp;&nbsp;	&#8594; </a>
     <div style='clear:both'></div>
 </div><%})%>
-<div style='clear:both;'></div>
-<div class="maindivider" ></div>
+</div>
 </div>
 </div>
 

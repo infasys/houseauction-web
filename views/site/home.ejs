@@ -1,5 +1,4 @@
 <%- include('../partials/header.ejs')%>
-
 <%- include('../partials/banner-top.ejs')%>
   <div class="bannerimagecen">
     <div class="bannerimgtint">
@@ -112,22 +111,7 @@
             console.log(data)
             handlepostcodereposne(data)
         })
-   /*     postcodetxt = postcodeval.replace(/\s/g, "");
-                    s
-                    lastpostcodeteststr = postcodetxt
-                    var finished = false;
-                var mypostcodeerrmsg = '';
-                var mypostcodedata = {}
-                var timerdone = false
-                    if(finished) { handlepostcodereposne(mypostcodedata,letter,mypostcodeerrmsg); }
-                $.post('/postcode',{postcode:postcodetxt},function(data){
-                    
-                    postcodewaiting = false;
-                    finished = true;
-                   mypostcodedata=data
-                   if(timerdone){handlepostcodereposne(mypostcodedata,letter)}
-                },'json').fail(function(error) {finished = true; if(timerdone){ handlepostcodereposne(undefined,letter,'ERROR UNKNOWN')}  });
-            }*/
 }
 </script>
+<%- include('../partials/contact-box.ejs')%>
 <%- include('../partials/footer.ejs')%>

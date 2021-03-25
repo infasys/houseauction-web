@@ -45,7 +45,7 @@ height: 70px;
     Find out about Auction House
 </div>
 <div class='form-page'>
-    <div class='form-page-content' style='font-size: 16px; padding:80px;text-align: center;color:#777;'>
+    <div class='form-page-content' style='font-size: 18px; padding:80px;text-align: center;color:#777;'>
     As with estate agents, there are many auction houses to choose from nationwide; however Auction House has become the most popular choice for buying and selling by auction.
     </div>
 
@@ -90,9 +90,10 @@ height: 70px;
         var i = 0;
         notes.forEach(function(n){
             i++
-            notesStr+="<div class='bulletpoint'><div class='mypoint' >"+i+"</div><div class='header'>"+n.name+"</div><div>"+n.text+"</div><div class='comments'>"+n.comments+"</div></div>";
+            notesStr+="<div class='bulletpoint'><div class='mypoint' >"+i+"</div><div class='header'>"+n.name+"</div><div>"+n.text+"</div><div class='comments'>"+'"'+n.comments+'"'+"</div></div>";
             
         })
         $('#notesholder').html(notesStr);
 </script>
+<%- include('../partials/contact-box.ejs')%>
 <%- include('../partials/footer.ejs')%>

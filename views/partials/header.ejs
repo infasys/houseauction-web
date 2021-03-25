@@ -10,10 +10,31 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/solid.min.css" integrity="sha512-xIEmv/u9DeZZRfvRS06QVP2C97Hs5i0ePXDooLa5ZPla3jOgPT/w6CzoSMPuRiumP7A/xhnUBxRmgWWwU26ZeQ==" crossorigin="anonymous" />
 
       <div class="container">
-    
-        <div style='float:left;'><a href="#" class="logo"><img style='position: absolute;;height:34px;;top:5px;' class="ah-logo-footer" alt="Auction House Logo" src="/images/logo3.png" /><span style='display:inline-block;padding-left:50px;'>Auction House</span></a></div>
-      <nav>
-        <ul class='nav'>
+          <style>
+              .mywrapper{
+                  display: flex;
+              }
+              .flex1{
+                  display: flex;
+  order: 1;
+  flex: 0 1 1;
+  align-self: flex-end;
+  flex-grow: 1;
+  
+} .flex2{
+                  display: flex;
+  order: 1;
+  flex: 0 1 1;
+  align-self: flex-end;
+  flex-grow: 1;
+  justify-content: flex-end;
+  
+}
+              </style>
+    <div class='mywrapper'>
+        <div class='flex1'><a href="#" class="logo"><img style='height:65px;;top:5px;vertical-align:middle' class="ah-logo-footer" alt="Auction House Logo" src="/images/logo.png" /><span style='display:inline-block;padding-left:50px;'>Auction House</span></a></div>
+        <div class='flex2'>  <nav class='flex-item-bottom'>
+        <ul class='nav' style='align-self: flex-end;'>
           <li><a href='/' >Home</a></li>
           <li class="dropdown">
                                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">Auctions<span class="caret"></span></a>
@@ -84,8 +105,9 @@
                           
         </ul>
       </nav>
+    </div>
       </div>
+    </div>
       <div style='clear:both'></div>
     </header>
 </div>
-    

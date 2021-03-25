@@ -11,6 +11,10 @@
     font-family: 'Roboto Slab', serif;
 
 */
+.nav {
+  font-size: 16px;
+}
+
 .nav > li {
   color: #fff;
   display: block;
@@ -51,6 +55,7 @@ ul.nav > li ul li > a {
   min-width: 120px;
   box-sizing: border-box;
   min-width: 200px;
+  font-size: 16px;
 }
 
 ul li:hover > ul,
@@ -76,7 +81,7 @@ ul.nav > li ul li a {
 }
 
 ul.nav > li ul li:hover > a {
-  color: #fff;
+  color: #000;
 }
 
 .nav > li.hightlight {
@@ -332,6 +337,9 @@ label.faq-question {
   transition: ease 0.5s;
   background-color: #fff;
   text-align: left;
+  font-size: 20px;
+  font-weight: 500;
+  margin-top: 30px;
 }
 
 input + label + .faq-answer {
@@ -349,7 +357,7 @@ input:checked + label.faq-question::before {
 
 .faq-answer {
   color: #777;
-  font-size: 12px;
+  font-size: 16px;
   padding: 20px;
 }
 
@@ -374,6 +382,11 @@ footer {
   color: #575757;
 }
 
+.lotlistwrapper {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .lottitle {
   height: 60px;
   padding: 10px;
@@ -388,11 +401,12 @@ footer {
 }
 
 .lotitem {
-  float: left;
+  flex-wrap: wrap;
   overflow: hidden;
-  width: 20%;
+  flex: 0 0 20%;
   padding: 20px;
   box-sizing: border-box;
+  vertical-align: top;
 }
 
 .propertymainprice {
@@ -442,8 +456,9 @@ footer {
   overflow: hidden;
   font-size: 13px;
   font-weight: 500;
-  height: 40px;
+  height: 60px;
   overflow: hidden;
+  vertical-align: middle;
 }
 
 .lotlink {
@@ -742,6 +757,37 @@ padding-top: 32.5%;
 .catdesc {
   margin-top: 4px;
   font-size: 15px;
+}
+
+.contactwrapper {
+  background: #f2f2f2;
+  padding: 20px 0px;
+  box-sizing: border-box;
+}
+
+.contactbox {
+  width: 80%;
+  margin: 20px auto;
+  padding: 20px;
+}
+
+.inrowf {
+  margin: 5px auto;
+  display: flex;
+  flex-direction: row;
+  box-sizing: border-box;
+  padding: 0px;
+}
+
+.inrow-25f {
+  flex: 1;
+  padding: 5px 20px;
+  box-sizing: border-box;
+}
+
+.outrowf {
+  display: flex;
+  flex-direction: column;
 }
 
 /*

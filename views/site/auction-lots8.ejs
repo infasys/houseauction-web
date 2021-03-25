@@ -1,9 +1,9 @@
-<div class="maindivider" ></div>
+
 <div class='container'>
 <div style='padding:20px 0px;'>
    
 <div class='auctionresultsmenu'>A few auction items <a href='/auction-lots'>see more...</a></div>
-<div class="maindivider" ></div>
+<div class='lotlistwrapper'>
 <%
 const formatToCurrency = amount => {
   return "£" + amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,");
@@ -19,7 +19,6 @@ lots.forEach(data=>{%><div class='lotitem'>
     <a class='lotlink' href='/lot/details/<%-data.id%>'>Full details  &nbsp;&nbsp;&nbsp;	&#8594; </a>
     <div style='clear:both'></div>
 </div><%})%>
-<div style='clear:both;'></div>
-<div class="maindivider" ></div>
+</div>
 </div>
 </div>

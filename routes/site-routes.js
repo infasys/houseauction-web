@@ -25,13 +25,22 @@ router.get('/guide',async(req,res)=>{
     var faqs = await db.getFAQs();
     res.render('site/guide.ejs',{faqs})
 })
+
+router.get('/contact',async(req,res)=>{
+    console.log(req.query)
+    var question = req.query.question
+    res.render('site/contact.ejs',{question})
+})
 router.get('/about-us',async(req,res)=>{
     var members = await db.getMembers();
     res.render('site/about-us.ejs',{members})
 })
+router.get('/privacy-policy',async(req,res)=>{
+    res.render('site/privacy-poilcy.ejs')
+})
 router.get('/contact-us',async(req,res)=>{
-    var members = await db.getMembers();
-    res.render('site/contact-us.ejs',{members})
+    var apikey = process.env.GOGGLEMAPS_API
+    res.render('site/contact-us.ejs',{apikey})
 })
 router.get('/auction-upcoming',async (req,res)=>{
     var auctions = await db.getAuctions();
@@ -94,6 +103,19 @@ router.get('/auction-lots-list',async (req, res) => {
       })
 	res.render('site/auction-lots-list',{lots,msg:''});
 });
+
+
+
+router.get('/auction-maps',async (req,res)=>{
+    var lots = await db.getProperties();
+    lots.forEach(p=>{
+        if(!p.img)p.img ='abc/b2c63fa2-dd22-498d-a5f9-162a2523a58b.jpg'
+        p.uri = azBlob.generateSasToken(p.img).uri;
+      })
+    res.render('site/auction-maps',{lots,msg:''});
+})
+
+
 router.post('/auction-lots8',async (req, res) => {
     var lots = await db.getPropertiesLimit8();
     lots.forEach(p=>{
@@ -113,8 +135,6 @@ router.post('/removefromfav',async (req,res)=>{
     await db.removeFromFavourties(req.session.userid,req.body.propertyid)
     res.json({succes:true})
 })
-
-
 
 router.get('/auction-rooms',async (req,res)=>{
     res.render('site/auction-rooms');

@@ -24,26 +24,18 @@ font-weight: 700;
     <div class='form-page-inner' style='width:500px;margin: 0px auto;padding:20px;text-align: center;'>
   <div style='padding:20px;box-sizing: border-box;' class='loginheader'>
     <p>
-        Login
+        Forgotten Password Recovery
     </p>
-    <%
-        if(message){
-            %><div class='errormsg'><%-message%></div><%
-        }
-    %>
 </div>
-    <form action="/account/authenticate" method="post">
+<form action="/account/forgot-password" method="post">
     <div class=''>
         <input type='text' class='sitetxta'  name="Email"  placeholder='E-Mail Address'/>
     </div>
-    <div class=''>
-        <input type='password' class='sitetxta'  name="Password"  placeholder='Password'/>
-    </div>
     <div style='clear:both;'></div>
      <div style='text-align: right;'>
-    <button class='sitebtn-small' >Sign In</button>
+    <button class='sitebtn-small' >Send Now</button>
     </div>
-    <div class='form-anchor' style='padding:20px;box-sizing: border-box;'><a href="/account/forgotten-password" title="Forgotten login details.">Forgotten Password?</a></div>
+    <div class='form-anchor' style='padding:20px;box-sizing: border-box;'><a href="/account/log-in" title="Back to login">Back to login</a></div>
   
     <div style='clear:both;'></div>
 </form>	

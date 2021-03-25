@@ -8,10 +8,12 @@
 </div>
 <div class='form-page'>
   <div class="form-page-content">
-    <div style='text-align:center;'>
+    <div style='text-align:center;font-size:18px;'>
       We pride ourselves in being your property auction experts. With teams across the country, we use our local knowledge to deliver national results, and now we want to share that knowledge with you. This information centre aims to answer all the frequently asked questions we receive about auction, debunk the myths and explain why auction is the best way to buy and sell all types of property and land.
-      <div class="inputWithIconButton" style='margin:30px 0px;'><input class='search-input sitetxt-ib' id='valuation-postcode' type='text' placeholder='Ask a question'/><i class="fa fa-search fa-lg fa-fw" aria-hidden="true"></i><button id='btntest'>SEARCH</button></div>
- 
+      <br/>
+      <form action='/contact' method="get">
+      <div class="inputWithIconButton" style='margin:30px 0px;'><input style='font-size: 22px;;' name='question' id='questiontxt' class='search-input sitetxt-ib' id='valuation-postcode' type='text' placeholder='Ask a question'/><i class="fa fa-search fa-lg fa-fw" aria-hidden="true"></i><button id='btnAsk'>SEARCH</button></div>
+      </form>
     </div>
   </div>
     <div class="tabs">
@@ -33,7 +35,9 @@
             var count = 0;
             faqs.forEach(q=>{
               if(q.category==cat.id){
-                count++;
+                if(q.primary){
+                  count++;
+                }
               }
             })
             var split = count/2;
@@ -42,13 +46,14 @@
             var listb = [];
             faqs.forEach(q=>{
               if(q.category==cat.id){
-                
+                if(q.primary){
                 if(count<split){
                   lista.push(q)
                 }else{
                   listb.push(q)
                 }
                 count++;
+              }
               }
             })
             %>
@@ -76,5 +81,7 @@
 <div style='clear:both;'></div>
 
 </div>
+<script>
 
+</script>
 <%- include('../partials/footer.ejs')%>
