@@ -181,7 +181,7 @@ router.get('/portal/profileedit',authCheck, async (req, res) => {
 	if(req.session.memberid){
 		myuserid = req.session.memberid;	
 	}
-	await db.UpdateCompanyStatus(myuserid);
+	await db.updateCompanyStatus(myuserid);
 	var results = await db.getCustomerById(myuserid)
 	var customer = results[0]
 	var members = [];
