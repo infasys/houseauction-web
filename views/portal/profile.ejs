@@ -59,63 +59,43 @@
     
       <div style='float:left;margin-right:20px'><img src="/images/user.gif" class="cimg" /></div>
       <div style='float:left;'>
-        <div style='font-size:20px;font-weight: 600;'>Tahid Miah</div>
+        <div style='font-size:20px;font-weight: 600;'><%-customer.forename%> <%-customer.surname%></div>
         <div style='font-size:16px;'><%-customer.username%></div>
         <div style='font-size:16px;'><%-customer.mobile%></div>
       </div>
-      <div style='float:right'><button id='btnNext' class='sitebtn-small2' style='float:right'>edit</button></div>
+      <div style='float:right'><a href='/portal/profileedit'><button id='start' class='sitebtn-small2' style='float:right'>edit</button></a></div>
     <div style='clear:both;padding:5px;'></div>
     <% 
       var c = customer; 
+      if(c.iscompany){
       var addrBuilder = (c.premises?c.premises+'<br />': '')+ (c.door?c.door+' ':'')+(c.street+'<br />')+ (c.town?c.town+'<br />': '')+(c.county?c.county+', ': '')+c.postcode;
       var addrBuilder2 = (c.premises?c.premises+', ': '')+ (c.door?c.door+' ':'')+(c.street+', ')+ (c.town?c.town: '');
-      if(addrBuilder){ %>
-
-      <%}%>
-      <div class='row2'><div class='flbl'>Title:</div><div class='fnameval'><%-customer.title%></div></div>
-      <div class='row2'><div class='flbl'>First Name:</div><div class='fnameval'><%-customer.forename%></div></div>
-      <div class='row2'><div class='flbl'>Last Name:</div><div  class='fnameval'><%-customer.surname%></div></div>
-      <div class='row2'><div class='flbl'>Middle Name:</div><div  class='fnameval'><%-customer.middlename%></div></div>
-      <div class='row2'><div class='flbl'>Address:</div><div  class='fnameval'><%-addrBuilder2%></div></div>
-      <div class='row2'><div class='flbl'>Postcode:</div><div  class='fnameval'><%-customer.postcode%></div></div>
-      <div class='row2'><div class='flbl'>E-Mail:</div><div  class='fnameval'><%-customer.username%></div></div>
-      <div class='row2'><div class='flbl'>Telephone:</div><div  class='fnameval'><%-customer.mobile%></div></div>
+      %>
+      <div class='row2'><div class='flbl'>Title:</div><div class='fnameval'><%-customer.title%>&nbsp;</div></div>
+      <div class='row2'><div class='flbl'>First Name:</div><div class='fnameval'><%-customer.forename%>&nbsp;</div></div>
+      <div class='row2'><div class='flbl'>Last Name:</div><div  class='fnameval'><%-customer.surname%>&nbsp;</div></div>
+      <div class='row2'><div class='flbl'>Middle Name:</div><div  class='fnameval'><%-customer.middlename%>&nbsp;</div></div>
+      <div class='row2'><div class='flbl'>Address:</div><div  class='fnameval'><%-addrBuilder2%>&nbsp;</div></div>
+      <div class='row2'><div class='flbl'>Postcode:</div><div  class='fnameval'><%-customer.postcode%>&nbsp;</div></div>
+      <div class='row2'><div class='flbl'>E-Mail:</div><div  class='fnameval'><%-customer.username%>&nbsp;</div></div>
+      <div class='row2'><div class='flbl'>Telephone:</div><div  class='fnameval'><%-customer.mobile%>&nbsp;</div></div>
       <div class='row2'><div class='flbl'>Company:</div><div  class='fnameval'>n/a</div></div>
       <% var i=0;
       addrs.forEach(a=>{
         i++;
         var addrBuilder3 = (a.premises?a.premises+', ': '')+ (a.door?a.door+' ':'')+(a.street+', ')+ (a.town?a.town: '');
     
-        %><div class='row2'><div class='flbl'>Address History <%-i%>:</div><div  class='fnameval'><%-addrBuilder3%></div></div>
-        <div class='row2'><div class='flbl'>Since:</div><div  class='fnameval'><%-a.start_year%> <%-a.start_month%></div></div><%
+        %><div class='row2'><div class='flbl'>Address History <%-i%>:</div><div  class='fnameval'><%-addrBuilder3%>&nbsp;</div></div>
+        <div class='row2'><div class='flbl'>Since:</div><div  class='fnameval'><%-a.start_year%> <%-a.start_month%>&nbsp;</div></div><%
       })%>
-      <div class='row2'><div class='flbl'>Date of Birth:</div><div  class='fnameval'><%-customer.dob%></div></div>
-      <div class='row2'><div class='flbl'>Nation Insurance:</div><div  class='fnameval'><%-customer.nationalinsurance%></div></div>
+      <div class='row2'><div class='flbl'>Date of Birth:</div><div  class='fnameval'><%-customer.dob%>&nbsp;</div></div>
+      <div class='row2'><div class='flbl'>Nation Insurance:</div><div  class='fnameval'><%-customer.nationalinsurance%>&nbsp;</div></div>
       <div class='row2'><div class='flbl'>Driving License:</div><div  class='fnameval'><%-customer.drivinglicense%>&nbsp;</div></div>
-      <div class='row2'><div class='flbl'>Passport Number:</div><div  class='fnameval'><%-customer.passport%></div></div>
+      <div class='row2'><div class='flbl'>Passport Number:</div><div  class='fnameval'><%-customer.passport%>&nbsp;</div></div>
+      <%}%>
     </div>
   </div>
  
   <div style="padding: 20px;margin:30px;">
-  <table class="fit vtop infotable" style="table-layout: fixed">
-        <tbody>
-          <tr>
-            <th style="width: 320px">Date</th>
-            <th style="width: 160px">Report Name</th>
-            <th style="width: 60px">Score</th>
-            <th>Status</th>
-            <th>details</th>
-          </tr>
 
-          <%amlchecks.forEach(a=>{ %>
-          <tr>
-            <td><i class="icocmp">a.rundate</i></td>
-            <td><%-a.profilename%></td>
-            <td><%-a.score%></td>
-            <td><%-a.bandtext%></td>
-            <td><a href="/aml/details/<%-a.id%>">details</a></td>
-          </tr>
-          <% })%>
-        </tbody>
-      </table>
       </div>

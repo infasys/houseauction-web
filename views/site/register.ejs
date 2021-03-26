@@ -24,7 +24,23 @@ font-weight: 700;
         <p>
            <div  class='loginheader'> Register </div>
         </p>
-    <div id='errormsg'><%-msg%></div>
+        <div id='errormsg'>
+        <%
+            if(myissues.length>0){
+                
+                
+                myissues.forEach(my=>{
+                    %>
+                    
+                    <div><%-my%></div>
+                    <%
+                })
+                
+                
+                
+            }
+        %>
+    </div>
     <div class=''>
         <input type='text' class='sitetxta'  name="firstname"  placeholder='First Name'/>
     </div>

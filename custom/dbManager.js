@@ -24,6 +24,15 @@ class dbManager{
     })
   }
 
+  updateCompanyStatus(userid){
+    return new Promise((resolve,reject)=>{
+      db.query('update customers set iscompany = 1 where id=?',[userid], function (err, result) {
+        if (err) throw err;
+        resolve(result)
+      })
+    })
+  }
+
 
   getRooms(){
     return new Promise((resolve,reject)=>{
@@ -530,12 +539,26 @@ addnewCustomer(reg){
   return new Promise((resolve,reject)=>{
     console.log(reg.Password)
     let hash = crypto.createHash('md5').update(reg.Password).digest("hex");
-    db.query('insert into customers(title,forename,surname,username,password) values (?)',[[reg.title,reg.firstname,reg.lastname,reg.Email,hash]], function (err, result) {
+    db.query('insert into customers(title,forename,surname,username,password,verificationcode) values (?)',[[reg.title,reg.firstname,reg.lastname,reg.Email,hash,123456]], function (err, result) {
       if (err) throw err;
       resolve(result)
     })
   })
 }
+
+checkUsername(username){
+  return new Promise((resolve,reject)=>{
+    db.query('select * from customers where username like ?',[username], function (err, result) {
+      if (err) throw err;
+      if(result.length>0){
+        resolve({status:false})
+      }else{
+        resolve({status:true})
+      }
+    })
+  })
+}
+
 
 addNewCompanyMember(email,companyid){
   return new Promise((resolve,reject)=>{

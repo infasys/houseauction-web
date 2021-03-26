@@ -176,10 +176,12 @@ router.get('/portal/profile',authCheck, async (req, res) => {
 	res.render('portal/profile',{customer,amlchecks,addrs,members:members,mysel:1,menusel:3});
 });
 router.get('/portal/profileedit',authCheck, async (req, res) => {
+	
 	var myuserid = req.session.userid;
 	if(req.session.memberid){
 		myuserid = req.session.memberid;	
 	}
+	await db.UpdateCompanyStatus(myuserid);
 	var results = await db.getCustomerById(myuserid)
 	var customer = results[0]
 	var members = [];

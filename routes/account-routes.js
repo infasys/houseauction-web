@@ -20,11 +20,12 @@ router.get('/account/forgotten-password',authCheckNoLogIn ,(req,res)=>{
 })
 router.get('/account/register',authCheckNoLogIn ,(req,res)=>{
 	delete req.session.loginmessage;
-	var mymsg = ''
-	if(req.session.registermessage){
-		mymsg = "E-Mail is not Valid";
+	var myissues = []
+	if(req.session.issues){
+	 myissues = req.session.issues;
 	}
-    res.render('site/register.ejs',{msg:mymsg})
+	delete req.session.issues;
+    res.render('site/register.ejs',{myissues})
 })
 router.get('/account/register_success',authCheckNoLogIn ,(req,res)=>{
 	delete res.locals.registration
@@ -60,16 +61,24 @@ function generate(n) {
 
 router.post('/account/register',authCheckNoLogIn,async (req,res)=>{
 	delete req.session.registermessage;
+	delete req.session.issues;
 	var reg = req.body;
 
 	var username = req.body.Email;
 	var errors = 0;
 	var issues = []
-	if(validator.validate(username)){
+	if(!validator.validate(username)){
 		issues.push('E-Mail address is not valid')
+		errors++
 	}
 	if(req.body.Password.length<5){
 		issues.push('Password Length does not meet minimum requirement')
+		errors++
+	}
+	var userstatus = await db.checkUsername(req.body.Email);
+	if(!userstatus.status){
+		issues.push('User Already Exists')
+		errors++
 	}
 	console.log(generate(7))
 	if(!errors){
@@ -85,8 +94,13 @@ router.post('/account/register',authCheckNoLogIn,async (req,res)=>{
 			smtpManager.new_registration(req.session.username)
 			res.redirect('/portal/dashboard');
 		}else{
+			issues.push('Something Went Wrong')
+			req.session.issues = issues
 			res.redirect('/account/register');
 		}
+	}else{
+		req.session.issues = issues
+		res.redirect('/account/register');
 	}
 })
 
