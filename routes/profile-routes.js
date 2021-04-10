@@ -9,11 +9,26 @@ const axios = require('axios');
 
 router.post('/profile/updateCompany',authCheck,async(req,res)=>{
 	var c = req.body
+	var isCompany = false;
 	var myuserid = req.session.userid;
 	if(req.session.memberid){
 		myuserid = req.session.memberid;	
 	}
-    await db.changeAccountType(myuserid);
+	if(c.biddingType==2){
+		isCompany = true
+	}
+    await db.changeAccountType(myuserid,isCompany);
+	res.json({status:true})
+})
+
+
+router.post('/profile/addCompanyDetails',authCheck,async(req,res)=>{
+	var c = req.body
+	var myuserid = req.session.userid;
+	if(req.session.memberid){
+		myuserid = req.session.memberid;	
+	}
+    await db.createNewCompany(myuserid,c);
 	res.json({status:true})
 })
 

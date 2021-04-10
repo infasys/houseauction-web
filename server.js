@@ -61,7 +61,7 @@ require("fs").readdirSync(routesPath).forEach(function(file) {
   // Reload on changes to these file extensions.
   exts: [ 'ejs', 'mustache','css' ],
   // Print debug info
-  debug: true
+  debug: false
 });
 
 // Specify the folder to watch for file-changes.

@@ -1,11 +1,5 @@
 
-<div class='container'>
-<div style='padding:20px 0px;'>
-  <style>
-    .lotitem{
-      min-width:250px;
-    }
-    </style>
+<div class='mycontainer'>
 <div class='auctionresultsmenu'>A few auction items <a href='/auction-lots'>see more...</a></div>
 <div class='lotlistwrapper'>
 <%
@@ -23,6 +17,5 @@ lots.forEach(data=>{%><div class='lotitem'>
     <a class='lotlink' href='/lot/details/<%-data.id%>'>Full details  &nbsp;&nbsp;&nbsp;	&#8594; </a>
     <div style='clear:both'></div>
 </div><%})%>
-</div>
 </div>
 </div>

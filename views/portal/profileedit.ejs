@@ -30,7 +30,9 @@
 <div style=' width:800px;margin:30px auto 10px auto;'>
   <div class="progress-bar-wrapper"></div>
 </div>
-
+<%
+console.log(customer)
+%>
 
 <div class='myinputsection' id='section-1'>
   <div class='myinputrow'>
@@ -40,9 +42,9 @@
         Bidding Profile
     <div class="select">
         <select  id='optbiddingtype' autocomplete="off"  placeholder="Title">
-        <option value=''>Please Select</option>
-        <option value='1' >Bidding as an individual</option>
-        <option value='2'>Bidding as an Company</option>
+        <option value='' <%if(customer.iscompany==null){ %>selected<% }%>>Please Select</option>
+        <option value='1' <%if(customer.iscompany==0){ %>selected<% }%>>Bidding as an individual</option>
+        <option value='2'<%if(customer.iscompany==1){ %>selected<% }%> >Bidding as an Company</option>
       </select>
     </div>
     </div>
@@ -68,7 +70,7 @@
   </div>
   <div class='myinputrow'>
     Company Address
-    <textarea class='mytxt' rows=6></textarea>
+    <textarea id='companyaddress' class='mytxt' rows=6></textarea>
 </div>
 </div>
 
@@ -190,9 +192,12 @@
       #addrHistoryLoaded{
         width:500px;margin:0px auto;
       }
-     
+     #btnFinish{
+       display: none;
+       background: #16cd4c;
+     }
       </style>
-      <div style='' id='addrHistoryLoaded'>
+      <div  id='addrHistoryLoaded'>
        
       </div>
   </div>
@@ -302,7 +307,7 @@
 <div class='myinputsection' id='section-7'>
   <div class='myinputrow' style='text-align: center;'><a href='/portal/profile'><button class='sitebtn-small2'>Done</button></a></div>
 </div>
-<div class='myinputrow'><button id='btnPrev' class='sitebtn-small2' style='float:left'>Previous</button><button id='btnNext' class='sitebtn-small2' style='float:right'>Next</button></div>
+<div class='myinputrow'><button id='btnPrev' class='sitebtn-small2' style='float:left'>Previous</button><button id='btnNext' class='sitebtn-small2' style='float:right'>Next</button><button id='btnFinish' class='sitebtn-small2' style='float:right'>Complete</button></div>
 <div style='clear:both; margin-bottom:200px;'></div>
 <script>
 
@@ -352,7 +357,12 @@ $(function(){
 
 
 function start(){
-  console.log('START')
+  
+  var idName = getCurrentStep(1);
+      idName = idName.replace(/\s+/g, '-').toLowerCase();
+      $('#'+idName).addClass('visited').addClass('current')
+
+    $('#btnPrev').hide()
 $('#section-'+mysectionid).show()
 
 }
@@ -361,6 +371,7 @@ start();
 })
 var list = [
   {name:'Bidding Profile Type',id:1},
+  {name:'Entitiy Details',id:2},
   {name:'Contact Details',id:3},
   {name:'Correspondence Address',id:4},
   {name:'Address History',id:5},
@@ -379,8 +390,20 @@ return name;
 }
 
 $('#btnPrev').click(function(){
+
+  if(mysectionid==1){
+
+  }else{
+  console.log(mysectionid)
   $('#section-'+mysectionid).hide()
   mysectionid--;
+  if(mysectionid==2){
+    if(isCompany){
+
+    }else{
+      mysectionid--;
+    }
+  }
   $('#section-'+mysectionid).show()
   for(var i = 0;i<list.length;i++){
     if(i>mysectionid){
@@ -402,7 +425,7 @@ $('#btnPrev').click(function(){
   $('#'+idName).addClass('visited').addClass('current')
       }, renderingWaitDelay);
 
-
+    }
 
 })
 
@@ -434,8 +457,12 @@ var mysectionid = 1;
 
 $('#btnNext').click(function(){
     processSection(mysectionid)
+    
 })
-
+$('#btnFinish').click(function(){
+    processSection(mysectionid)
+    
+})
 function moveNext(){
     for(var i = 0;i<list.length;i++){
       if(i>mysectionid){
@@ -447,14 +474,14 @@ function moveNext(){
     var currentStatus = document.getElementById('current-status')
     currentStatus.style.transition = 'width 1000ms linear';
     $('#section-'+mysectionid).hide()
-    mysectionid++;
-    if(mysectionid==2){
-      if(isCompany){
+     mysectionid++;
+     if(mysectionid==2){
+       if(isCompany){
   
-      }else{
-        mysectionid++;
-      }
-    }
+       }else{
+         mysectionid++;
+       }
+     }
     $('#section-'+mysectionid).show()
     var idName = getCurrentStep(mysectionid);
     idName = idName.replace(/\s+/g, '-').toLowerCase();
@@ -462,6 +489,17 @@ function moveNext(){
     console.log(percentage)
     $('.current-status').width(percentage+'%')
     var renderingWaitDelay = 1000;
+
+  if(mysectionid>1){
+    $('#btnPrev').show()
+  }
+  if(mysectionid>5){
+    $('#btnNext').hide()
+    $('#btnFinish').show()
+  }else{
+    $('#btnNext').show()
+    $('#btnFinish').hide()
+  }
     setTimeout(function() {
       if(idName){
       $('.section').removeClass('current')
@@ -469,6 +507,8 @@ function moveNext(){
     $('#'+idName).addClass('visited').addClass('current')
       }
   
+
+
   }, renderingWaitDelay);
   }
 
@@ -503,6 +543,8 @@ function processSection(id){
   console.log(id)
     if(id==1){
         saveBiddingType(id)
+    }else if(id==2){
+        saveCompanyDetails(id)
     }else if(id==3){
         saveCustomerDetails(id)
     }else if(id==4){
@@ -513,7 +555,14 @@ function processSection(id){
         saveCustomerVerification(id)
     }
   }
-
+  function saveCompanyDetails(id){
+    var companyname = $('#txtCompanyName').val()
+    var companytype = $('#optcompany').val()
+    var companyaddress = $('#companyaddress').val()
+    $.post('/profile/addCompanyDetails',{companyname,companytype,companyaddress},function(data){
+        moveNext()
+    },'json')
+  }
 
   function saveCustomerAddress(id){
     var address = {
@@ -538,7 +587,14 @@ function processSection(id){
       $('#error-'+id).html('You are required to select One')
     }else{
       $('#error-'+id).html('')
+      if(biddingType==2){
+        isCompany = true;
+      }else{
+        isCompany = false;
+      }
+      console.log("SENDING REQUEST")
       $.post('/profile/updateCompany',{biddingType},function(){
+        console.log('RESPONSE')
         moveNext()
       },'json')
     }

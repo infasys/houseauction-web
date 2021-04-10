@@ -14,7 +14,7 @@ const formatToCurrency = amount => {
 </style>
 <div style='margin-top:60px;'></div>
 <div class='lottitle shadow-md' style='box-sizing: border-box;'>
-    <div class='mycontainer'>
+    <div class='mycontainer' style='display:table;'>
     <div style="display: table-cell;vertical-align: middle;height:80px; background-color:rgb(245, 245, 245);border-right:3px solid red;">
     <div class='propertylotno' style='display:inline;vertical-align: middle;padding-right:20px;width: 500px;'>
         Lot No. <%-property.id%></br><div style='display:inline-block;font-weight:500;font-size:16px;'>Residential - Flats/Aparatment</div></div>
@@ -23,6 +23,20 @@ const formatToCurrency = amount => {
     </div>
     <div style="display: table-cell;vertical-align: middle;height:80px; background-color:rgb(245, 245, 245);">
         <div class='propertyheader' style='display:inline;vertical-align: middle;padding-left:40px;'><%-property.name%></div>
+        
+    </div>
+    <div style='text-align: right;display: table-cell;vertical-align: middle;height:80px; '>
+
+ <%if(isuser){
+  if(!isAdded){%>
+      <button id='btnAddFav' class='sitebtn-small'> <i class="far fa-heart"></i> Save </button>
+      <%}else {%>
+        <button id='btnRemoveFav' class='sitebtn-small'> <i class="far fa-heart"></i> Remove </button>
+        <%}%>
+      <%}else{%>
+        <button id='btnRegisterInterest' class='sitebtn-small'> <i class="far fa-heart"></i> Register Interest </button>
+      <%}
+      %>
     </div>
 </div>
 </div>
@@ -94,6 +108,11 @@ const formatToCurrency = amount => {
 <div style='clear:both;margin-bottom:200px;'></div>
 </div>
 <script>
+
+
+  $('#btnRegisterInterest').click(function(){
+    location = '/account/register'
+  })
 
 
 

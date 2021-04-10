@@ -139,24 +139,60 @@ getAMLReportsByUser(userid) {
     })
   });
 }
-updateCompany(companyid,name,address,entity){
+
+createNewCompany(userid,c){
   return new Promise((resolve,reject)=>{
-    db.query(`update company set name = ?, address= ?, entitytypeid= ? where id = ?`,[name,address,entity,companyid],(err,result)=>{
+
+
+
+    db.query("select * from customers where id = ?",[userid],async function (err, result) {
       if (err) throw err;
-      resolve(result)
-    })
+      var companyid = result[0].companyid
+      if(companyid){
+        db.query(`update company set name = ?,entitytypeid= ?, address= ? where id = ?`,[c.companyname,c.companytype,c.companyaddress,companyid],(err,result)=>{
+          if (err) throw err;
+          resolve(result)
+        })
+      }else{
+        db.query(`insert into company (name,entitytypeid,address) values (?,?,?)`,[c.companyname,c.companytype,c.companyaddress],(err,result)=>{
+          if (err) throw err;
+          var companyid = result.insertId;
+          db.query('update customers set companyid = ?,iscompany=true where id = ?',[companyid,userid], (err,result) =>{
+            if (err) throw err;
+            resolve(result)
+          })
+        })
+    }
+   })
+
+    
   })
 }
-changeAccountType(userid){
-  return new Promise((resolve,reject)=>{ 
-    db.query(`insert into company (name) values ('')`,(err,result)=>{
-      if (err) throw err;
-      var companyid = result.insertId;
-      db.query('update customers set companyid = ?,iscompany=true where id = ?',[companyid,userid], (err,result) =>{
+
+updateUserAccountType(userid,iscompany){
+  return new Promise((resolve,reject)=>{
+      db.query('update customers set iscompany=? where id = ?',[iscompany,userid], (err,result) =>{
         if (err) throw err;
         resolve(result)
       })
+  })
+}
+
+
+changeAccountType(userid,iscompany){
+  var mythis = this
+  return new Promise(async (resolve,reject)=>{ 
+    db.query('update customers set iscompany=? where id = ?',[iscompany,userid], (err,result) =>{
+      if (err) throw err;
+      resolve(result)
     })
+    /*
+    if(iscompany){
+    
+    }else{
+      await mythis.updateUserAccountType(userid,iscompany)
+      resolve({status:true})
+    }*/
   })
 }
 verifycode(userid,code){

@@ -1,5 +1,8 @@
 <%- include('../partials/menu-portal.ejs')%>
 <style>
+    body{
+        background-color: #fff;
+    }
     .banner{
         background: url('branding/pngtree-hand-drawn-cartoon-house-print-ad-image_148888.jpg');
         background-size: cover;
@@ -42,30 +45,14 @@
         background-color: #c8102e;
         color:#fff;
     }
-    .lotPrice{
-        padding:10px;
-        text-align: center;
-        background-color: #c8102e;
-        color:#fff;
-        text-align: center;
-        font-size: 12px;;
-
-    }
-    .lotDesc{
-        min-height:85px;
-        color:#333;
-        text-align: center;
-        padding:16px;
-        overflow: hidden;
-        font-size: 15px;
-    }
     .lotitmlstimgtd{
         width: 100%;
-padding-top: 50%;
+padding-top:50%;
 background-repeat: no-repeat;
 background-size: cover;
 box-sizing: border-box;
 background-position: center;
+margin:0px;
     }
 .assetrow td{
     background-color: #f8f9fa;
@@ -82,14 +69,40 @@ background-position: center;
 }
 .imgcont{
     box-sizing: border-box;
-    padding:20px  !important;
+    padding:0px  !important;
 }
 .assetrowmain td{
     background-color: #fff;
 }
+
+.mycontainer{
+    max-width:1200px;
+    min-width: 800px;
+    margin:0px auto;
+}
+.myTable td{
+    vertical-align: top;
+    color:#333;
+        text-align: left;
+        padding:0px;
+        overflow: hidden;
+        font-size: 12px;
+}
+.lotdetailstable{
+    border-collapse: collapse;
+    
+}
+.lotdetailstable td{
+    border:none;
+}
+.myremoveprop{
+    text-decoration: none;
+    color:red;
+    font-weight: 600;
+}
 </style>
 
-    <div style='padding:20px;'>   
+    <div class='mycontainer' style='padding:20px;'>   
         <div id='myproperties'>
 
         </div>
@@ -101,25 +114,15 @@ background-position: center;
     const formatToCurrency = amount => {
         return "£" + amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,");
     };
-    /*
-    var lotstr =''
-    lots.forEach(l=>{
-        lotstr +="<a href='/portal/lot/details/"+l.id+"''><div class='lotitem'>";
-        if(l.bid_interest){lotstr +="<div style='padding:10px;'> Bidding Enabled</div>";}
-        lotstr +="<div class='lotno'>Lot "+l.id+l.bid_interest+"</div>"
-        lotstr +="<div class='lotitmlstimg' style='background-image: url("+l.uri+");'></div><div class='lotPrice'>*Guide | "+formatToCurrency(l.price)+"+ (plus fees)</div><div class='lotDesc'>"+l.propname+"</div><div style='clear:both'></div> </div></a>"
-      
-    })
-    $('#myproperties').html(lotstr);
-*/
-
     var lotstr ='<table class="myTable">'
         lotstr +="<tr class='assetrowmain'>";
-        lotstr +="<td style='width:200px;'d>&nbsp;</td><td><div class='lotPric'>*Guide | + (plus fees)</div></td><td><div class='lotDesc'></div></td>"
+            lotstr+='<td style="width:200px;"></td><td ></td><td style="width:300px;"></td>'
         lotstr +="</tr>";
     lots.forEach(l=>{
         lotstr +="<tr class='assetrow'>";
-        lotstr +="<td class='imgcont'><div class='lotitmlstimgtd' style='background-image: url("+l.uri+");'>&nbsp;</div></td><td><div class='lotPric'>*Guide | "+formatToCurrency(l.price)+"+ (plus fees)</div></td><td><div class='lotDesc'>"+l.propname+"</div></td>"
+        lotstr +="<td style='border-bottom:0px;'><div class='lotitmlstimgtd' style='background-image: url("+l.uri+");'>&nbsp;</div></td>";
+        lotstr +="<td><table class='lotdetailstable' width='100%' height='110px'><tr><td style='vertical-align:top;padding:10px 10px;'>"+l.propname+"</td></tr><tr height='100%'><td style='vertical-align: bottom;padding:0px 10px;'>*Guide | <strong>"+formatToCurrency(l.price)+"</strong>+ (plus fees)</td></tr></table></td>"
+        lotstr +="<td><table class='lotdetailstable' width='100%' height='110px'><tr><td style='vertical-align:top;padding:10px 10px;text-align:right;'>wish to bid: <a class='myremoveprop' href='#'><i class='fas fa-check'></i></a></td></tr><tr height='100%'><td style='vertical-align: bottom;text-align:right;padding:10px 10px;'><a class='myremoveprop' href='/remove'><i class='far fa-heart'></i></a></td></tr></table></td>"
         lotstr +="</tr>";
     })
      lotstr +='</table>'
