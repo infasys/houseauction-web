@@ -583,7 +583,7 @@ addnewCustomer(reg){
   return new Promise((resolve,reject)=>{
     console.log(reg.Password)
     let hash = crypto.createHash('md5').update(reg.Password).digest("hex");
-    db.query('insert into customers(title,forename,surname,username,password,verificationcode) values (?)',[[reg.title,reg.firstname,reg.lastname,reg.Email,hash,123456]], function (err, result) {
+    db.query('insert into customers(title,forename,surname,username,password,verificationcode,isbuyer) values (?)',[[reg.title,reg.firstname,reg.lastname,reg.Email,hash,123456,1]], function (err, result) {
       if (err) throw err;
       resolve(result)
     })
@@ -606,7 +606,7 @@ checkUsername(username){
 
 addNewCompanyMember(email,companyid){
   return new Promise((resolve,reject)=>{
-    db.query('insert into customers(username,companyid) values (?)',[[email,companyid]], function (err, result) {
+    db.query('insert into customers(username,companyid,iscompany,isbuyer) values (?)',[[email,companyid,1,1]], function (err, result) {
       if (err) throw err;
       resolve(result)
     })
