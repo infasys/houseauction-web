@@ -15,7 +15,8 @@ router.get('/portal/dashboard',authCheck,async (req, res) => {
 	var myuserid = req.session.userid;
 	var results = await db.getCustomerById(myuserid)
 	var customer = results[0]
-	res.render('portal/dashboard',{msg:'',menusel:1,customer});
+	var auctionsresults = await db.getAuctions()
+	res.render('portal/dashboard',{msg:'',menusel:1,customer,auctions:auctionsresults});
 });
 
 router.get('/portal/company',authCheck, async (req, res) => {

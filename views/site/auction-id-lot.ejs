@@ -63,10 +63,18 @@
     <div style='clear:both;'></div>
 <%
 const formatToCurrency = amount => {
+    if(amount){
   return "£" + amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,");
+    }else{
+        return "";
+    }
 };
 
-lots.forEach(data=>{%>
+lots.forEach(data=>{
+    if(data.propname){
+    %>
+
+    
     <div class='lotitem-list'>
  
     <div class='lotitmlstimg-list' style='background-image: url(<%-data.uri%>);'></div>
@@ -81,7 +89,9 @@ lots.forEach(data=>{%>
     <div style='clear:both'></div>
 </div>
 
-<%})%>
+<%}else{
+    %>No Properties<%
+}})%>
 
 </div>
 <div style='padding:100px;'></div>

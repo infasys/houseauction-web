@@ -1,4 +1,22 @@
 <%- include('../partials/menu-portal.ejs')%>
+<%
+
+function formatDateTimeMe(date) {
+    var d = new Date(date),
+    month = '' + (d.getMonth() + 1),
+    day = '' + d.getDate(),
+    year = d.getFullYear(),
+    hours = d.getHours(),
+    mins = d.getMinutes();
+    if (month.length < 2)  month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+    if (hours.length < 2) hours = '0' + hours;
+    if (mins.length < 2) mins = '0' + mins;
+   
+    var strTime = `${day}/${month}/${year} ${hours}:${mins}`;
+    return strTime;
+    }
+%>
 <style>
     .checklist>div>img{
         display: inline-block;
@@ -24,8 +42,7 @@
 }
 </style>
 <div class='mycontainer' style='padding:20px;'>
-    <div class='inrow-70-padr' style='padding-right:30px;'>
-        <div class='dash-box'>
+        <div class='dash-box' >
             <div class='dash-title'>Welcome</div>
             <div class='dash-content'>
                 <p>Dear Potential Home Owner,</p>
@@ -36,18 +53,26 @@
         </div>
 
 
+<div class='inrow-50' style='padding-right:30px;box-sizing: border-box;'>
+    <div class='dash-box' style='min-height:300px;'>
+        <div class='dash-title'>AML Status</div>
+        <div class='dash-content'>
+            WAITING
+        </div>
+    </div>
+    
+
+
 </div>
-<div class='inrow-30'>
-    <div class='dash-box'>
+<div class='inrow-50'>
+    <div class='dash-box' style='min-height:300px;'>
         <div class='dash-title'>Online Bidding Eligibility</div>
         <div class='dash-content'>
             <div class='checklist'>
-            <div><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABmJLR0QA/wD/AP+gvaeTAAACJUlEQVQ4jY2TS2gTURSG/zuTOzNJtTFNSKYxaClKkaKYttRdRYTGByoWl26LCrpwEZG6MHURpO5c6MKdYFYWhUhpQEtBN4JoKejCkqo105mkeWKaZmaSjAuTksdYPbv7n/8759zLuQQmEZydGfK5nOM8Tz2GQQxN01LJbGY+fPHWUruXNB/uzT30e12ukMfhOM1TjjbnVF3TlWx2TkqnQqGzN5c6CoQXHp0/KPoe221dXrOpGlEobUpxef3a7ZNXowDANjoP+PZF/gUDgEC5bpsgjA2eGV1YjMQUBgB6nc7p/4F5lgcA2G1de71uz10AYIOzM0ODfX33LSzL7gTv4e0YFUdQ0AooV8qwcnz/gRP+KONzOcfbH8wM9ruPIlFMIFfO/5mGUs7d4wgwVp4TW+5oEcAStgNe+/UTK7l4S2HKUa+lVmvtdqhnACxh8Cm1jN3crm04nl/tmMwgqDGaXpGbxc+ZL6AMxbDHX4fXTGEA0NWKzCjZjZiqa3pD1Ko6PiQ/ghCCRDGBeP6bKbylarqSTscIADx5/+zlfo94odnAEhZVo2oKA8CPpPxi8tjlCQYApHQqVCiVpGbDTnBhsyjJueQ0UN/ExUhMGZ44vmIThDGBct1/Jevw93XlylTgxtvtAgDw+umrr4fPjbypGES0cnx/+2JtqZqeyGxEVxVp8k7g+ruG3vIbGzH1/MGRXpfzlIWnIgBUVF2R05n58KXgcrv3NxQ7zhH6RKo9AAAAAElFTkSuQmCC"/>Bid Eligibilty Status: <strong>Not Available</strong></div>
-            <div><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABmJLR0QA/wD/AP+gvaeTAAACJUlEQVQ4jY2TS2gTURSG/zuTOzNJtTFNSKYxaClKkaKYttRdRYTGByoWl26LCrpwEZG6MHURpO5c6MKdYFYWhUhpQEtBN4JoKejCkqo105mkeWKaZmaSjAuTksdYPbv7n/8759zLuQQmEZydGfK5nOM8Tz2GQQxN01LJbGY+fPHWUruXNB/uzT30e12ukMfhOM1TjjbnVF3TlWx2TkqnQqGzN5c6CoQXHp0/KPoe221dXrOpGlEobUpxef3a7ZNXowDANjoP+PZF/gUDgEC5bpsgjA2eGV1YjMQUBgB6nc7p/4F5lgcA2G1de71uz10AYIOzM0ODfX33LSzL7gTv4e0YFUdQ0AooV8qwcnz/gRP+KONzOcfbH8wM9ruPIlFMIFfO/5mGUs7d4wgwVp4TW+5oEcAStgNe+/UTK7l4S2HKUa+lVmvtdqhnACxh8Cm1jN3crm04nl/tmMwgqDGaXpGbxc+ZL6AMxbDHX4fXTGEA0NWKzCjZjZiqa3pD1Ko6PiQ/ghCCRDGBeP6bKbylarqSTscIADx5/+zlfo94odnAEhZVo2oKA8CPpPxi8tjlCQYApHQqVCiVpGbDTnBhsyjJueQ0UN/ExUhMGZ44vmIThDGBct1/Jevw93XlylTgxtvtAgDw+umrr4fPjbypGES0cnx/+2JtqZqeyGxEVxVp8k7g+ruG3vIbGzH1/MGRXpfzlIWnIgBUVF2R05n58KXgcrv3NxQ7zhH6RKo9AAAAAElFTkSuQmCC"/>Actions to Complete</div>
-            <div><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABmJLR0QA/wD/AP+gvaeTAAACJUlEQVQ4jY2TS2gTURSG/zuTOzNJtTFNSKYxaClKkaKYttRdRYTGByoWl26LCrpwEZG6MHURpO5c6MKdYFYWhUhpQEtBN4JoKejCkqo105mkeWKaZmaSjAuTksdYPbv7n/8759zLuQQmEZydGfK5nOM8Tz2GQQxN01LJbGY+fPHWUruXNB/uzT30e12ukMfhOM1TjjbnVF3TlWx2TkqnQqGzN5c6CoQXHp0/KPoe221dXrOpGlEobUpxef3a7ZNXowDANjoP+PZF/gUDgEC5bpsgjA2eGV1YjMQUBgB6nc7p/4F5lgcA2G1de71uz10AYIOzM0ODfX33LSzL7gTv4e0YFUdQ0AooV8qwcnz/gRP+KONzOcfbH8wM9ruPIlFMIFfO/5mGUs7d4wgwVp4TW+5oEcAStgNe+/UTK7l4S2HKUa+lVmvtdqhnACxh8Cm1jN3crm04nl/tmMwgqDGaXpGbxc+ZL6AMxbDHX4fXTGEA0NWKzCjZjZiqa3pD1Ko6PiQ/ghCCRDGBeP6bKbylarqSTscIADx5/+zlfo94odnAEhZVo2oKA8CPpPxi8tjlCQYApHQqVCiVpGbDTnBhsyjJueQ0UN/ExUhMGZ44vmIThDGBct1/Jevw93XlylTgxtvtAgDw+umrr4fPjbypGES0cnx/+2JtqZqeyGxEVxVp8k7g+ruG3vIbGzH1/MGRXpfzlIWnIgBUVF2R05n58KXgcrv3NxQ7zhH6RKo9AAAAAElFTkSuQmCC"/>Anti Money Laundering: Not Completed/ Valid until DD-MM-YYYY</div>
-            <div><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABmJLR0QA/wD/AP+gvaeTAAACE0lEQVQ4jY2TTWgTURSFz7zMTzKdhhajSTMaIYQQFIKtuBUXEhWqNQouuhPUIgWhiF24cboRQUKXgnStcVVDpLaoK90bXFhSo00DM6kztDVO8zMzIXZREyY/jd7dO+98h3sv71HoUVJyfkwc9MY4mvFShPpTM01VLv9clm7MZDq9lP2QSC2MHhU8kn/g8CUXzTH2u2rdsORddamgK9JsfDrTFZBIPb8S9YSfDXOCv1dXzdoxfsur2xt3712+mW4FJFILo1FP6M2/YHvIZ3V1fDY+nSEAMDJwaO5/YIbZn2qYc4sBt/gIABxScn7s1JHwE4bQjn6wIAiIRCIol8swTRM84wyK50+kiTjojXUurBccCoWgaRp0XQcAOB0se9w9coHwnNNnN7MsC0JIF6yqKmRZbgvmaNZPNxqNNjEQCIAQglwuB57nW7CiKN2tUWiQqmkU7Vo+nwdN0wiHw/1hADXTLBKloq5U64bVFOv1OrLZLCiKgqZpB8IVq2atl+QVCgCS7xdfh4aOTdgNhBB0jmevte2NxcnY9WsEAAq6Iu0YetuG+sFb1ZJc2JXnAMABAO9eLW2eiZ/7JrCusy6acx9I/oW/l5SpmYk7H1sBAPD2ZWrt5PjpDw1QPp5xBmniaHtYFatmrevF9Net/O37V299auptv7FZD188jQaHxIscw/oAwLDMzR+/5OXHkw++dHr3AMDRzrpJpkAuAAAAAElFTkSuQmCC">Document Verification: Not Completed</div>
-            <div><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABmJLR0QA/wD/AP+gvaeTAAACE0lEQVQ4jY2TTWgTURSFz7zMTzKdhhajSTMaIYQQFIKtuBUXEhWqNQouuhPUIgWhiF24cboRQUKXgnStcVVDpLaoK90bXFhSo00DM6kztDVO8zMzIXZREyY/jd7dO+98h3sv71HoUVJyfkwc9MY4mvFShPpTM01VLv9clm7MZDq9lP2QSC2MHhU8kn/g8CUXzTH2u2rdsORddamgK9JsfDrTFZBIPb8S9YSfDXOCv1dXzdoxfsur2xt3712+mW4FJFILo1FP6M2/YHvIZ3V1fDY+nSEAMDJwaO5/YIbZn2qYc4sBt/gIABxScn7s1JHwE4bQjn6wIAiIRCIol8swTRM84wyK50+kiTjojXUurBccCoWgaRp0XQcAOB0se9w9coHwnNNnN7MsC0JIF6yqKmRZbgvmaNZPNxqNNjEQCIAQglwuB57nW7CiKN2tUWiQqmkU7Vo+nwdN0wiHw/1hADXTLBKloq5U64bVFOv1OrLZLCiKgqZpB8IVq2atl+QVCgCS7xdfh4aOTdgNhBB0jmevte2NxcnY9WsEAAq6Iu0YetuG+sFb1ZJc2JXnAMABAO9eLW2eiZ/7JrCusy6acx9I/oW/l5SpmYk7H1sBAPD2ZWrt5PjpDw1QPp5xBmniaHtYFatmrevF9Net/O37V299auptv7FZD188jQaHxIscw/oAwLDMzR+/5OXHkw++dHr3AMDRzrpJpkAuAAAAAElFTkSuQmCC">Bidding Deposit: Not Completed</div>
-            </div>
+                <div><i class="fa fa-check-circle"></i>Verify Account</div>
+                <div><i class="fa fa-check-circle"></i>Update Bidding Profile <a href='/portal/profile'>click here</a></div>
+                <div><i class="fa fa-check-circle"></i>Upload Verification Documents <a href='/portal/profile'>click here</a></div>
+           </div>
         </div>
     </div>
     
@@ -67,8 +92,29 @@
          </div>
      </div>
      <%}%>
+
+
+     <% 
+     
+     auctions.forEach(a => {
+        if(a.status==3){ %>
+            <div class='dash-box'>
+    <div class='dash-title'>Taking Bidding Deposits</div>
+    <div class='dash-content'>
+        Auction: <%-formatDateTimeMe(a.datetime)%>
+        
+    </div>
+</div>
+        
+        <%
+        }
+     });
+     
+     
+     %>
+
 <div class='dash-box'>
-    <div class='dash-title'>Next Online Auction</div>
+    <div class='dash-title'>Join Live Steam</div>
     <div class='dash-content'>
         Please click <a href='https://stream.tahid.co.uk'>here</a> to access the Online Auction
 
