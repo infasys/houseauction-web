@@ -55,22 +55,22 @@ console.log(customer)
     </div>
   <div class='myinputrow'>
     Company Name
-    <input id='txtCompanyName' class='mytxt' type='txt'  value='' placeholder='Company Name'/>
+    <input id='txtCompanyName' class='mytxt' type='txt'  value='<%-customer.companyname%>' placeholder='Company Name'/>
 </div>
   <div class='myinputrow'>
       Company Details
   <div class="select">
       <select  id='optcompany' autocomplete="off" placeholder="Entitiy Type">
       <option value='' >Entitiy Type</option>
-      <option value='1' <%if(customer.title==1){ %>selected<% }%> >Sole Trader</option>
-      <option value='2' <%if(customer.title==2){ %>selected<% }%> >Partnership</option>
-      <option value='3' <%if(customer.title==3){ %>selected<% }%> >Limited Company</option>
+      <option value='1' <%if(customer.entitytypeid==1){ %>selected<% }%> >Sole Trader</option>
+      <option value='2' <%if(customer.entitytypeid==2){ %>selected<% }%> >Partnership</option>
+      <option value='3' <%if(customer.entitytypeid==3){ %>selected<% }%> >Limited Company</option>
     </select>
   </div>
   </div>
   <div class='myinputrow'>
     Company Address
-    <textarea id='companyaddress' class='mytxt' rows=6></textarea>
+    <textarea id='companyaddress' class='mytxt' rows=6><%-customer.companyaddr%></textarea>
 </div>
 </div>
 
@@ -204,7 +204,6 @@ console.log(customer)
 
 
   <div class='myinputrow'>
-    <div class='sectionError' id='error-6'></div>
     <div id='specialfunctionaddrhistory'></div>
       Postcode Search
       <div class="inputWithIconButton" style='margin-top:10px;'><input class='search-input sitetxt-ib' id='postcodesearchboxP' type='text'  class='mytxt' placeholder='Postcode' /><i class="fa fa-search fa-lg fa-fw" aria-hidden="true"></i><button id='postcodesearchbtnP'>Search</button></div>
@@ -412,6 +411,13 @@ $('#btnPrev').click(function(){
       $('#'+idName).removeClass('visited').removeClass('current')
     }
   }
+  if(mysectionid>5){
+    $('#btnNext').hide()
+    $('#btnFinish').show()
+  }else{
+    $('#btnNext').show()
+    $('#btnFinish').hide()
+  }
 
   var idName = getCurrentStep(mysectionid);
   idName = idName.replace(/\s+/g, '-').toLowerCase();
@@ -460,8 +466,9 @@ $('#btnNext').click(function(){
     
 })
 $('#btnFinish').click(function(){
-    processSection(mysectionid)
-    
+  console.log('clicked')
+  processSection(mysectionid)
+ // location.href='/portal/profile'
 })
 function moveNext(){
     for(var i = 0;i<list.length;i++){
@@ -661,14 +668,16 @@ function processSection(id){
     var driving = $('#txtdrivinglicense').val()
     var passport = $('#txtpassportno').val()
     if(errors){
-       
+        console.log('issues')
         issues.forEach(function(ms){
+          console.log(ms)
             $('#error-'+id).append(ms)
         })
      
       }else{
         $.post('/profile/updateverificationcustomer',{dob:tmpdate,nino,driving,passport},function(data){
-        moveNext()
+
+          location.href= '/portal/profile'
         },'json')
     }
   }

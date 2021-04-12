@@ -1,4 +1,4 @@
-<%- include('../partials/header.ejs')%>
+<%- include('../partials/menu-portal.ejs')%>
 <%
 const formatToCurrency = function numberWithCommas(x) {
   return "£" +x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -13,8 +13,21 @@ const formatToCurrency = amount => {
   }
 </style>
 <div style='margin-top:60px;'></div>
+
+<%
+if(property.auctionstatus==3){
+  %><div style='padding:20px 0px;text-align: center;'><%
+        if(!biddeposit){
+          %> <button class='sitebtn-small2' id='btnBidDeposit'>Add to Deposit List</button><%
+        }else{
+          %> <button class='sitebtn-small2'  id='btnRemoveBidDeposit'>Remove from Deposit List</button><%
+        }
+        %>
+        </div><%}%>
 <div class='lottitle shadow-md' style='box-sizing: border-box;'>
+  
     <div class='mycontainer' style='display:table;'>
+      
     <div style="display: table-cell;vertical-align: middle;height:80px; background-color:rgb(245, 245, 245);border-right:3px solid red;">
     <div class='propertylotno' style='display:inline;vertical-align: middle;padding-right:20px;width: 500px;'>
         Lot No. <%-property.id%></br><div style='display:inline-block;font-weight:500;font-size:16px;'>Residential - Flats/Aparatment</div></div>
@@ -77,7 +90,6 @@ const formatToCurrency = amount => {
   <a class="prevScroll" onclick="sideScroll('left')">&#10094;</a>
    
 </div>
-<%- include('../partials/getintouch.ejs')%>
 </div>
 <div class='rightpanel'>    
     
@@ -207,5 +219,3 @@ function initMap() {
 <script async
     src="https://maps.googleapis.com/maps/api/js?key=<%-apikey%>&callback=initMap">
 </script>
-
-<%- include('../partials/footer.ejs')%>

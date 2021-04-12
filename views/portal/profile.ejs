@@ -1,4 +1,52 @@
 <%- include('../partials/menu-portal.ejs')%>
+<%
+  function formatDate(date) {
+    var hours = date.getHours();
+    var minutes = date.getMinutes();
+    var ampm = hours >= 12 ? 'pm' : 'am';
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    minutes = minutes < 10 ? '0'+minutes : minutes;
+    var strTime = hours + ':' + minutes + ' ' + ampm;
+    return date.getDate() + "/" + (date.getMonth()+1)  + "/" + date.getFullYear();
+  }
+%>
+  
+<%
+if(members.length>1){
+%>
+<div class='mycontainer'>
+<div class='dash-box'>
+  <div class='dash-title'>Active Member</div>
+  <div class='dash-content'>
+  <label>You Are Editing Member:</label>
+  <div class='select'><select class='mytxt3' id='memberselect'>
+  <%members.forEach(function(m){
+    
+    var selected = '  '
+    if(m.id==customer.id){
+      selected = ' SELECTED '
+    }%>
+    <option value='<%-m.id%>' <%-selected%> ><%-m.username%></option>
+    <%
+  })%>
+  </select>
+  </div>
+
+  <script>
+
+    $('#memberselect').change(function(){
+      var memberid =  $(this).find(":selected").val() 
+      $.post('/portal/changeactivemember',{memberid:memberid},function(){location.reload()},'json')
+
+    })
+  </script>
+</div>
+</div>
+</div>
+<%
+}
+%>
 <script src="/dob-picker/dobpicker.js"></script>
 <link href="/progress-bar-master/example/css/main.css" rel="stylesheet" />
 <script src="/progress-bar-master/progress-bar.js"></script>
@@ -67,11 +115,11 @@
     <div style='clear:both;padding:5px;'></div>
     <% 
       var c = customer; 
-      if(c.iscompany){
+      if(c.profile_updated){
       var addrBuilder = (c.premises?c.premises+'<br />': '')+ (c.door?c.door+' ':'')+(c.street+'<br />')+ (c.town?c.town+'<br />': '')+(c.county?c.county+', ': '')+c.postcode;
       var addrBuilder2 = (c.premises?c.premises+', ': '')+ (c.door?c.door+' ':'')+(c.street+', ')+ (c.town?c.town: '');
       %>
-      <div class='row2'><div class='flbl'>Title:</div><div class='fnameval'><%-customer.title%>&nbsp;</div></div>
+      <div class='row2'><div class='flbl'>Title:</div><div class='fnameval'><%-customer.titlename%>&nbsp;</div></div>
       <div class='row2'><div class='flbl'>First Name:</div><div class='fnameval'><%-customer.forename%>&nbsp;</div></div>
       <div class='row2'><div class='flbl'>Last Name:</div><div  class='fnameval'><%-customer.surname%>&nbsp;</div></div>
       <div class='row2'><div class='flbl'>Middle Name:</div><div  class='fnameval'><%-customer.middlename%>&nbsp;</div></div>
@@ -79,8 +127,21 @@
       <div class='row2'><div class='flbl'>Postcode:</div><div  class='fnameval'><%-customer.postcode%>&nbsp;</div></div>
       <div class='row2'><div class='flbl'>E-Mail:</div><div  class='fnameval'><%-customer.username%>&nbsp;</div></div>
       <div class='row2'><div class='flbl'>Telephone:</div><div  class='fnameval'><%-customer.mobile%>&nbsp;</div></div>
-      <div class='row2'><div class='flbl'>Company:</div><div  class='fnameval'>n/a</div></div>
-      <% var i=0;
+      <%if(c.iscompany){%>
+      <div class='row2'><div class='flbl'>Company:</div><div  class='fnameval'><%-customer.companyname%></div></div>
+      <%
+      entityname = ''
+      if(customer.entitytypeid==1){
+        entityname = 'Sole Trader';
+      }else if(customer.entitytypeid==2){
+        entityname = 'Partnership';
+      }else if(customer.entitytypeid==3){
+        entityname = 'Limited Company';
+      }
+      %>
+      <div class='row2'><div class='flbl'>Entity Type:</div><div  class='fnameval'><%-entityname%></div></div>
+      <div class='row2'><div class='flbl'>Company Address:</div><div  class='fnameval'><%-customer.companyaddr%></div></div>
+      <%} var i=0;
       addrs.forEach(a=>{
         i++;
         var addrBuilder3 = (a.premises?a.premises+', ': '')+ (a.door?a.door+' ':'')+(a.street+', ')+ (a.town?a.town: '');
@@ -88,7 +149,7 @@
         %><div class='row2'><div class='flbl'>Address History <%-i%>:</div><div  class='fnameval'><%-addrBuilder3%>&nbsp;</div></div>
         <div class='row2'><div class='flbl'>Since:</div><div  class='fnameval'><%-a.start_year%> <%-a.start_month%>&nbsp;</div></div><%
       })%>
-      <div class='row2'><div class='flbl'>Date of Birth:</div><div  class='fnameval'><%-customer.dob%>&nbsp;</div></div>
+      <div class='row2'><div class='flbl'>Date of Birth:</div><div  class='fnameval'><%-formatDate(customer.dob)%>&nbsp;</div></div>
       <div class='row2'><div class='flbl'>Nation Insurance:</div><div  class='fnameval'><%-customer.nationalinsurance%>&nbsp;</div></div>
       <div class='row2'><div class='flbl'>Driving License:</div><div  class='fnameval'><%-customer.drivinglicense%>&nbsp;</div></div>
       <div class='row2'><div class='flbl'>Passport Number:</div><div  class='fnameval'><%-customer.passport%>&nbsp;</div></div>

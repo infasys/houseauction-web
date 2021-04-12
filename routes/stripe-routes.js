@@ -13,9 +13,10 @@ router.get("/paymentdemo", async (req, res) => {
 
 
 router.post("/processCard",authCheck, async (req, res) => {
-  console.log('START')
+
     var c = req.body;
     console.log(c)
+
 const paymentMethod = await stripe.paymentMethods.create({
     type: 'card',
     card: {
@@ -29,8 +30,8 @@ const paymentMethod = await stripe.paymentMethods.create({
   });
   console.log(paymentMethod)
   console.log(req.session.userid)
-  dbManager.savePayment(paymentMethod.id,req.session.userid)
-    res.json({id:paymentMethod.id})
+  dbManager.savePayment(paymentMethod.id,req.session.userid,c.properties)
+  res.json({id:paymentMethod.id})
 });
 
 router.get('/payment/setup',async function(req,res){

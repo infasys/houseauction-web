@@ -23,6 +23,7 @@ router.post('/profile/updateCompany',authCheck,async(req,res)=>{
 
 
 router.post('/profile/addCompanyDetails',authCheck,async(req,res)=>{
+	console.log("UPDATE COMPANY")
 	var c = req.body
 	var myuserid = req.session.userid;
 	if(req.session.memberid){

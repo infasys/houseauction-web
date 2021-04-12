@@ -18,16 +18,81 @@ router.get('/portal/dashboard',authCheck,async (req, res) => {
 	res.render('portal/dashboard',{msg:'',menusel:1,customer});
 });
 
+router.get('/portal/company',authCheck, async (req, res) => {
+	var results = await db.getCustomerById(req.session.userid)
+	var customer= results[0]
+	var company = null;
+	var members = []
+	if(customer.companyid){
+		var companies = await db.getCompanyById(customer.companyid)
+		company = companies[0];
+		members = await db.getCompanyMembersByCompanyId(customer.companyid)
+	}
+
+	res.render('portal/company',{customer:customer,company:company,members:members,menusel:4});
+});
+router.post('/member/addmember',authCheck, async (req, res) => {
+    var results = await db.getCustomerById(req.session.userid)
+	var customer= results[0]
+    var success = await db.addNewCompanyMember(req.body.email,customer.companyid);
+	res.json({status:true})
+});
+
+router.get('/portal/addCompanyMember',authCheck, async (req, res) => {
+	var results = await db.getCustomerById(req.session.userid)
+	var customer= results[0]
+	res.render('portal/addMember',{customer})
+});
+
+
+router.get('/portal/property/:id',authCheck,async (req, res) => {
+	var myuserid = req.session.userid;
+	var results = await db.getCustomerById(myuserid)
+	var customer = results[0]
+	var apikey = process.env.GOGGLEMAPS_API
+    var lot = await db.getPropertyById(req.params.id)
+    var images = await db.getPropertyImagesById(req.params.id)
+    if(!images.length){
+        images.push({filename:'abc/b2c63fa2-dd22-498d-a5f9-162a2523a58b.jpg'})
+    }
+    images.forEach(i=>{
+      i.uri = azBlob.generateSasToken(i.filename).uri;
+    })
+    var maps = await db.getPropertyMapsById(req.params.id)
+    maps.forEach(i=>{
+        i.uri = azBlob.generateSasToken(i.filename).uri;
+      })
+      var catalogs = await db.getPropertyCatalogById(req.params.id)
+      catalogs.forEach(i=>{
+        i.uri = azBlob.generateSasToken(i.filename).uri;
+      })
+    var details = await db.getPropertyDetailsById(req.params.id)
+    var property = lot[0]
+    var isAdded = false
+    if(req.session.userid){
+        var dbres =  await db.getSellerFavourites(req.session.userid,req.params.id)
+        if(dbres.length) isAdded = true;
+		biddeposit = dbres[0].bid_deposit;
+    }
+    res.render('portal/property',{biddeposit,property,images,details,isAdded,maps,catalogs,apikey,customer});
+});
+
 router.get('/portal/properties',authCheck,async (req, res) => {
+	var myuserid = req.session.userid;
+	var results = await db.getCustomerById(myuserid)
+	var customer = results[0]
 	var lots = await db.getPropertiesByUserId(req.session.userid);
     lots.forEach(p=>{
         if(!p.img)p.img ='abc/b2c63fa2-dd22-498d-a5f9-162a2523a58b.jpg'
         p.uri = azBlob.generateSasToken(p.img).uri;
       })
-	res.render('portal/properties',{lots:lots,menusel:2});
+	res.render('portal/properties',{lots:lots,menusel:2,customer});
 });
 router.get('/portal/myaccount',authCheck,async (req, res) => {
-	res.render('portal/myaccount',{menusel:7});
+	var myuserid = req.session.userid;
+	var results = await db.getCustomerById(myuserid)
+	var customer = results[0]
+	res.render('portal/myaccount',{menusel:7,customer});
 });
 
 var config = {
@@ -77,7 +142,7 @@ router.get('/portal/deposits',authCheck,async (req, res) => {
 		}
 	}
 	var lots = await db.getPropertiesByUserId(req.session.userid);
-	var total = 3
+	var total = 0
     lots.forEach(p=>{
 		if(p.bid_interest){		
 			total+=p.price
@@ -85,12 +150,15 @@ router.get('/portal/deposits',authCheck,async (req, res) => {
         if(!p.img)p.img ='abc/b2c63fa2-dd22-498d-a5f9-162a2523a58b.jpg'
         p.uri = azBlob.generateSasToken(p.img).uri;
       })
+	  if(total<3){
+		  total = 3;
+	  }
 	  total= total*10/100;
 	  amount= parseInt(total *100);
 	  
 	  var paymentIntent = await stripe.paymentIntents.create({amount:amount,currency: 'gbp', payment_method_types: ['card'],capture_method: 'manual'});
 	  console.log(paymentIntent)
-	res.render('portal/deposits',{total:total,lots:lots,payments,paymentIntent:paymentIntent,menusel:5});
+	res.render('portal/deposits',{customer,total:total,lots:lots,payments,paymentIntent:paymentIntent,total,menusel:5});
 });
 router.get('/portal/amlchecks',authCheck,async (req, res) => {
 	var myuserid = req.session.userid;
@@ -287,21 +355,6 @@ router.post('/portal/fileuploaddetails',async(req,res)=>{
 	}
 	console.log(req.body.filename.name)
 	var results = await db.addVerificationDocument(myuserid,req.body.doctype,req.body.filename.name)
-	res.json({status:true})
-})
-
-router.post('/portal/updateverificationcustomer',async(req,res)=>{
-	var c = req.body
-	var myuserid = req.session.userid;
-	if(req.session.memberid){
-		myuserid = req.session.memberid;	
-	}
-	var mydob = null
-	if(c.dob){
-		mydob = c.dob
-	}
-	console.log(mydob)
-	var results = await db.updateCustomerVerificationDetails(myuserid,mydob,c.nino,c.driving,c.passport)
 	res.json({status:true})
 })
 

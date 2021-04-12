@@ -125,7 +125,7 @@ getAddressHistoryById(id,userid){
 
 getCustomerById(userid){
   return new Promise((resolve,reject)=>{
-      db.query('select * from customers where id = ?',[userid], function (err, result) {
+      db.query('select customers.*,company.name AS companyname, company.entitytypeid ,company.address AS companyaddr,opttitles.name as titlename from customers left join opttitles on opttitles.id=customers.title LEFT JOIN company ON company.id=customers.companyid where customers.id = ?',[userid], function (err, result) {
         if (err) throw err;
         resolve(result)
       })
@@ -142,13 +142,12 @@ getAMLReportsByUser(userid) {
 
 createNewCompany(userid,c){
   return new Promise((resolve,reject)=>{
-
-
-
+    console.log('SEACH COMPANY')
     db.query("select * from customers where id = ?",[userid],async function (err, result) {
       if (err) throw err;
       var companyid = result[0].companyid
       if(companyid){
+        console.log('FOUND COMPANY')
         db.query(`update company set name = ?,entitytypeid= ?, address= ? where id = ?`,[c.companyname,c.companytype,c.companyaddress,companyid],(err,result)=>{
           if (err) throw err;
           resolve(result)
@@ -257,7 +256,7 @@ updateCustomerDetailsNoAddr(userid,title,forename,surname,middlename,mobile){
 }
 updateCustomerVerificationDetails(userid,dob,nino,driving,passport){
   return new Promise((resolve,reject)=>{
-    db.query(`update customers set dob=?,nationalinsurance=?,drivinglicense=?,passport=? where id= ? `,[dob,nino,driving,passport,userid], function (err, result) {
+    db.query(`update customers set dob=?,nationalinsurance=?,drivinglicense=?,passport=?,profile_updated=1 where id= ? `,[dob,nino,driving,passport,userid], function (err, result) {
       if (err) throw err;
       resolve(result)
     })
@@ -461,7 +460,7 @@ getPropertiesByUserId(userid){
     db.query(`SELECT myproperties.*,customerpropertylist.bid_deposit AS bid_interest
     from customerpropertylist 
     left JOIN 
-    (select p.id,p.name as propname,i.img,p.price,p.town,p.county from properties p left join (select propertyid,max(filename) as img from propertyimages group by propertyid) i on i.propertyid = p.id left join customers s on s.id = p.clientid)
+    (select  auctions.id as auctionid, auctions.datetime,auctions.status AS auctionstatus, p.id,p.name as propname,i.img,p.price,p.town,p.county from properties p left join (select propertyid,max(filename) as img from propertyimages group by propertyid) i on i.propertyid = p.id left join customers s on s.id = p.clientid LEFT JOIN auction_properties on p.id = auction_properties.propertyid LEFT JOIN auctions ON auctions.id = auction_properties.auctionid    )
      AS myproperties
     ON myproperties.id = customerpropertylist.propertyid WHERE userid=?
     `,[userid], function (err, result) {
@@ -471,12 +470,28 @@ getPropertiesByUserId(userid){
     //db.end();
   })
 }
-
-savePayment(stripeid,userid){
+getPropertyById(id){
+  return new Promise((resolve,reject)=>{
+    db.query(`select  auctions.id as auctionid, auctions.datetime,auctions.status AS auctionstatus, p.id,p.name as propname,i.img,p.price,p.town,p.county from properties p left join (select propertyid,max(filename) as img from propertyimages group by propertyid) i on i.propertyid = p.id left join customers s on s.id = p.clientid LEFT JOIN auction_properties on p.id = auction_properties.propertyid LEFT JOIN auctions ON auctions.id = auction_properties.auctionid where p.id = ?;`,[id], function (err, result) {
+      if (err) throw err;
+      resolve(result)
+    })
+  })
+}
+savePayment(stripeid,userid,properties){
   return new Promise((resolve,reject)=>{
       db.query('insert into payment_deposits (stripeid, customerid,status) values (?)',[[stripeid,userid,1]], function (err, result) {
         if (err) throw err;
-        resolve(result)
+        var paymentid = result.insertId
+        var paymentlist = []
+        properties.forEach(p=>{
+          paymentlist.push([p,paymentid])
+        })
+        db.query('insert into property_deposits (propertyid,paymentid) values ?',[paymentlist],function(err,result){
+          if (err) throw err;
+          resolve(result)
+        })
+        
       })
     })
 }
@@ -520,14 +535,7 @@ getPropertiesLimit8(){
     //db.end();
   })
 }
-getPropertyById(id){
-  return new Promise((resolve,reject)=>{
-    db.query(`select * from properties where id = ?;`,[id], function (err, result) {
-      if (err) throw err;
-      resolve(result)
-    })
-  })
-}
+
 getPropertyImagesById(id){
   return new Promise((resolve,reject)=>{
     db.query('select * from propertyimages where propertyid = ?;',[id], function (err, result) {

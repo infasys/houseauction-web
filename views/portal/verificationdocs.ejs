@@ -38,8 +38,124 @@ min-height:80px;;
   box-sizing: border-box;
   margin:20px 0px;
 }
+ /* Style the Image Used to Trigger the Modal */
+ #myImg {
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+#myImg:hover {opacity: 0.7;}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+}
+
+/* Modal Content (Image) */
+.modal-content {
+  margin: auto;
+  display: block;
+  width: 90%;
+  max-width: 1200px;
+}
+
+/* Caption of Modal Image (Image Text) - Same Width as the Image */
+#caption {
+  margin: auto;
+  display: block;
+  width: 80%;
+  max-width: 700px;
+  text-align: center;
+  color: #ccc;
+  padding: 10px 0;
+  height: 150px;
+}
+
+/* Add Animation - Zoom in the Modal */
+.modal-content, #caption {
+  animation-name: zoom;
+  animation-duration: 0.6s;
+}
+
+@keyframes zoom {
+  from {transform:scale(0)}
+  to {transform:scale(1)}
+}
+
+/* The Close Button */
+.close {
+  position: absolute;
+  top: 15px;
+  right: 35px;
+  color: #f1f1f1;
+  font-size: 40px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.close:hover,
+.close:focus {
+  color: #bbb;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* 100% Image Width on Smaller Screens */
+@media only screen and (max-width: 700px){
+  .modal-content {
+    width: 100%;
+  }
+} 
   </style>
-<div style='padding:30px;'>
+
+<%
+if(members.length>1){
+%>
+<div class='mycontainer'>
+<div class='dash-box'>
+  <div class='dash-title'>Active Member</div>
+  <div class='dash-content'>
+  <label>You Are Editing Member:</label>
+  <div class='select'><select class='mytxt3' id='memberselect'>
+  <%members.forEach(function(m){
+    
+    var selected = '  '
+    if(m.id==customer.id){
+      selected = ' SELECTED '
+    }%>
+    <option value='<%-m.id%>' <%-selected%> ><%-m.username%></option>
+    <%
+  })%>
+  </select>
+  </div>
+
+  <script>
+
+    $('#memberselect').change(function(){
+      var memberid =  $(this).find(":selected").val() 
+      $.post('/portal/changeactivemember',{memberid:memberid},function(){location.reload()},'json')
+
+    })
+  </script>
+</div>
+</div>
+</div>
+<%
+}
+%>
+<div class='mycontainer'>
+
   <p>Everyone hoping to bid in an auction needs to have photographic ID together with a proof of residency. If you are the successful bidder, the auctions team will take copies of your ID, and they may carry out electronic ID verification as well, in order to meet the HMRC Anti-Money Laundering Regulations. Remote bidders (Telephone/Proxy/Online) will also need to provide this ID before their bid can be accepted.</p>
   <div class='uploadcat'>
   <h3>Photographic ID</h3>
@@ -64,12 +180,15 @@ min-height:80px;;
      <label class='mylbl' style='width:130px;'><%-v.name%>:</label>
      <input type="file" id="myfile-<%-v.id%>" name="myfile" class="rm-input" autocomplete='off' style='margin-right:10px;'/>
      <input type="button" class="mybtn" value="upload" onClick="uploadFile('<%-v.id%>')" class="rm-button" />
-     <div id='uploadeddocresults-<%-v.id%>' class='uploadres'>
-       <% docs.forEach(d=>{
+     <div class='uploadres'>
+     <% docs.forEach(d=>{
          if(d.doctypeid==v.id){%>
-           <a href='<%-d.uri%>'> <img src='<%-d.uri%>' /></a>
+           <img class='mydoc' src='<%-d.uri%>' />
            <%}
          })%>
+         </div>
+     <div id='uploadeddocresults-<%-v.id%>' class='uploadres'>
+       
  
      </div>
  </div>
@@ -102,7 +221,7 @@ min-height:80px;;
     <div id='uploadeddocresults-<%-v.id%>' class='uploadres'>
       <% docs.forEach(d=>{
         if(d.doctypeid==v.id){%>
-          <a href='<%-d.uri%>'> <img src='<%-d.uri%>' /></a>
+         <img class='mydoc' src='<%-d.uri%>' />
           <%}
         })%>
 
@@ -114,7 +233,35 @@ min-height:80px;;
 <div style='clear:both;'></div>
 </div>
 </div>
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+  <!-- The Close Button -->
+  <span class="close">&times;</span>
+
+  <!-- Modal Content (The Image) -->
+  <img class="modal-content" id="img01">
+
+  <!-- Modal Caption (Image Text) -->
+  <div id="caption"></div>
+</div>
 <script>
+  var modal = document.getElementById("myModal");
+  var modalImg = document.getElementById("img01");
+  $('.mydoc').click(function(e){
+    modal.style.display = "block";
+
+  modalImg.src = this.src;
+  captionText.innerHTML = this.alt;
+    e.preventDefault()
+  })
+  var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  
+  modal.style.display = "none";
+} 
 
  var uploadedfilelist = []
  
@@ -152,7 +299,13 @@ min-height:80px;;
       document.getElementById('uploadeddocresults-'+f.doctype).innerHTML=''
      })
      uploadedfilelist.forEach(f=>{
-       document.getElementById('uploadeddocresults-'+f.doctype).innerHTML+='<img src="'+f.filename.uri+'" onerror="this.onerror=null; this.src=\'/lib/icns/ukcreditheader.png\'" class="uploadpreviewimg"/>'
+       document.getElementById('uploadeddocresults-'+f.doctype).innerHTML+='<img src="'+f.filename.uri+'" class="mydoc" onerror="this.onerror=null; this.src=\'/lib/icns/ukcreditheader.png\'" class="uploadpreviewimg"/>'
+       $('.mydoc').click(function(e){
+    modal.style.display = "block";
+  modalImg.src = this.src;
+  captionText.innerHTML = this.alt;
+    e.preventDefault()
+  })
      })
  }   
 

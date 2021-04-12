@@ -1,1 +1,287 @@
 <%- include('../partials/menu-portal.ejs')%>
+<script src="https://js.stripe.com/v3/"></script>
+<%
+
+const formatToCurrency = amount => {
+        return "£" + amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,");
+    };
+%>
+<style>
+    body{
+        background-color: #fff;
+    }
+    .banner{
+        background: url('branding/pngtree-hand-drawn-cartoon-house-print-ad-image_148888.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        height:400px;
+        width:100%;
+    }
+    .submenu{
+        margin:10px 30px;
+        padding:10px 20px;
+        border-bottom:2px solid #000;
+    }
+    .mitem{
+        display: inline-block;
+        margin-right:20px;
+        cursor: pointer;
+    }
+    .right{
+        float:right;
+    }
+    .lotitem{
+        float:left;
+        background: #fff;
+        width:25%;
+        max-width:240px;
+        min-width:140px;
+        margin:30px 0px 30px 30px;
+        cursor: pointer;
+        box-sizing: border-box;
+        border:1px solid #ccc;
+    }
+    .lotitem:hover{
+        border:2px solid #c8102e;
+        box-sizing: border-box;
+
+    }
+    .lotno{
+        height:30px;
+        text-align: center;
+        background-color: #c8102e;
+        color:#fff;
+    }
+    .lotitmlstimgtd{
+        width: 100%;
+padding-top:50%;
+background-repeat: no-repeat;
+background-size: cover;
+box-sizing: border-box;
+background-position: center;
+margin:0px;
+    }
+.assetrow td{
+    background-color: #f8f9fa;
+    border:none;
+    border-bottom: 1px solid #dae0e3;
+    padding:0px;
+}
+
+.myTable{
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+
+}
+.imgcont{
+    box-sizing: border-box;
+    padding:0px  !important;
+}
+.assetrowmain td{
+    background-color: #fff;
+}
+
+.mycontainer{
+    max-width:1200px;
+    min-width: 800px;
+    margin:0px auto;
+}
+.myTable td{
+    vertical-align: top;
+    color:#333;
+        text-align: left;
+        padding:0px;
+        overflow: hidden;
+        font-size: 12px;
+}
+.lotdetailstable{
+    border-collapse: collapse;
+    
+}
+.lotdetailstable td{
+    border:none;
+}
+.myremoveprop{
+    text-decoration: none;
+    color:red;
+    font-weight: 600;
+}
+a{
+    text-decoration: none;
+    color: unset;
+}
+.auctionbox{
+   
+    background:#fff;
+    margin-top:30px;
+}
+.auctiontitle{
+   padding:6px 8px;;
+   font-weight: 600;
+   background:#efefef;
+   margin-top:30px;
+}
+.mytxt{
+    font-size: 14px;;
+    font-weight: 600;
+    padding:4 8px;
+    border-radius: 0px;
+    background-color: #fff3de;
+}
+</style>
+
+    <div class='mycontainer' style='padding:20px;'>
+        <% 
+        var depositpaid = false;
+payments.forEach(p=>{
+  if(p.details){
+    depositpaid = true
+    %> 
+        <div  style='background:#f4f5f8;border:1px solid #ccc;padding:20px;box-sizing: border-box;margin-bottom:20px;'> DEPOSIT PAID: <strong><%-formatToCurrency(p.details.amount/100)%></strong></div>
+     
+    <%
+  }
+})
+%>
+
+<% if(!depositpaid){ if(total>10){ %>
+    
+        <div id="stripe-form">
+          
+            <div  style='background:#f4f5f8;border:1px solid #ccc;padding:20px;box-sizing: border-box;'>
+                <div style='text-align:right;'><img src='/images/Powered by Stripe - blurple.png'/ height=30></div>
+           
+            <div class="form-row">
+              <div class="cc-text">Card Number</div>
+              <input type="text" size="30" autocomplete="off" class="card-number mytxt" value='4000002760003184' style='width:410px;'/>
+            </div>
+            <div class="form-row">
+              <div class="cc-text">CVC</div>
+              <input type="text" size="4" autocomplete="off" class="card-cvc mytxt"  style='width:410px;'/>
+            </div>
+            <div class="form-row">
+              <div class="cc-text">Expiration (MM/YYYY)</div>
+              <input type="text" size="2" class="card-expiry-month mytxt" style='width:200px;'/>
+              <span> / </span>
+              <input type="text" size="4" class="card-expiry-year mytxt" style='width:200px;'/>
+            </div>
+            <input type="hidden" name="amount" value="2000" id="cc-amount">
+            <!-- <button type="submit" class="submit-button">Submit Payment</button> -->
+            <div style='text-align:left'>
+                <div style='font-size:20px;display: inline-block;font-weight: 700;padding:3px;margin-right:20px;'> <%-formatToCurrency(total)%></div><button id='btnTest' class='sitebtn-small2' style='margin-top:20px;'>Make Deposit</button>  
+        </div>
+
+    <div id='paymentbox'></div>
+    </div>
+         </div>
+         <%}else{%>
+            
+            <div  style='background:#f4f5f8;border:1px solid #ccc;padding:20px;box-sizing: border-box;'>You do not have any properties for deposits</div>
+            <%}}%>
+
+        <div id='myproperties'>
+
+        </div>
+        <div style='clear:both'></div>
+    </div>
+
+<script>
+    var lots = <%-JSON.stringify(lots)%>;
+    const formatToCurrency = amount => {
+        return "£" + amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,");
+    };
+    function formatDateTimeMe(date) {
+    var d = new Date(date),
+    month = '' + (d.getMonth() + 1),
+    day = '' + d.getDate(),
+    year = d.getFullYear(),
+    hours = d.getHours(),
+    mins = d.getMinutes();
+    if (month.length < 2)  month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+    if (hours.length < 2) hours = '0' + hours;
+    if (mins.length < 2) mins = '0' + mins;
+   
+    var strTime = `${day}/${month}/${year} ${hours}:${mins}`;
+    return strTime;
+    }
+
+    var auctions = [];
+    lots.forEach(l=>{
+       
+        if(l.auctionid){
+            if(l.auctionstatus == 3){
+                    var found = false;
+            auctions.forEach(a=>{
+                if(a.auctionid == l.auctionid){
+                    found = true;
+                    if(l.bid_interest){
+                        a.lots.push(l)
+                    }
+                }
+            })
+            if(!found){
+                var tmp = []
+                if(l.bid_interest){
+                    tmp=[l]
+                }
+                    auctions.push({auctionid:l.auctionid,datetime:l.datetime,lots:tmp})
+                }
+            }
+        }
+    })
+    var auctiondepositid = []
+    var auctionstr = ''
+    auctions.forEach(a=>{
+        auctionstr += '<div class="auctionbox">'
+            auctionstr += '<div class="auctiontitle">Auction: '+formatDateTimeMe(a.datetime)+'</div>'
+            var lotstr ='<table class="myTable">'
+        a.lots.forEach(l=>{
+        var auctiondate = ''
+        if(l.datetime){
+            auctiondepositid.push(l.id)
+            auctiondate = "Auction Date: "+formatDateTimeMe(l.datetime)+"<div><a href='/portal/deposits'><button class='sitebtn-small2' style='margin-top:10px;'>Bidding Deposit</button></a></div>"
+        }
+        lotstr +="<tr class='assetrow'>";
+        lotstr +="<td style='border-bottom:0px;width:200px;'><div class='lotitmlstimgtd' style='background-image: url("+l.uri+");'>&nbsp;</div></td>";
+        lotstr +="<td style='width:300px;'><table class='lotdetailstable' width='100%' height='110px'><tr><td style='vertical-align:top;padding:10px 10px;'><a href='/portal/property/"+l.id+"' >"+l.propname+"</a></td></tr><tr height='100%'><td style='vertical-align: bottom;padding:0px 10px;'>*Guide | <strong>"+formatToCurrency(l.price)+"</strong>+ (plus fees)</td></tr></table></td>"
+        lotstr +="<td><table class='lotdetailstable' width='100%' height='110px'><tr><td style='vertical-align:top;padding:10px 10px;text-align:right;'>"+auctiondate+"</td></tr><tr height='100%'><td style='vertical-align: bottom;text-align:right;padding:10px 10px;'><a class='myremoveprop' href='/remove'><i class='far fa-heart'></i></a></td></tr></table></td>"
+        lotstr +="</tr>";
+    })
+     lotstr +='</table>'
+        auctionstr += lotstr+'</div>'
+    })
+
+    $('#myproperties').append(auctionstr);
+</script>
+
+<script>
+    var spinner ='<div class="sk-chase"><div class="sk-chase-dot"></div><div class="sk-chase-dot"></div><div class="sk-chase-dot"></div><div class="sk-chase-dot"></div><div class="sk-chase-dot"></div><div class="sk-chase-dot"></div></div>';
+    var paymentIntent = <%-JSON.stringify(paymentIntent)%>;
+    $('#btnTest').click(function(){
+    
+          var stripe = Stripe('pk_test_EwHGEw5dBO9G4c7MiWqic4Vc');
+          var card = {
+      number: $('.card-number').val(),
+      cvc: $('.card-cvc').val(),
+      exp_month: $('.card-expiry-month').val(),
+      exp_year: $('.card-expiry-year').val(),
+      properties: auctiondepositid
+    }
+    $('#paymentbox').html(spinner+'processing payment');
+    $.post('/processCard',card,function(data){
+              stripe.confirmCardPayment(paymentIntent.client_secret, {payment_method:data.id})
+              .then(function(result) {
+      console.log(result)
+        if(result.error){
+          $('#paymentbox').html('Payment Failed');
+        }else{
+          $('#paymentbox').html('Payment Successful');
+        }
+    });
+          },'json')
+          
+  
+  })
+  </script>

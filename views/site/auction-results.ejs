@@ -1,7 +1,7 @@
 <%- include('../partials/header.ejs')%>
 <%- include('../partials/banner-top.ejs')%>
 <div class="maindivider" ></div>
-<div class='container'>
+<div class='mycontainer'>
 <div style='padding:20px 0px;'>
    
 <div class="maindivider" ></div>
@@ -11,6 +11,7 @@
       min-width: 400px;
     }
     </style>
+
 <%
 const formatToCurrency = amount => {
   return "£" + amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,");
@@ -28,6 +29,7 @@ lots.forEach(data=>{%><div class='lotitem '>
 </div><%})%>
 <div style='clear:both;'></div>
 <div class="maindivider" ></div>
+</div>
 </div>
 </div>
 </div>

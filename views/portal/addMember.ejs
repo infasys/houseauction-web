@@ -1,0 +1,60 @@
+<%- include('../partials/menu-portal.ejs')%>
+
+<style>
+     .mycontainer {
+    max-width: 600px;
+    min-width: 800px;
+    margin: 0px auto;
+    padding:20px;
+}
+  </style>
+    <div class="mycontainer" style='margin-top:100px;'>
+        <div class="clearfix"></div>
+        <p>
+            Please enter user email address, this will then add the customer to your company, if the user exist already they will recieve an invite to join the company.
+        </p>
+   <div class="panel panel-default">
+                <div class="panel-heading red">
+                    <h4 class="panel-title">Account Details</h4>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-14">
+                            <div class="form-group">
+                                <label class="col-sm-6" for="Email">Email Address</label>
+                                <div class="col-sm-18">
+                                    <input class="form-control" class='mytxt' id='txtemail' data-val="true" data-val-email="The Email Address field is not a valid e-mail address." data-val-maxlength="The field Email Address must be a string or array type with a maximum length of &#39;100&#39;." data-val-maxlength-max="100" data-val-required="The Email Address field is required." id="Email" name="Email" type="text" value="" />
+                                    <span class="field-validation-valid" data-valmsg-for="Email" data-valmsg-replace="true"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+              
+                <div class="gray tile">
+                    <div class="spacer"></div>
+                    <input type="submit" class="sitebtn-small2" style='float:right;' value="Register" data-track="true" data-track-cat="Enquiry" data-track-action="Submit" class='addnew' data-track-label="Account (UK)" id='addmember'/>
+                </div>
+            </div>
+        </div>
+<script>
+    function validateEmail(email) {
+  const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(email);
+}
+    $('#addmember').click(function(){
+        var email = $('#txtemail').val();
+        var res = validateEmail(email)
+        if(res){
+            $.post('/member/addmember',{email:email},function(data){
+                
+               location.href = '/portal/company'
+            
+            },'json')
+        }else{
+            alert('email not valid')
+        }
+    })
+</script>
