@@ -26,10 +26,24 @@ function formatDateTimeMe(date) {
         vertical-align: middle;
     }
     .checklist>div{
+        -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
         font-size: 14px;
-        font-weight: 400;
+        font-weight: 600;
         margin-bottom:10px;
+        vertical-align: top;
     }
+    .checklist>div>i{
+        -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+        font-size: 20px;
+        font-weight: 600;
+        display: inline-block;
+        margin-right: 5px;
+        vertical-align: middle;
+    }
+
+
     .sectionError{
     color:rgb(199, 0, 0);
     font-weight: 700;
@@ -40,8 +54,15 @@ function formatDateTimeMe(date) {
     min-width: 800px;
     margin:0px auto;
 }
+.startbtn{
+    background-color:#188601;
+    border-radius: 10px;
+    font-size:18px;
+    padding:8px 16px;
+}
 </style>
 <div class='mycontainer' style='padding:20px;'>
+ 
         <div class='dash-box' >
             <div class='dash-title'>Welcome</div>
             <div class='dash-content'>
@@ -49,22 +70,15 @@ function formatDateTimeMe(date) {
                 <p>Auction House would like to ensure that your process of working with us is as smooth as possible. This portal allows you to do meet the prerequisite to bid on a property.</p>
                 <p>Regards</p>
                 <p>Auction House</p>
+                <div style='text-align: center;padding-top:40px;'>
+                    <a href='/portal/profile'><button class='sitebtn-small2 startbtn'>Start Your Journey</button></a>
+                </div>
             </div>
-        </div>
+        </div> 
 
 
 <div class='inrow-50' style='padding-right:30px;box-sizing: border-box;'>
-    <div class='dash-box' style='min-height:300px;'>
-        <div class='dash-title'>AML Status</div>
-        <div class='dash-content'>
-            WAITING
-        </div>
-    </div>
-    
-
-
-</div>
-<div class='inrow-50'>
+ 
     <div class='dash-box' style='min-height:300px;'>
         <div class='dash-title'>Online Bidding Eligibility</div>
         <div class='dash-content'>
@@ -77,6 +91,16 @@ function formatDateTimeMe(date) {
     </div>
     
 
+</div>
+<div class='inrow-50'>
+
+    <div class='dash-box' style='min-height:300px;'>
+        <div class='dash-title'>AML Status</div>
+        <div class='dash-content'>
+            WAITING
+        </div>
+    </div>
+    
 
 </div>
 <div style='clear:both;'></div>
