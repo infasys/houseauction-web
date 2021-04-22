@@ -1460,4 +1460,27 @@ option {
   padding: 30px;
 }
 
+.sitetxtc {
+  font-family: "Open Sans", sans-serif;
+  padding: 16px 12px !important;
+  border: 1px solid #ddd;
+  resize: none;
+  width: 100%;
+  margin-bottom: 10px;
+  font-size: 22px !important;
+  box-sizing: border-box;
+  border: 0 solid #f4f4f4 !important;
+  font-weight: 500 !important;
+  box-shadow: 0px 12px 5px -6px rgba(210, 210, 210, 0.75);
+}
+
+.sitetxtc::placeholder {
+  color: #595959 !important;
+  font-weight: 500 !important;
+}
+
+.footer a {
+  color: #fff;
+}
+
 /*# sourceMappingURL=default.css.map */
