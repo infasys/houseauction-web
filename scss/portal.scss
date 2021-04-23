@@ -110,7 +110,7 @@ header{
     .dash-title{
       font-family: $myfont;
       padding:6px 8px;
-      font-size:18px;
+      font-size:13px;
       font-weight: 700;
       background:#b82b35;
       color:#fff;
@@ -119,7 +119,7 @@ header{
   .dash-content{
       padding:20px;
       font-family: $myfont;
-      font-size:16px;
+      font-size:13px;
   }
 }
 
@@ -245,11 +245,11 @@ color: #777;
 }
   .mytxt{
       border-radius:7px;
-      font-size:16px;
+      font-size:13px;
       width:100%;
       border:1px solid #ddd;
       outline: none;
-      padding: 1em;
+      padding: 8px 12px;
       color:#000;
       margin-top:10px;
       font-family: $myfont

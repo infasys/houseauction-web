@@ -419,6 +419,7 @@ footer {
 .lotlistwrapper {
   display: flex;
   flex-wrap: wrap;
+  margin-bottom: 60px;
 }
 
 .lottitle {
@@ -434,18 +435,27 @@ footer {
   box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
-.lotitem {
+.lotitemholder {
   flex-wrap: wrap;
   overflow: hidden;
   flex: 0 0 33%;
-  padding: 20px;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.lotitem {
   box-sizing: border-box;
   vertical-align: top;
+  border-top: 5px solid #C8102E;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+.lotitem:hover {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
 }
 
 .propertymainprice {
   font-size: 30px;
-  color: #c10303;
+  color: #C8102E;
   font-weight: 900;
   margin-bottom: 20px;
 }
@@ -462,16 +472,16 @@ footer {
   background-size: cover;
   box-sizing: border-box;
   background-position: center;
-  border-radius: 8px;
 }
 
 .lotno {
   font-family: "Roboto", sans-serif;
-  font-weight: 700;
-  color: #000;
-  font-weight: 900;
-  font-size: 18px;
-  padding-bottom: 10px;
+  font-weight: 500;
+  color: #fff;
+  font-size: 16px;
+  background: #C8102E;
+  float: left;
+  padding: 5px 10px;
 }
 
 .lotPrice {
@@ -498,8 +508,8 @@ footer {
 .lotlink {
   display: block;
   padding: 10px 0px;
-  color: #b82b35;
-  font-weight: 500;
+  color: #C8102E;
+  font-weight: 700;
   text-decoration: none;
 }
 
@@ -793,6 +803,13 @@ padding-top: 32.5%;
   font-size: 15px;
 }
 
+h4 {
+  border-left: 6px solid #C8102E;
+  padding: 4px;
+  padding-left: 24px;
+  font-size: 24px;
+}
+
 .contactwrapper {
   background: #f2f2f2;
   padding: 20px 0px;
@@ -934,7 +951,7 @@ li.activePage > a {
 .dash-box .dash-title {
   font-family: "Open Sans", sans-serif;
   padding: 6px 8px;
-  font-size: 18px;
+  font-size: 13px;
   font-weight: 700;
   background: #b82b35;
   color: #fff;
@@ -943,7 +960,7 @@ li.activePage > a {
 .dash-box .dash-content {
   padding: 20px;
   font-family: "Open Sans", sans-serif;
-  font-size: 16px;
+  font-size: 13px;
 }
 
 select {
@@ -1080,11 +1097,11 @@ option {
 
 .mytxt {
   border-radius: 7px;
-  font-size: 16px;
+  font-size: 13px;
   width: 100%;
   border: 1px solid #ddd;
   outline: none;
-  padding: 1em;
+  padding: 8px 12px;
   color: #000;
   margin-top: 10px;
   font-family: "Open Sans", sans-serif;

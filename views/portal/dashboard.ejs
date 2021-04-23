@@ -12,7 +12,7 @@ function formatDateTimeMe(date) {
     if (day.length < 2) day = '0' + day;
     if (hours.length < 2) hours = '0' + hours;
     if (mins.length < 2) mins = '0' + mins;
-   
+   console.log(mins)
     var strTime = `${day}/${month}/${year} ${hours}:${mins}`;
     return strTime;
     }
@@ -110,7 +110,9 @@ function formatDateTimeMe(date) {
          <div class='dash-content'  style='text-align: center;''>
              <div id='verficationcoderequest'>
              <p>Your account still requires verification, you should have recieved a link with a code:</p>
-             <div style='width:400px;max-width:100%;margin:0px auto;text-align: center;'><div id='error-code' class='sectionError'></div><input id='verficationcode' type='text' class='mytxt' placeholder="verification code" style='text-align:center;box-sizing: border-box;font-weight:700'/><button class='sitebtn-small2 ' id='btnVerify'>Verify</button></div>
+             <div style='width:400px;max-width:100%;margin:0px auto;text-align: center;'><div id='error-code' class='sectionError'></div><input id='verficationcode' type='text' class='mytxt' placeholder="verification code" style='text-align:center;box-sizing: border-box;font-weight:700'/>
+             <button class='sitebtn-small2 ' id='btnVerify' style='margin-top:30px;'>Verify</button>
+            </div>
              <div style='clear:both'></div>
              </div>
          </div>

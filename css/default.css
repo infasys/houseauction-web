@@ -530,6 +530,7 @@ footer {
 .lotlistwrapper {
   display: flex;
   flex-wrap: wrap;
+  margin-bottom: 60px;
 }
 
 .lottitle {
@@ -545,18 +546,27 @@ footer {
   box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
-.lotitem {
+.lotitemholder {
   flex-wrap: wrap;
   overflow: hidden;
   flex: 0 0 33%;
-  padding: 20px;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.lotitem {
   box-sizing: border-box;
   vertical-align: top;
+  border-top: 5px solid #C8102E;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+.lotitem:hover {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
 }
 
 .propertymainprice {
   font-size: 30px;
-  color: #c10303;
+  color: #C8102E;
   font-weight: 900;
   margin-bottom: 20px;
 }
@@ -573,16 +583,16 @@ footer {
   background-size: cover;
   box-sizing: border-box;
   background-position: center;
-  border-radius: 8px;
 }
 
 .lotno {
   font-family: "Roboto", sans-serif;
-  font-weight: 700;
-  color: #000;
-  font-weight: 900;
-  font-size: 18px;
-  padding-bottom: 10px;
+  font-weight: 500;
+  color: #fff;
+  font-size: 16px;
+  background: #C8102E;
+  float: left;
+  padding: 5px 10px;
 }
 
 .lotPrice {
@@ -609,8 +619,8 @@ footer {
 .lotlink {
   display: block;
   padding: 10px 0px;
-  color: #b82b35;
-  font-weight: 500;
+  color: #C8102E;
+  font-weight: 700;
   text-decoration: none;
 }
 
@@ -902,6 +912,13 @@ padding-top: 32.5%;
 .catdesc {
   margin-top: 4px;
   font-size: 15px;
+}
+
+h4 {
+  border-left: 6px solid #C8102E;
+  padding: 4px;
+  padding-left: 24px;
+  font-size: 24px;
 }
 
 .contactwrapper {
