@@ -1,13 +1,7 @@
 .contactwrapper{
-    background: #f2f2f2;
+    background: #ececec;
     padding:20px 0px;
     box-sizing: border-box;
-}
-.contactbox{
- 
-    width:80%;
-    margin: 20px auto;
-    padding:20px;
 }
 .inrowf{
     margin: 5px auto;
@@ -18,10 +12,26 @@
 }
 .inrow-25f{
     flex: 1;
-    padding:5px 20px;
+    padding:5px 5px;
     box-sizing: border-box;
 }
 .outrowf{
     display: flex;
     flex-direction: column;;
 }
+
+.sitetxtc{
+    font-family: 'Brandon Grotesque';
+    padding:7px 12px !important;
+    border:1px solid #ddd;
+    resize: none;
+    width:100%;
+    margin-bottom: 10px;
+    font-size: 16px;
+    box-sizing: border-box;
+    border: 0 solid #f4f4f4;
+  }
+  .sitetxtc::placeholder{
+    color: #595959 !important;
+    font-weight:500 !important;
+  }

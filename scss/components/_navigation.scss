@@ -1,6 +1,4 @@
 
-@import 'variables';
-
 .nav{
   font-size: 16px;
 }
@@ -61,7 +59,8 @@ ul.nav> li ul {
   position: relative;
   }
   ul.nav> li ul li a{
-    color:rgb(157, 157, 157);
+    color:$menufont;
+    font-weight: 600;
   }
   ul.nav> li ul li:hover>a{
     color:#000;
@@ -78,7 +77,6 @@ ul.nav> li ul {
   .nav>li:hover>a,
   .nav>li:focus-within>a{
     color: #000;
-    text-shadow: 0px 0px 1px black;
   }
   .nav>li:hover,
   .nav>li:focus-within {
@@ -89,3 +87,57 @@ ul.nav> li ul {
     color: #000;
     text-shadow: 0px 0px 1px black;
   }
+
+
+header{
+  background: $primary;
+  padding:1em 0;
+  box-shadow: 0px 15px 10px -15px rgb(199, 199, 199);  
+  a{
+      color:#000;
+      text-decoration: none;
+  }
+  a.logo{
+      font-weight: bold;
+      img{
+          height:40px;
+      }
+  }
+  nav {
+
+      float:right;
+      
+      ul{
+          list-style-type: none;
+          margin: 0;
+          display: flex;
+      }
+      li a{
+        font-family: 'Brandon Grotesque';
+          color:#000;
+          padding:1em;
+        font-weight: 700;
+          
+      }
+  }
+}
+
+
+.caret:before {
+	font-family: "Font Awesome 5 Free";
+	font-weight: 900;
+content: " \f107";
+padding-left: 15px;
+
+}
+
+
+.highlight{
+  background-color:$red-primary;
+  color:#fff  !important;
+  font-weight:700;
+  border-radius: 5px;
+  margin-left: 20px;
+  text-shadow:none!important;
+  padding: 8px 16px;
+}

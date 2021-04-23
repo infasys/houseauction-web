@@ -238,59 +238,11 @@
     transform: scale(1);
   }
 }
-/*
-    font-family: 'DM Mono', monospace;
-    font-family: 'Open Sans', sans-serif;
-    font-family: 'Open Sans Condensed', sans-serif;
-    font-family: 'Roboto', sans-serif;
-    font-family: 'Roboto Condensed', sans-serif;
-    font-family: 'Roboto Mono', monospace;
-    font-family: 'Roboto Slab', serif;
-
-*/
-/*
-    font-family: 'DM Mono', monospace;
-    font-family: 'Open Sans', sans-serif;
-    font-family: 'Open Sans Condensed', sans-serif;
-    font-family: 'Roboto', sans-serif;
-    font-family: 'Roboto Condensed', sans-serif;
-    font-family: 'Roboto Mono', monospace;
-    font-family: 'Roboto Slab', serif;
-
-*/
-a {
-  text-decoration: none;
-}
-
-.categorychoicemsg {
-  font-weight: 600;
-}
-
-/*
-    font-family: 'DM Mono', monospace;
-    font-family: 'Open Sans', sans-serif;
-    font-family: 'Open Sans Condensed', sans-serif;
-    font-family: 'Roboto', sans-serif;
-    font-family: 'Roboto Condensed', sans-serif;
-    font-family: 'Roboto Mono', monospace;
-    font-family: 'Roboto Slab', serif;
-
-*/
 footer {
   background: #f4f5f8;
   color: #575757;
 }
 
-/*
-    font-family: 'DM Mono', monospace;
-    font-family: 'Open Sans', sans-serif;
-    font-family: 'Open Sans Condensed', sans-serif;
-    font-family: 'Roboto', sans-serif;
-    font-family: 'Roboto Condensed', sans-serif;
-    font-family: 'Roboto Mono', monospace;
-    font-family: 'Roboto Slab', serif;
-
-*/
 .tabs {
   position: relative;
   min-height: 200px;
@@ -401,16 +353,6 @@ input:checked + label.faq-question::before {
   box-sizing: border-box;
 }
 
-/*
-    font-family: 'DM Mono', monospace;
-    font-family: 'Open Sans', sans-serif;
-    font-family: 'Open Sans Condensed', sans-serif;
-    font-family: 'Roboto', sans-serif;
-    font-family: 'Roboto Condensed', sans-serif;
-    font-family: 'Roboto Mono', monospace;
-    font-family: 'Roboto Slab', serif;
-
-*/
 footer {
   background: #f4f5f8;
   color: #575757;
@@ -803,23 +745,10 @@ padding-top: 32.5%;
   font-size: 15px;
 }
 
-h4 {
-  border-left: 6px solid #C8102E;
-  padding: 4px;
-  padding-left: 24px;
-  font-size: 24px;
-}
-
 .contactwrapper {
-  background: #f2f2f2;
+  background: #ececec;
   padding: 20px 0px;
   box-sizing: border-box;
-}
-
-.contactbox {
-  width: 80%;
-  margin: 20px auto;
-  padding: 20px;
 }
 
 .inrowf {
@@ -832,13 +761,30 @@ h4 {
 
 .inrow-25f {
   flex: 1;
-  padding: 5px 20px;
+  padding: 5px 5px;
   box-sizing: border-box;
 }
 
 .outrowf {
   display: flex;
   flex-direction: column;
+}
+
+.sitetxtc {
+  font-family: "Brandon Grotesque";
+  padding: 7px 12px !important;
+  border: 1px solid #ddd;
+  resize: none;
+  width: 100%;
+  margin-bottom: 10px;
+  font-size: 16px;
+  box-sizing: border-box;
+  border: 0 solid #f4f4f4;
+}
+
+.sitetxtc::placeholder {
+  color: #595959 !important;
+  font-weight: 500 !important;
 }
 
 /*
@@ -865,7 +811,7 @@ h4 {
 body {
   background: #f4f5f8;
   margin: 0;
-  font-family: "Open Sans", sans-serif;
+  font-family: "Roboto", sans-serif;
   font-size: 14px;
 }
 
@@ -910,7 +856,7 @@ li.activePage > a {
 
 .nav li > a {
   font-size: 12px;
-  font-family: "Open Sans", sans-serif;
+  font-family: "Roboto", sans-serif;
   font-weight: 600;
   line-height: 24px;
   padding: 6px 12px;
@@ -949,7 +895,7 @@ li.activePage > a {
   box-shadow: rgba(0, 0, 0, 0.133) 0px 3.2px 7.2px 0px, rgba(0, 0, 0, 0.11) 0px 0.6px 1.8px 0px;
 }
 .dash-box .dash-title {
-  font-family: "Open Sans", sans-serif;
+  font-family: "Roboto", sans-serif;
   padding: 6px 8px;
   font-size: 13px;
   font-weight: 700;
@@ -959,7 +905,7 @@ li.activePage > a {
 }
 .dash-box .dash-content {
   padding: 20px;
-  font-family: "Open Sans", sans-serif;
+  font-family: "Roboto", sans-serif;
   font-size: 13px;
 }
 
@@ -1104,7 +1050,7 @@ option {
   padding: 8px 12px;
   color: #000;
   margin-top: 10px;
-  font-family: "Open Sans", sans-serif;
+  font-family: "Roboto", sans-serif;
 }
 
 .select {
@@ -1161,7 +1107,7 @@ option {
 
 .sitebtn-small {
   color: #fff;
-  font-family: "Open Sans", sans-serif;
+  font-family: "Roboto", sans-serif;
   background: #cd1638;
   padding: 16px 20px;
   font-size: 16px;

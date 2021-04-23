@@ -1,8 +1,20 @@
 /* You can add global styles to this file, and also import other style files */
 @import url('https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Open+Sans+Condensed:ital,wght@0,300;0,700;1,300&family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700&family=Roboto+Condensed:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Roboto+Mono:wght@300;400;500;600;700&family=Roboto+Slab:wght@100;200;300;400;500;600;700;800;900&family=Roboto:wght@300;400;500;700&display=swap');
 
+$primary :#fff;
+$test :rgb(255, 154, 2); 
+$menufont:#6f6f6f;
+$bglight:rgb(242, 242, 242);
+$red-primary:#C8102E;
+$primary :#fff;
+$test :rgb(255, 154, 2);
+$menufont:#777;
+$bglight:#f4f5f8;
+$myfont: 'Roboto', sans-serif;
+$myfont_a: 'Roboto', sans-serif;
+$myfont_b: 'Roboto', sans-serif;
 
-@import 'components/ribbons','components/spinner', 'components/variables','components/site','components/footer','components/guide','components/auction','components/contactform';
+@import 'components/ribbons','components/spinner','components/site','components/footer','components/guide','components/auction','components/contactform';
 
 /*
     font-family: 'DM Mono', monospace;
@@ -14,11 +26,6 @@
     font-family: 'Roboto Slab', serif;
 
 */
-$myfont: 'Open Sans', sans-serif;
-$primary :#fff;
-$test :rgb(255, 154, 2);
-$menufont:#777;
-$bglight:#f4f5f8;
 
 * {
     -webkit-font-smoothing: antialiased;

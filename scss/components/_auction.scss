@@ -1,4 +1,4 @@
-@import 'variables';
+
 footer{
     background:$bglight;
     color: #575757;
@@ -42,7 +42,7 @@ width: 100%;
 
 .propertymainprice{
     font-size: 30px;
-    color:#C8102E;
+    color:$red-primary;
     font-weight: 900;
     margin-bottom:20px;
 }
@@ -361,12 +361,4 @@ font-size: 16px;
 .catdesc{
 margin-top:4px;
 font-size: 15px;
-}
-
-h4{
-    border-left:6px solid #C8102E;
-   
-    padding:4px;
-    padding-left:24px;
-    font-size: 24px;;
 }
