@@ -64,22 +64,19 @@
     <div style='clear:both;'></div>
 <%
 const formatToCurrency = amount => {
-  return "£" + amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,");
+  return "£" + amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
 
 lots.forEach(data=>{%>
-    <div class='lotitem-list'>
- 
-    <div class='lotitmlstimg-list' style='background-image: url(<%-data.uri%>);'></div>
-   <div style='float:left;padding:5px 20px;'>
- 
+    <div class='lotitem-list' style='display: flex;'>
+       
+    <div class='lotitmlstimg-list' style='background-image: url(<%-data.uri%>);float:none'> <div class='lotno'>LOT <%-data.id%></div></div>
+        <div style='display: flex;flex-direction: column;flex:1;'>
     <div class='lotDesc-list'><%-data.propname%></div>
-    <div class='lotPrice'>Guide Price <%-formatToCurrency(data.price)%> + fees</div>
-    <a class='lotlink' href='/lot/details/<%-data.id%>'>Full details  	&#8594; </a>
+    <div class='lotPrice' >*<%-formatToCurrency(data.price)%>+</div>
+   
+    <a class='lotlink' href='/lot/details/<%-data.id%>' style='text-align:right;'>Full details  	&#8594; </a>
     </div>
-
-    <div class='lotno-list'>Lot No.<%-data.id%></div>
-    <div style='clear:both'></div>
 </div>
 
 <%})%>

@@ -472,7 +472,7 @@ getPropertiesByUserId(userid){
 }
 getPropertyById(id){
   return new Promise((resolve,reject)=>{
-    db.query(`select  auctions.id as auctionid, auctions.datetime,auctions.status AS auctionstatus, p.id,p.name as propname,i.img,p.price,p.town,p.county from properties p left join (select propertyid,max(filename) as img from propertyimages group by propertyid) i on i.propertyid = p.id left join customers s on s.id = p.clientid LEFT JOIN auction_properties on p.id = auction_properties.propertyid LEFT JOIN auctions ON auctions.id = auction_properties.auctionid where p.id = ?;`,[id], function (err, result) {
+    db.query(`select  auctions.id as auctionid, auctions.datetime,auctions.status AS auctionstatus, p.id,p.name as propname,i.img,p.price,p.town,p.county,p.latitude,p.longitude from properties p left join (select propertyid,max(filename) as img from propertyimages group by propertyid) i on i.propertyid = p.id left join customers s on s.id = p.clientid LEFT JOIN auction_properties on p.id = auction_properties.propertyid LEFT JOIN auctions ON auctions.id = auction_properties.auctionid where p.id = ?;`,[id], function (err, result) {
       if (err) throw err;
       resolve(result)
     })
@@ -508,7 +508,7 @@ getPayments(userid){
 getProperties(){
   return new Promise((resolve,reject)=>{
   //  db = mysql.createConnection(params);
-    db.query('select p.id,p.name as propname,p.town,CONCAT(s.forename,", ",s.surname) as sellername,i.img,p.price,p.town,p.county from properties p left join (select propertyid,max(filename) as img from propertyimages group by propertyid) i on i.propertyid = p.id left join customers s on s.id = p.clientid;', function (err, result) {
+    db.query('select p.id,p.name as propname,p.latitude,p.longitude,p.town,CONCAT(s.forename,", ",s.surname) as sellername,i.img,p.price,p.town,p.county from properties p left join (select propertyid,max(filename) as img from propertyimages group by propertyid) i on i.propertyid = p.id left join customers s on s.id = p.clientid;', function (err, result) {
       if (err) throw err;
       resolve(result)
     })

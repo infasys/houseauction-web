@@ -57,33 +57,112 @@
   }
 </style>
 <div class="maindivider" style='margin-top:60px;' ></div>
-<div class='mycontainer'>
-   
+
     <div class='auctionresultsmenu'><div style='float:right;'><div class='mitem'><a href='/auction-lots'><i class="fa fa-th-large"></i>&nbsp;&nbsp;&nbsp;Grid View</a></div><div class='mitem'> <a href='/auction-maps'><i class="fa fa-map-marker-alt"></i>Map View</a></div><div class='mitem'><a href='/auction-lots-list'><i class="fa fa-list"></i>&nbsp;&nbsp;&nbsp;List View</a></div><div style='clear:both;'></div></div></div>
     <div class="maindivider" ></div>
     <div style='clear:both;'></div>
+    <div style='display:flex;height:80%;'>
+        <div style='width:800px;height:100%;overflow-y: scroll;'>
 <%
 const formatToCurrency = amount => {
-  return "£" + amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,");
+  return "£" + amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
-
 lots.forEach(data=>{%>
-    <div class='lotitem-list'>
- 
-    <div class='lotitmlstimg-list' style='background-image: url(<%-data.uri%>);'></div>
-   <div style='float:left;padding:5px 20px;'>
- 
-    <div class='lotDesc-list'><%-data.propname%></div>
-    <div class='lotPrice'>Guide Price <%-formatToCurrency(data.price)%> + fees</div>
-    <a class='lotlink' href='/lot/details/<%-data.id%>'>Full details  	&#8594; </a>
+    <div class='lotitem-list' style='display: flex;'>
+       
+    <div class='lotitmlstimg-list' style='background-image: url(<%-data.uri%>);float:none'> <div class='lotno'>LOT <%-data.id%></div></div>
+        <div style='display: flex;flex-direction: column;flex:1;'>
+    <div class='lotDesc-list' style='font-size: 14px;;'><%-data.propname%></div>
+    <div class='lotPrice' >*<%-formatToCurrency(data.price)%>+</div>
+   
+    <a class='lotlink' href='/lot/details/<%-data.id%>' style='text-align:right;'>Full details  	&#8594; </a>
     </div>
-
-    <div class='lotno-list'>Lot No.<%-data.id%></div>
-    <div style='clear:both'></div>
 </div>
 
 <%})%>
-
+</div>
+<div style='background:#b82b35;width:100%' id='map'>sdfsdfa</div>
 </div>
 <div style='padding:100px;'></div>
 <%- include('../partials/footer.ejs')%>
+<script>
+
+
+    const mylots = <%-JSON.stringify(lots);%>;
+
+    
+
+  let map;
+
+  function initMap() {
+  map = new google.maps.Map(document.getElementById("map"), {
+    center: { lat: 51.373809814453125, lng: -0.09735748916864395},
+    zoom: 10,
+  });
+
+  const infoWindow = new google.maps.InfoWindow();
+
+
+  var markers = []
+
+  mylots.forEach(function(p){
+
+
+     var marker = new google.maps.Marker({
+         position: { lat: Number(p.latitude), lng:Number(p.longitude)},
+         map,
+        title: p.propname,
+       /* label: 'Lot No: '+p.id,*/
+
+     })
+
+     var content = `<div>${p.propname}</div><div class='lotitmlstimg' style='height:100px;width:200px;background-image: url(${p.uri});'></div>`
+     marker.addListener("click", () => {
+      infoWindow.close();
+      infoWindow.setContent(content);
+      infoWindow.open(marker.getMap(), marker);
+    });
+
+  })
+
+  const contentString =
+    '<div id="content">' +
+    '<div id="siteNotice">' +
+    "</div>" +
+    '<h1 id="firstHeading" class="firstHeading">Uluru</h1>' +
+    '<div id="bodyContent">' +
+    "<p><b>Uluru</b>, also referred to as <b>Ayers Rock</b>, is a large " +
+    "sandstone rock formation in the southern part of the " +
+    "Northern Territory, central Australia. It lies 335&#160;km (208&#160;mi) " +
+    "south west of the nearest large town, Alice Springs; 450&#160;km " +
+    "(280&#160;mi) by road. Kata Tjuta and Uluru are the two major " +
+    "features of the Uluru - Kata Tjuta National Park. Uluru is " +
+    "sacred to the Pitjantjatjara and Yankunytjatjara, the " +
+    "Aboriginal people of the area. It has many springs, waterholes, " +
+    "rock caves and ancient paintings. Uluru is listed as a World " +
+    "Heritage Site.</p>" +
+    '<p>Attribution: Uluru, <a href="https://en.wikipedia.org/w/index.php?title=Uluru&oldid=297882194">' +
+    "https://en.wikipedia.org/w/index.php?title=Uluru</a> " +
+    "(last visited June 22, 2009).</p>" +
+    "</div>" +
+    "</div>";
+
+    
+//     const marker = new google.maps.Marker({
+//     position: uluru,
+//     map,
+//     title: "Uluru (Ayers Rock)",
+//   });
+
+//   const infowindow = new google.maps.InfoWindow({
+//     content: contentString,
+//   });
+//   marker.addListener("click", () => {
+//     infowindow.open(map, marker);
+//   });
+}
+
+</script>
+<script defer
+    src="https://maps.googleapis.com/maps/api/js?key=<%-apikey%>&callback=initMap">
+</script>

@@ -121,7 +121,8 @@ router.get('/auction-maps',async (req,res)=>{
         if(!p.img)p.img ='abc/b2c63fa2-dd22-498d-a5f9-162a2523a58b.jpg'
         p.uri = azBlob.generateSasToken(p.img).uri;
       })
-    res.render('site/auction-maps',{lots,msg:''});
+      var apikey = process.env.GOGGLEMAPS_API
+    res.render('site/auction-maps',{lots,msg:'',apikey});
 })
 
 
