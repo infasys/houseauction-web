@@ -16,8 +16,9 @@ lots.forEach(data=>{%><div class='lotitemholder'><div class='lotitem'>
       
     <div class='lotitmlstimg' style='background-image: url(<%-data.uri%>);'></div>
     <div style='padding:10px;box-sizing: border-box;'>
+      <div class='lotPrice'>*<%-formatToCurrency(data.price)%>+</div>
+    <div style='clear:both;'></div>
     <div class='lotDesc'><%-data.propname%></div>
-    <div class='lotPrice'>Guide Price <%-formatToCurrency(data.price)%> + fees</div>
     <a class='lotlink' href='/lot/details/<%-data.id%>'>Full details  &nbsp;&nbsp;&nbsp;	&#8594; </a>
     <div style='clear:both'></div></div>
   </div></div><%})%>
