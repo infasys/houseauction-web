@@ -58,7 +58,7 @@
 </style>
 <div class="maindivider" style='margin-top:60px;' ></div>
 <div class='mycontainer'>
-   
+   <h4>All Lots</h4>
     <div class='auctionresultsmenu'><div style='float:right;'><div class='mitem'><a href='/auction-lots'><i class="fa fa-th-large"></i>&nbsp;&nbsp;&nbsp;Grid View</a></div><div class='mitem'> <a href='/auction-maps'><i class="fa fa-map-marker-alt"></i>Map View</a></div><div class='mitem'><a href='/auction-lots-list'><i class="fa fa-list"></i>&nbsp;&nbsp;&nbsp;List View</a></div><div style='clear:both;'></div></div></div>
     <div class="maindivider" ></div>
     <div style='clear:both;'></div>
@@ -68,11 +68,11 @@ const formatToCurrency = amount => {
 };
 
 lots.forEach(data=>{%>
-    <div class='lotitem-list' style='display: flex;'>
+    <div class='lotitem-list' style='display: flex; margin-bottom:30px;'>
        
     <div class='lotitmlstimg-list' style='background-image: url(<%-data.uri%>);float:none'> <div class='lotno'>LOT <%-data.id%></div></div>
         <div style='display: flex;flex-direction: column;flex:1;'>
-    <div class='lotDesc-list'><%-data.propname%></div>
+    <div class='lotDesc-list' style='font-weight:400;'><%-data.propname%></div>
     <div class='lotPrice' >*<%-formatToCurrency(data.price)%>+</div>
    
     <a class='lotlink' href='/lot/details/<%-data.id%>' style='text-align:right;'>Full details  	&#8594; </a>

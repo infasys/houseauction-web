@@ -20,9 +20,18 @@
     color: #b82b35;
   }
   </style>
+    <div class="bannerimagecen">
+      <div class="bannerimgtint">
+        <div class="mycontainer" style='min-height:200px;'>
+    </div>
+    </div>
+    </div>
 <div class='mycontainer'>
+ <div style='padding:10px;'> <h4>All Lots</h4></div>
 <div style='padding:20px 0px;'>
-   
+   <div style='margin:10px 10px;background: #ccc;height:100px;'>
+    Search Container
+   </div>
   <div class='auctionresultsmenu'><div style='float:right;'><div class='mitem'><a href='/auction-lots'><i class="fa fa-th-large"></i>&nbsp;&nbsp;&nbsp;Grid View</a></div><div class='mitem'> <a href='/auction-maps'><i class="fa fa-map-marker-alt"></i>Map View</a></div><div class='mitem'><a href='/auction-lots-list'><i class="fa fa-list"></i>&nbsp;&nbsp;&nbsp;List View</a></div><div style='clear:both;'></div></div></div>
   <div style='clear:both;'></div>
 <div class='lotlistwrapper'>
@@ -31,7 +40,9 @@ const formatToCurrency = amount => {
   return "£" + amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
 
-lots.forEach(data=>{%><div class='lotitemholder'><div class='lotitem'>
+lots.forEach(data=>{%><div class='lotitemholder'>
+
+<div class='lotitem'>
     <div class='lotno'>LOT <%-data.id%></div>
  
       

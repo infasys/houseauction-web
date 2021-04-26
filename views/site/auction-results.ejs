@@ -6,27 +6,27 @@
    
 <div class="maindivider" ></div>
 <div class='lotlistwrapper'>
-  <style>
-    .lotitem{
-      min-width: 400px;
-    }
-    </style>
-
-<%
-const formatToCurrency = amount => {
-  return "£" + amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,");
-};
-
-lots.forEach(data=>{%><div class='lotitem '>  
-    <div class='lotno'>Lot No.<%-data.id%></div>
- <!--   <img src='data.uri' style='height:190px;' /> -->
-    <div class='lotitmlstimg' style='position:relative;background-image: url(<%-data.uri%>);'><div class="ribbon ribbon-top-right"><span>Sold</span></div></div>
-   
-    <div class='lotDesc'><%-data.propname%></div>
-    <div class='lotPrice'>Guide Price <%-formatToCurrency(data.price)%> + fees</div>
-    <a class='lotlink' href='/lot/details/<%-data.id%>'>Full details  &nbsp;&nbsp;&nbsp;	&#8594; </a>
-    <div style='clear:both'></div>
-</div><%})%>
+  <%
+  const formatToCurrency = amount => {
+    return "£" + amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  };
+  
+  lots.forEach(data=>{%><div class='lotitemholder' >
+  
+  <div class='lotitem'  style='position:relative'>
+    <div class='ribbon ribbon-top-right'> <span>Under Offer</span></div>
+      <div class='lotno'>LOT <%-data.id%></div>
+    
+        
+   <div class='lotitmlstimg' style='background-image: url(<%-data.uri%>);'></div>
+   <div style='padding:10px;box-sizing: border-box;'>
+     <div class='lotPrice'>*<%-formatToCurrency(data.price)%>+</div>
+   <div style='clear:both;'></div>
+   <div class='lotDesc'><%-data.propname%></div>
+   <a class='lotlink' href='/lot/details/<%-data.id%>'>Full details  &nbsp;&nbsp;&nbsp;	&#8594; </a>
+   <div style='clear:both'></div></div>
+    </div></div><%})%>
+  </div>
 <div style='clear:both;'></div>
 <div class="maindivider" ></div>
 </div>

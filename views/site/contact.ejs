@@ -1,37 +1,18 @@
 <%- include('../partials/header.ejs')%>
 <%- include('../partials/banner-top.ejs')%>
-<div style='padding:100px;'></div>
-<div class='contactwrapper'>
-    <div class='contactbox'>
-        <div style='font-size: 22px;color:#000;font-weight: 700;padding:10px 20px 20px 0px;'>Contact Us</div>
-        <div id='formstatus'></div>
-    <div class='inrowf'>
-        <div class='inrow-25f'>
-            <input type='text' class='sitetxta' id='firstname' placeholder='First name'/>
-        </div>
-        <div class='inrow-25f'>
-            <input type='text' class='sitetxta' id='lastname' placeholder='Last name'/>
-        </div>
-        <div class='inrow-25f'>
-            <input type='text' class='sitetxta' id='emailaddr' placeholder='Email address'/>
-        </div>
-        <div class='inrow-25f'>
-            <input type='text' class='sitetxta' id='telephone' placeholder='Telephone'/>
-        </div>
-    </div>
-    <div class='inrowf'>
-        <div class='inrow-25f'>
-            <textarea  class='sitetxta' id='queryaddinfo' placeholder="Enquiry "><%-question%></textarea>
-        </div>
-    </div>
-    <div>
-        <button id="btnSubmitQueryContact" class="sitebtn-small" style="float:right;margin-right:20px;">Submit Query</button>
-    </div>
-    </div>
-    </div>
-
+<div class="bannerimagecen">
+    <div class="bannerimgtint">
+      <div class="mycontainer" style='min-height:200px;'>
+  </div>
+  </div>
+  </div>
+<%- include('../partials/contact-box.ejs')%>
 
 <script>
+    var question = "<%-question%>"
+    if(question){
+        $('#queryaddinfo').val(question)
+    }
     $('#btnSubmitQueryContact').click(function(){
         var error = 0;
         var errormsgs = []

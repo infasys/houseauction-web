@@ -1478,4 +1478,8 @@ a {
   font-weight: 500;
 }
 
+#questiontxt:focus, #questiontxt:active {
+  outline: none;
+}
+
 /*# sourceMappingURL=default.css.map */
