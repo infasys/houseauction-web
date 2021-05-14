@@ -6,11 +6,11 @@ var db = mysql.createConnection(params);
 
 class dbManager{
 
-  getRegistrationTemplate(){
+  getemailtemplate(name){
     return new Promise((resolve,reject)=>{
-      db.query('select * from email_templates where id = 1', function (err, result) {
+      db.query("select * from email_templates where name = ?",[name],  (err, [template])=> {
         if (err) throw err;
-        resolve(result[0])
+        resolve(template)
       })
     })
   }

@@ -66,13 +66,15 @@ function formatDateTimeMe(date) {
         <div class='dash-box' >
             <div class='dash-title'>Welcome</div>
             <div class='dash-content'>
-                <p>Dear Potential Home Owner,</p>
-                <p>Auction House would like to ensure that your process of working with us is as smooth as possible. This portal allows you to do meet the prerequisite to bid on a property.</p>
-                <p>Regards</p>
-                <p>Auction House</p>
-                <div style='text-align: center;padding-top:40px;'>
-                    <a href='/portal/profile'><button class='sitebtn-small2 startbtn'>Start Your Journey</button></a>
-                </div>
+                <p class="MsoNormal">Hello </p><p class="MsoNormal">&nbsp;</p><p class="MsoNormal">The
+                    Team here at Auction House are dedicated to delivering the highest 
+                   quality of service in the most professional manner possible but we need 
+                   your help if we’re going to do that so:</p><p class="MsoNormal">&nbsp;</p><ol style="margin-top :  0cm; " type="1" start="1"><li class="x_347814597MsoListParagraph" style="margin-left :  0cm; ">If you have a question pick up the phone and ask, we’re here to help</li><li class="x_347814597MsoListParagraph" style="margin-left :  0cm; ">Please
+                    complete as much of the information in your customer account profile as
+                    you are able to assist us in doing our job properly</li><li class="x_347814597MsoListParagraph" style="margin-left :  0cm; ">Whatever you need to know we can tell you so don’t be shy we’re here for you</li></ol><p class="MsoNormal">&nbsp;</p><p class="MsoNormal">From
+                    this portal you will be able to view property particulars, register as a
+                    seller or a bidder, find useful information that will guide you through
+                    the process of buying or selling at auction. </p><p class="MsoNormal">&nbsp;</p><p class="MsoNormal">We hope you find this website useful and look forward to being of service to you. </p><p class="MsoNormal">&nbsp;</p><p class="MsoNormal">Best Regards</p><p class="MsoNormal">Team Auction House</p>
             </div>
         </div> 
 
@@ -112,6 +114,8 @@ function formatDateTimeMe(date) {
              <p>Your account still requires verification, you should have recieved a link with a code:</p>
              <div style='width:400px;max-width:100%;margin:0px auto;text-align: center;'><div id='error-code' class='sectionError'></div><input id='verficationcode' type='text' class='mytxt' placeholder="verification code" style='text-align:center;box-sizing: border-box;font-weight:700'/>
              <button class='sitebtn-small2 ' id='btnVerify' style='margin-top:30px;'>Verify</button>
+             <p>Not recieved a code, <a href='#codereset' id='codereset'>Click Here</a> to have a new code sent to your mailbox.</p>
+             <div id='coderesults'></div>
             </div>
              <div style='clear:both'></div>
              </div>
@@ -149,16 +153,17 @@ function formatDateTimeMe(date) {
 </div>
 
 <script>
+    var spinner ='<div class="sk-chase"><div class="sk-chase-dot"></div><div class="sk-chase-dot"></div><div class="sk-chase-dot"></div><div class="sk-chase-dot"></div><div class="sk-chase-dot"></div><div class="sk-chase-dot"></div></div>';
+
 $(function(){
 
     $('#btnVerify').click(function(){
         $('#error-code').html('')
         var verficationcode = $('#verficationcode').val()
-        if(verficationcode.length==6){
+        if(verficationcode.length>=6){
             $.post('/profile/verifycode',{verficationcode},function(data){
                 console.log(data)
                 if(data.status){
-
                     $('#verficationcoderequest').html('DONE')
                     $('#verifyboxmain').html('')
                 }else{
@@ -168,6 +173,13 @@ $(function(){
         }else{
             $('#error-code').html('Looks like your missing digits')
         }
+    })
+
+    $('#codereset').click(function(){
+        $('#coderesults').html(spinner)
+        $.post('/account/resendverifycode',function(data){
+            $('#coderesults').html('Code Request Sent, please check your spam folder')
+        },'json')
     })
 
 

@@ -43,7 +43,7 @@ router.get('/contact-us',async(req,res)=>{
     res.render('site/contact-us.ejs',{apikey})
 })
 router.get('/auction-upcoming',async (req,res)=>{
-    var auctions = await db.getAuctions();
+    var auctions = await db.getUpcomingAuctions();
     res.render('site/upcoming',{auctions:auctions});
 })
 router.get('/thank-you',async (req,res)=>{
@@ -98,9 +98,10 @@ router.get('/auction-lots',async (req, res) => {
 router.get('/online/auction/:id',async (req, res) => {
 
     var lots = await db.getPropertiesByAuctionId(req.params.id);
+    console.log(lots)
     lots.forEach(p=>{
-        if(!p.img)p.img ='abc/b2c63fa2-dd22-498d-a5f9-162a2523a58b.jpg'
-        p.uri = azBlob.generateSasToken(p.img).uri;
+        if(!p.primaryimage)p.primaryimage ='abc/b2c63fa2-dd22-498d-a5f9-162a2523a58b.jpg'
+        p.uri = azBlob.generateSasToken(p.primaryimage).uri;
       })
 	res.render('site/auction-id-lot',{lots,msg:''});
 });
@@ -157,14 +158,22 @@ router.get('/auction-finance',async (req,res)=>{
     res.render('site/finance');
 })
 router.get('/auction-results',async (req,res)=>{
-    var lots = await db.getProperties();
-    lots.forEach(p=>{
-        if(!p.img)p.img ='abc/b2c63fa2-dd22-498d-a5f9-162a2523a58b.jpg'
-        p.uri = azBlob.generateSasToken(p.img).uri;
-      })
-    res.render('site/auction-results',{lots});
+    var auctions = await db.getAuctionsPastAuctions();
+    res.render('site/auction-results',{auctions});
 })
 router.get('/thank-you',async (req,res)=>{
     res.render('site/thank-you');
 })
+
+
+router.post('/auctiondetails',async (req, res) => {
+
+    var lots = await db.getPropertiesByAuctionIdCompleted(req.body.id);
+
+    lots.forEach(p=>{
+        if(!p.primaryimage)p.primaryimage ='abc/b2c63fa2-dd22-498d-a5f9-162a2523a58b.jpg'
+        p.uri = azBlob.generateSasToken(p.primaryimage).uri;
+      })
+	res.json({lots,msg:''});
+});
 module.exports = router;

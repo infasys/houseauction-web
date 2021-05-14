@@ -4,6 +4,8 @@ const params = { host: process.env.MYSQL_HOST,user: process.env.MYSQL_USER,passw
 const crypto = require('crypto');
 var db = mysql.createConnection(params);
 
+
+
 class dbManager{
 
   saveEnquriy(firstname,lastname,email,telephone,addr1,addr2,town,postcode,info){
@@ -204,9 +206,22 @@ verifycode(userid,code){
           db.query('update customers set isVerified = 1 where id = ?',[userid], function (err, result) {
             if (err) throw err;
             resolve({status:true})
-
           })
-          
+        }else{
+          resolve({status:false})
+        }
+      }
+    })
+  })
+}
+verifypasswordreset(userid,code){
+  return new Promise((resolve,reject)=>{
+    db.query('select * from customers where id = ?',[userid], function (err, result) {
+      if (err) throw err;
+      if(result[0]){
+        var user = result[0]
+        if(user.password_reset==code){
+            resolve({status:true})
         }else{
           resolve({status:false})
         }
@@ -518,13 +533,41 @@ getProperties(){
 getPropertiesByAuctionId(auctionid){
   return new Promise((resolve,reject)=>{
   //  db = mysql.createConnection(params);d = ap.propertyid where auctions.id =?   
-    db.query('SELECT  p.*,auctions.* from auctions  left JOIN  auction_properties AS ap ON ap.auctionid = auctions.id left JOIN   (select p.id,p.name as propname,p.town AS ptown,CONCAT(s.forename,", ",s.surname) as sellername,i.img,p.price,p.town,p.county from properties p left join (select propertyid,max(filename) as img from propertyimages group by propertyid) i on i.propertyid = p.id left join customers s on s.id = p.clientid) AS p ',[auctionid], function (err, result) {
+    db.query('SELECT myproperties.*,auction_bids.id AS bidid,auction_bids.customerid AS bidderid,auction_bids.amount AS bidamount,auction_bids.uuid,auction_bids.`status` AS bidstatus   FROM (SELECT properties.`*`, auction_properties.id AS auctionpropertyid,auction_properties.lotno,auction_properties.`status` AS result FROM auction_properties  LEFT JOIN properties ON properties.id = auction_properties.propertyid WHERE auction_properties.auctionid = ?) AS myproperties LEFT JOIN auction_bids ON myproperties.auctionpropertyid = auction_bids.auctionpropertyid',[auctionid], function (err, result) {
       if (err) throw err;
       resolve(result)
     })
     //db.end();
   })
 }
+
+getPropertiesByAuctionIdCompleted(auctionid){
+  return new Promise((resolve,reject)=>{
+  //  db = mysql.createConnection(params);d = ap.propertyid where auctions.id =?   
+    db.query('SELECT myproperties.*,auction_bids.id AS bidid,auction_bids.customerid AS bidderid,auction_bids.amount AS bidamount,auction_bids.uuid,auction_bids.`status` AS bidstatus   FROM (SELECT properties.`*`, auction_properties.id AS auctionpropertyid,auction_properties.lotno,auction_properties.`status` AS result FROM auction_properties  LEFT JOIN properties ON properties.id = auction_properties.propertyid WHERE auction_properties.auctionid = ?) AS myproperties LEFT JOIN auction_bids ON myproperties.auctionpropertyid = auction_bids.auctionpropertyid',[auctionid], function (err, result) {
+      if (err) throw err;
+      var properties = []
+      var found  = false;
+      result.forEach(p=>{
+        var bid = {id:p.bidid,bidderid:p.bidderid,amount:p.bidamount,uuid:p.uuid,status:p.bidstatus}
+        found = false;
+        for(var j=0; j<properties.length;j++){
+          var tmpprop = properties[j]
+          if(tmpprop.id==p.id){
+            found = true;
+            tmpprop.bids.push(bid)
+          }
+        }
+        if(!found){
+          properties.push({id:p.id,name:p.name,price:p.price,bids:[bid],lotno:p.lotno,primaryimage:p.primaryimage,result:p.result})
+        }
+      })
+      resolve(properties)
+    })
+    //db.end();
+  })
+}
+
 getPropertiesLimit8(){
   return new Promise((resolve,reject)=>{
   //  db = mysql.createConnection(params);
@@ -579,11 +622,10 @@ addProperty(name,description,price){
   })
 }
 
-addnewCustomer(reg){
+addnewCustomer(reg,code){
   return new Promise((resolve,reject)=>{
-    console.log(reg.Password)
     let hash = crypto.createHash('md5').update(reg.Password).digest("hex");
-    db.query('insert into customers(title,forename,surname,username,password,verificationcode,isbuyer) values (?)',[[reg.title,reg.firstname,reg.lastname,reg.Email,hash,234234,1]], function (err, result) {
+    db.query('insert into customers(title,forename,surname,username,password,verificationcode,isbuyer) values (?)',[[reg.title,reg.firstname,reg.lastname,reg.Email,hash,code,1]], function (err, result) {
       if (err) throw err;
       resolve(result)
     })
@@ -602,8 +644,39 @@ checkUsername(username){
     })
   })
 }
+updateForgotenPassword(userid,code,hash){
+  return new Promise((resolve,reject)=>{
+    db.query("update customers set password= ?,password_reset=NULL where id = ? and password_reset =?",[hash,userid,code], function (err, result) {
+      if (err) throw err;
+      resolve({status:true})
+    })
+  })
+}
+updateVerificationCode(userid,code){
+  return new Promise((resolve,reject)=>{
+    db.query("update customers set verificationcode = ?,password_reset=NULL where id = ?",[code,userid], function (err, result) {
+      if (err) throw err;
+      resolve({status:true})
+    })
+  })
+}
+getCustomerByEmail(email){
+  return new Promise((resolve,reject)=>{
+    db.query('select * from customers where username like ?',[email], function (err, [customer]) {
+      if (err) throw err;
+        resolve(customer)
+    })
+  })
+}
 
-
+addCustomerResetPassword(id,myuuid){
+  return new Promise((resolve,reject)=>{
+    db.query('update customers set password_reset=? where id like ?',[myuuid,id], function (err, results) {
+      if (err) throw err;
+        resolve(results)
+    })
+  })
+}
 addNewCompanyMember(email,companyid){
   return new Promise((resolve,reject)=>{
     db.query('insert into customers(username,companyid,iscompany,isbuyer) values (?)',[[email,companyid,1,1]], function (err, result) {
@@ -613,10 +686,27 @@ addNewCompanyMember(email,companyid){
   })
 }
 
-
 getAuctions() {
   return new Promise((resolve, reject) => {
     db.query("select * from auctions", function (err, result) {
+      if (err) throw err;
+      resolve(result);
+    });
+  });
+}
+getUpcomingAuctions() {
+  return new Promise((resolve, reject) => {
+    db.query("select * from auctions where status < 3 or status is null", function (err, result) {
+      if (err) throw err;
+      resolve(result);
+    });
+  });
+}
+
+
+getAuctionsPastAuctions() {
+  return new Promise((resolve, reject) => {
+    db.query("select * from auctions where status = 3", function (err, result) {
       if (err) throw err;
       resolve(result);
     });

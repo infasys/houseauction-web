@@ -5,9 +5,13 @@ const authCheck = require('../custom/authCheck');
 const authCheckNoLogIn = require('../custom/authCheck').authCheckNoLogIn;
 const smtpManager = require('../custom/smtpManager');
 const crypto = require('crypto');
+const { encrypt, decrypt } = require('../custom/mycrypto');
 const { json } = require('express');
 const { title } = require('process');
 const validator = require("email-validator");
+const {v4:uuidv4} = require('uuid');
+
+
 router.get('/account/log-in',authCheckNoLogIn ,(req,res)=>{
 	var msg = '';
 	if(req.session.loginmessage){
@@ -18,6 +22,54 @@ router.get('/account/log-in',authCheckNoLogIn ,(req,res)=>{
 router.get('/account/forgotten-password',authCheckNoLogIn ,(req,res)=>{
     res.render('site/forgot.ejs')
 })
+
+router.get('/pwa:id' ,authCheckNoLogIn,async (req,res)=>{
+	delete req.session.loginmessage
+	var base64enc = req.params.id
+	try{
+	console.log(base64enc)
+	var stringencrypted = Buffer.from(base64enc, 'base64').toString('ascii')
+	var hash = JSON.parse(stringencrypted)
+	var decryptedobj = decrypt(hash)
+	var info = JSON.parse(decryptedobj)
+	}catch(ex){
+		req.session.loginmessage = 'invalid code'
+		res.redirect('/account/log-in');
+	}
+	
+	if(info.userid){
+		console.log(info)
+		var results = await db.verifypasswordreset(info.userid,info.code);
+		if(results.status== true){
+			var myissues = []
+			res.render('site/password_reset.ejs',{userid:info.userid,code:info.code,myissues});
+		}else{
+			req.session.loginmessage = 'invalid code'
+		res.redirect('/account/log-in');
+		}
+	}else{
+		req.session.loginmessage = 'invalid code'
+		res.redirect('/account/log-in');
+	}
+})
+router.post('/account/password-reset',authCheckNoLogIn ,async (req,res)=>{
+	var issues = []
+	var password = req.body.password
+	var userid = req.body.userid
+	var code = req.body.code
+	if(password.length<5){
+		issues.push('Password Length does not meet minimum requirement')
+		errors++
+		res.render('site/password_reset.ejs',{userid:info.userid,code:info.code,myissues:issues});
+	}else{
+		let hash = crypto.createHash('md5').update(password).digest("hex");
+		await db.updateForgotenPassword(userid,code,hash)
+		res.redirect('/account/log-in');
+	}
+})
+
+
+
 router.get('/account/register',authCheckNoLogIn ,(req,res)=>{
 	delete req.session.loginmessage;
 	var myissues = []
@@ -27,16 +79,52 @@ router.get('/account/register',authCheckNoLogIn ,(req,res)=>{
 	delete req.session.issues;
     res.render('site/register.ejs',{myissues})
 })
+
+
 router.get('/account/register_success',authCheckNoLogIn ,(req,res)=>{
 	delete res.locals.registration
     res.render('site/regsuccess.ejs')
 })
-router.post('/account/forgot-password',authCheckNoLogIn ,(req,res)=>{
-	console.log(req.body.Email)
+
+
+router.post('/account/forgot-password',async (req,res)=>{
 	delete req.session.loginmessage;
-	req.session.loginmessage = 'If the email address matches an account you will recieve an email to reset your password.'
-	smtpManager.forgot_password(req.body.Email)
+	var email = req.body.Email;
+	if(validator.validate(email)){
+		req.session.loginmessage = 'If the email address matches an account you will recieve an email to reset your password.'
+		var isExist = await db.checkUsername(email);
+		if(isExist){
+			var customer = await db.getCustomerByEmail(email)
+			var myuuid = uuidv4()
+			await db.addCustomerResetPassword(customer.id,myuuid)
+			var myobj = {userid:customer.id,code:myuuid}
+			var hashuserid = encrypt(JSON.stringify(myobj))
+			var stringhash = JSON.stringify(hashuserid)
+			var base64enc = Buffer.from(stringhash).toString('base64')
+			smtpManager.forgot_password(email,base64enc)
+		}
+	}else{
+		req.session.loginmessage = 'You provided an invalid email address'
+	}
 	res.redirect('/account/log-in');
+})
+
+router.get('/veri:id' ,async (req,res)=>{
+	var base64enc = req.params.id
+	console.log(base64enc)
+	var stringencrypted = Buffer.from(base64enc, 'base64').toString('ascii')
+	var hash = JSON.parse(stringencrypted)
+	var decryptedobj = decrypt(hash)
+	var info = JSON.parse(decryptedobj)
+	console.log(info)
+	if(info.userid){
+		var results = await db.verifycode(info.userid,info.code);
+		if(results.status== true){
+			res.render('site/verified');
+		}
+	}
+	//var userid = decrypt(req.params.id)
+	res.json({status:true})
 })
 
 router.post('/account/verification_link',authCheckNoLogIn ,async (req,res)=>{
@@ -57,6 +145,22 @@ function generate(n) {
 
 	return ("" + number).substring(add); 
 }
+
+
+router.post('/account/resendverifycode',authCheck ,async (req,res)=>{
+	var userid = req.session.userid;
+	console.log(userid)
+	var code = generate(7)
+	await db.updateVerificationCode(userid,code)
+	var myobj = {userid,code}
+	var hashuserid = encrypt(JSON.stringify(myobj))
+	var stringhash = JSON.stringify(hashuserid)
+	var base64enc = Buffer.from(stringhash).toString('base64')
+	var customers = await db.getCustomerById(userid)
+	var email = customers[0].username
+	await smtpManager.verification_code(email,code,base64enc)
+	res.json({status:true})
+})
 
 
 router.post('/account/register',authCheckNoLogIn,async (req,res)=>{
@@ -80,9 +184,9 @@ router.post('/account/register',authCheckNoLogIn,async (req,res)=>{
 		issues.push('User Already Exists')
 		errors++
 	}
-	console.log(generate(7))
+	var code = generate(7)
 	if(!errors){
-		await db.addnewCustomer(reg)
+		await db.addnewCustomer(reg,code)
 
 		let hash = crypto.createHash('md5').update(reg.Password).digest("hex");
 		var results = await db.getLogin(username,hash)
@@ -91,7 +195,11 @@ router.post('/account/register',authCheckNoLogIn,async (req,res)=>{
 			req.session.username = results[0]['username'];
 			req.session.userid = results[0]['id'];
 			delete req.session.loginmessage;
-			smtpManager.new_registration(req.session.username)
+			var myobj = {userid:req.session.userid,code:code}
+			var hashuserid = encrypt(JSON.stringify(myobj))
+			var stringhash = JSON.stringify(hashuserid)
+			var base64enc = Buffer.from(stringhash).toString('base64')
+			smtpManager.new_registration(req.session.username,code,base64enc)
 			res.redirect('/portal/dashboard');
 		}else{
 			issues.push('Something Went Wrong')

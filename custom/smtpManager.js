@@ -2,16 +2,19 @@ require('dotenv').config()
 const nodemailer = require('nodemailer');
 const db = require('./dbManagerMailTemplate.js')
 var transporter = nodemailer.createTransport({
-  host: "smtp.mailtrap.io",
-  port: 2525,
+  host: process.env.SMTP_SERVER,
+  port: process.env.SMTP_PORT,
   auth: {
-    user: "50b94adaf8f7d0",
-    pass: "0d89c8801a5fcd"
+    user: process.env.SMTP_USERNAME,
+    pass: process.env.SMTP_PASSWORD
   }
   });
 
   const smtpSender = process.env.SMTP_SENDER
-
+  function replaceAll(a, search, replace) {
+    return a.split(search).join(replace);
+  }
+  
   class smtpManager {
         async sendMail(to,subject,html){
             return new Promise((resolve,reject)=>{
@@ -35,13 +38,25 @@ var transporter = nodemailer.createTransport({
             })
         }
 
-        async new_registration(to){
-            var mailtemplate = await db.getRegistrationTemplate();
-            await this.sendMail(to,mailtemplate.subject,mailtemplate.body)
+        async new_registration(to,code,hash){
+            var mailtemplate = await db.getemailtemplate('Registration');
+            var body = mailtemplate.body
+            body = replaceAll(body,'{{uri}}',process.env.HOST+'/veri'+hash)
+            body = replaceAll(body,'{{code}}',code)
+            await this.sendMail(to,mailtemplate.subject,body) 
         }
-        async forgot_password(to){
-          var mailtemplate = await db.getRegistrationTemplate();
-          await this.sendMail(to,mailtemplate.subject,mailtemplate.body)
+        async verification_code(to,code,hash){
+          var mailtemplate = await db.getemailtemplate('Verification');
+          var body = mailtemplate.body
+          body = replaceAll(body,'{{uri}}',process.env.HOST+'/veri'+hash)
+          body = replaceAll(body,'{{code}}',code)
+          await this.sendMail(to,mailtemplate.subject,body) 
+      }
+        async forgot_password(to,hash){
+          var mailtemplate = await db.getemailtemplate('Forgot');
+            var body = mailtemplate.body
+            body = replaceAll(body,'{{uri}}',process.env.HOST+'/pwa'+hash)
+            await this.sendMail(to,mailtemplate.subject,body) 
       }
   }
 
