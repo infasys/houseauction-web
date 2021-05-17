@@ -14,6 +14,7 @@
     "body-parser": "^1.19.0",
     "connect-livereload": "^0.6.1",
     "connect-redis": "^5.1.0",
+    "dateformat": "^4.5.1",
     "dotenv": "^8.2.0",
     "easy-livereload": "^1.4.3",
     "ejs": "^3.1.6",

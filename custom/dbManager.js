@@ -524,7 +524,7 @@ getProperties(){
   return new Promise((resolve,reject)=>{
  
   
-    db.query('select p.id,ap.lotno,p.name as propname,p.town,p.primaryimage as img,p.primaryimage,p.latitude,p.longitude,p.price,p.town,p.county from properties p left join auction_properties ap on ap.propertyid = p.id where ap.status != 3', function (err, result) {
+    db.query('select p.id,ap.lotno,p.name as propname,auctions.datetime,p.town,p.primaryimage as img,p.primaryimage,p.price,p.town,p.county from properties p left join auction_properties ap on ap.propertyid = p.id left join auctions on auctions.id = ap.auctionid where ap.status != 3;', function (err, result) {
       if (err) throw err;
       resolve(result)
     })
@@ -572,7 +572,7 @@ getPropertiesByAuctionIdCompleted(auctionid){
 getPropertiesLimit8(){
   return new Promise((resolve,reject)=>{
   //  db = mysql.createConnection(params);
-    db.query('select p.id,ap.lotno,p.name as propname,p.town,p.primaryimage as img,p.primaryimage,p.price,p.town,p.county from properties p left join auction_properties ap on ap.propertyid = p.id where ap.status != 3 limit 12;', function (err, result) {
+    db.query('select p.id,ap.lotno,p.name as propname,auctions.datetime,p.town,p.primaryimage as img,p.primaryimage,p.price,p.town,p.county from properties p left join auction_properties ap on ap.propertyid = p.id left join auctions on auctions.id = ap.auctionid where ap.status != 3 limit 12;', function (err, result) {
       if (err) throw err;
       resolve(result)
     })

@@ -5,7 +5,7 @@ const path = require('path');
 const azBlob = require('../custom/storageManager');
 const { json } = require('body-parser');
 const stripe = require('stripe')(process.env.STRIPE_KEY_SK);
-
+const ejs_helpers = require('../custom/helper_ejs.js')
 router.get('/',(req,res)=>{
     res.redirect('/home')
 })
@@ -85,7 +85,7 @@ router.get('/lot/details/:id',async (req,res)=>{
         var dbres =  await db.getSellerFavourites(req.session.userid,req.params.id)
         if(dbres.length) isAdded = true;
     }
-    res.render('site/viewlot',{property,images,details,isAdded,maps,catalogs,apikey});
+    res.render('site/viewlot',{property,images,details,isAdded,maps,catalogs,apikey,helper:ejs_helpers});
 })
 router.get('/auction-lots',async (req, res) => {
     var lots = await db.getProperties();
@@ -93,7 +93,7 @@ router.get('/auction-lots',async (req, res) => {
         if(!p.img)p.img ='abc/b2c63fa2-dd22-498d-a5f9-162a2523a58b.jpg'
         p.uri = azBlob.generateSasToken(p.img).uri;
       })
-	res.render('site/auction-lots',{lots,msg:''});
+	res.render('site/auction-lots',{lots,msg:'',helper:ejs_helpers});
 });
 router.get('/online/auction/:id',async (req, res) => {
 
@@ -111,7 +111,7 @@ router.get('/auction-lots-list',async (req, res) => {
         if(!p.img)p.img ='abc/b2c63fa2-dd22-498d-a5f9-162a2523a58b.jpg'
         p.uri = azBlob.generateSasToken(p.img).uri;
       })
-	res.render('site/auction-lots-list',{lots,msg:''});
+	res.render('site/auction-lots-list',{lots,msg:'',helper:ejs_helpers});
 });
 
 
@@ -123,7 +123,7 @@ router.get('/auction-maps',async (req,res)=>{
         p.uri = azBlob.generateSasToken(p.img).uri;
       })
       var apikey = process.env.GOGGLEMAPS_API
-    res.render('site/auction-maps',{lots,msg:'',apikey});
+    res.render('site/auction-maps',{lots,msg:'',apikey,helper:ejs_helpers});
 })
 
 
@@ -133,7 +133,7 @@ router.post('/auction-lots8',async (req, res) => {
         if(!p.img)p.img ='abc/b2c63fa2-dd22-498d-a5f9-162a2523a58b.jpg'
         p.uri = azBlob.generateSasToken(p.img).uri;
       })
-	res.render('site/auction-lots8',{lots,msg:''});
+	res.render('site/auction-lots8',{lots,msg:'',helper:ejs_helpers});
 });
 
 router.post('/addtofav',async (req,res)=>{

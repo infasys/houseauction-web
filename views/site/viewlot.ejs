@@ -26,7 +26,6 @@ const formatToCurrency = amount => {
         
     </div>
     <div style='text-align: right;display: table-cell;vertical-align: middle;height:80px; '>
-
  <%if(isuser){
   if(!isAdded){%>
       <button id='btnAddFav' class='sitebtn-small'> <i class="far fa-heart"></i> Save </button>
@@ -36,7 +35,10 @@ const formatToCurrency = amount => {
       <%}else{%>
         <button id='btnRegisterInterest' class='sitebtn-small'> <i class="far fa-heart"></i> Register Interest </button>
       <%}
-      %>
+      
+      if(property.datetime){%>
+      <div style='margin-top:10px;'><span  style='font-size:18px;font-weight:bolder;color:#888;'>Auction Date: </span><span style='font-size:18px;font-weight:bolder'><%-helper.formateDateTimeFull(property.datetime)%></span></div>
+      <%}%>
     </div>
 </div>
 </div>
