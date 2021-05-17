@@ -70,7 +70,7 @@ const formatToCurrency = amount => {
 lots.forEach(data=>{%>
     <div class='lotitem-list' style='display: flex; margin-bottom:30px;'>
        
-    <div class='lotitmlstimg-list' style='background-image: url(<%-data.uri%>);float:none'> <div class='lotno'>LOT <%-data.id%></div></div>
+    <div class='lotitmlstimg-list' style='background-image: url(<%-data.uri%>);float:none'> <div class='lotno'>LOT <%-data.lotno%></div></div>
         <div style='display: flex;flex-direction: column;flex:1;'>
     <div class='lotDesc-list' style='font-weight:400;'><%-data.propname%></div>
     <div class='lotPrice' >*<%-formatToCurrency(data.price)%>+</div>

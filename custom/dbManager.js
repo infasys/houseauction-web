@@ -522,8 +522,9 @@ getPayments(userid){
 }
 getProperties(){
   return new Promise((resolve,reject)=>{
-  //  db = mysql.createConnection(params);
-    db.query('select p.id,p.name as propname,p.latitude,p.longitude,p.town,CONCAT(s.forename,", ",s.surname) as sellername,i.img,p.price,p.town,p.county from properties p left join (select propertyid,max(filename) as img from propertyimages group by propertyid) i on i.propertyid = p.id left join customers s on s.id = p.clientid;', function (err, result) {
+ 
+  
+    db.query('select p.id,ap.lotno,p.name as propname,p.town,p.primaryimage as img,p.primaryimage,p.latitude,p.longitude,p.price,p.town,p.county from properties p left join auction_properties ap on ap.propertyid = p.id where ap.status != 3', function (err, result) {
       if (err) throw err;
       resolve(result)
     })
@@ -571,7 +572,7 @@ getPropertiesByAuctionIdCompleted(auctionid){
 getPropertiesLimit8(){
   return new Promise((resolve,reject)=>{
   //  db = mysql.createConnection(params);
-    db.query('select p.id,p.name as propname,p.town,CONCAT(s.forename,", ",s.surname) as sellername,i.img,p.price,p.town,p.county from properties p left join (select propertyid,max(filename) as img from propertyimages group by propertyid) i on i.propertyid = p.id left join customers s on s.id = p.clientid limit 12;', function (err, result) {
+    db.query('select p.id,ap.lotno,p.name as propname,p.town,p.primaryimage as img,p.primaryimage,p.price,p.town,p.county from properties p left join auction_properties ap on ap.propertyid = p.id where ap.status != 3 limit 12;', function (err, result) {
       if (err) throw err;
       resolve(result)
     })
