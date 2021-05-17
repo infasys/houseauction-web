@@ -17,7 +17,7 @@ const formatToCurrency = amount => {
     <div class='mycontainer' style='display:table;'>
     <div style="display: table-cell;vertical-align: middle;height:80px; background-color:rgb(245, 245, 245);border-right:3px solid red;">
     <div class='propertylotno' style='display:inline;vertical-align: middle;padding-right:20px;width: 500px;'>
-        Lot No. <%-property.id%></br><div style='display:inline-block;font-weight:500;font-size:16px;'>Residential - Flats/Aparatment</div></div>
+        Lot No. <%-property.lotno%></br><div style='display:inline-block;font-weight:500;font-size:16px;'>Residential - Flats/Aparatment</div></div>
 
     
     </div>
@@ -77,7 +77,7 @@ const formatToCurrency = amount => {
   <a class="prevScroll" onclick="sideScroll('left')">&#10094;</a>
    
 </div>
-<%- include('../partials/getintouch.ejs')%>
+
 </div>
 <div class='rightpanel'>    
     
@@ -102,10 +102,14 @@ const formatToCurrency = amount => {
 </div>
 
 
-<div style='height:300px;width:100%;' id="map"></div>
+
   
 </div>
-<div style='clear:both;margin-bottom:200px;'></div>
+<div style='clear:both;padding-bottom:30px;'></div>
+
+<div style='height:400px;width:100%;border:1px solid #ccc;' id="map"></div>
+<%- include('../partials/getintouch.ejs')%>
+<div style='clear:both;'></div>
 </div>
 <script>
 
