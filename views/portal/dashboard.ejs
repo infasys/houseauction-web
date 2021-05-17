@@ -60,6 +60,9 @@ function formatDateTimeMe(date) {
     font-size:18px;
     padding:8px 16px;
 }
+.green{
+    color:green
+}
 </style>
 <div class='mycontainer' style='padding:20px;'>
  
@@ -85,7 +88,13 @@ function formatDateTimeMe(date) {
         <div class='dash-title'>Online Bidding Eligibility</div>
         <div class='dash-content'>
             <div class='checklist'>
-                <div><i class="fa fa-check-circle"></i>Verify Account</div>
+                <% 
+                var verif1 = '';
+                
+                if(customer.isVerified){
+                    verif1 = 'green';
+                }%>
+                <div><i class="fa fa-check-circle <%-verif1%>"></i>Verify Account</div>
                 <div><i class="fa fa-check-circle"></i>Update Bidding Profile <a href='/portal/profile'>click here</a></div>
                 <div><i class="fa fa-check-circle"></i>Upload Verification Documents <a href='/portal/profile'>click here</a></div>
            </div>
