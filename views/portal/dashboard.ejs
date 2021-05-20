@@ -90,13 +90,18 @@ function formatDateTimeMe(date) {
             <div class='checklist'>
                 <% 
                 var verif1 = '';
-                
+                var verif2 = '';
+                var verif3 = '';
                 if(customer.isVerified){
                     verif1 = 'green';
+                }if(customer.profile_updated){
+                    verif2 = 'green';
+                }if(customer.documentsuploaded){
+                    verif3 = 'green';
                 }%>
                 <div><i class="fa fa-check-circle <%-verif1%>"></i>Verify Account</div>
-                <div><i class="fa fa-check-circle"></i>Update Bidding Profile <a href='/portal/profile'>click here</a></div>
-                <div><i class="fa fa-check-circle"></i>Upload Verification Documents <a href='/portal/profile'>click here</a></div>
+                <div><i class="fa fa-check-circle  <%-verif2%>"></i>Update Bidding Profile <a href='/portal/profile'>click here</a></div>
+                <div><i class="fa fa-check-circle  <%-verif3%>"></i>Upload Verification Documents <a href='/portal/profile'>click here</a></div>
            </div>
         </div>
     </div>

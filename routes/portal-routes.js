@@ -356,6 +356,7 @@ router.post('/portal/fileuploaddetails',async(req,res)=>{
 	}
 	console.log(req.body.filename.name)
 	var results = await db.addVerificationDocument(myuserid,req.body.doctype,req.body.filename.name)
+	await db.updateCustomerDocusUploaded(myuserid);
 	res.json({status:true})
 })
 

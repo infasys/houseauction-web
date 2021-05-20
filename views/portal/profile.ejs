@@ -1,6 +1,7 @@
 <%- include('../partials/menu-portal.ejs')%>
 <%
   function formatDate(date) {
+    if(date){
     var hours = date.getHours();
     var minutes = date.getMinutes();
     var ampm = hours >= 12 ? 'pm' : 'am';
@@ -9,6 +10,9 @@
     minutes = minutes < 10 ? '0'+minutes : minutes;
     var strTime = hours + ':' + minutes + ' ' + ampm;
     return date.getDate() + "/" + (date.getMonth()+1)  + "/" + date.getFullYear();
+    }else{
+      return "";
+    }
   }
 %>
   
@@ -117,7 +121,10 @@ if(members.length>1){
       var c = customer; 
       if(c.profile_updated){
       var addrBuilder = (c.premises?c.premises+'<br />': '')+ (c.door?c.door+' ':'')+(c.street+'<br />')+ (c.town?c.town+'<br />': '')+(c.county?c.county+', ': '')+c.postcode;
-      var addrBuilder2 = (c.premises?c.premises+', ': '')+ (c.door?c.door+' ':'')+(c.street+', ')+ (c.town?c.town: '');
+      var addrBuilder2 =''
+      if(c.town || c.street){
+         addrBuilder2 = (c.premises?c.premises+', ': '')+ (c.door?c.door+' ':'')+(c.street+', ')+ (c.town?c.town: '');
+      }
       %>
       <div class='row2'><div class='flbl'>Title:</div><div class='fnameval'><%-customer.titlename%>&nbsp;</div></div>
       <div class='row2'><div class='flbl'>First Name:</div><div class='fnameval'><%-customer.forename%>&nbsp;</div></div>

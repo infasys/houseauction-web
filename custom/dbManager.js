@@ -261,9 +261,17 @@ updateCustomerAddress(userid,address){
     })
   })
 }
+updateCustomerDocusUploaded(userid){
+  return new Promise((resolve,reject)=>{
+    db.query(`update customers set documentsuploaded=1 where id= ? `,[userid], function (err, result) {
+      if (err) throw err;
+      resolve(result)
+    })
+  })
+}
 updateCustomerDetailsNoAddr(userid,title,forename,surname,middlename,mobile){
   return new Promise((resolve,reject)=>{
-    db.query(`update customers set title=?,forename=?,surname=?,middlename=?,mobile=? where id= ? `,[title,forename,surname,middlename,mobile,userid], function (err, result) {
+    db.query(`update customers set title=?,forename=?,surname=?,middlename=?,mobile=?,profile_updated=1 where id= ? `,[title,forename,surname,middlename,mobile,userid], function (err, result) {
       if (err) throw err;
       resolve(result)
     })
