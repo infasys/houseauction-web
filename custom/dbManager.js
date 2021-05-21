@@ -542,7 +542,7 @@ getProperties(){
 getPropertiesByAuctionId(auctionid){
   return new Promise((resolve,reject)=>{
   //  db = mysql.createConnection(params);d = ap.propertyid where auctions.id =?   
-    db.query('SELECT myproperties.*,auction_bids.id AS bidid,auction_bids.customerid AS bidderid,auction_bids.amount AS bidamount,auction_bids.uuid,auction_bids.`status` AS bidstatus   FROM (SELECT properties.`*`, auction_properties.id AS auctionpropertyid,auction_properties.lotno,auction_properties.`status` AS result FROM auction_properties  LEFT JOIN properties ON properties.id = auction_properties.propertyid WHERE auction_properties.auctionid = ?) AS myproperties LEFT JOIN auction_bids ON myproperties.auctionpropertyid = auction_bids.auctionpropertyid',[auctionid], function (err, result) {
+    db.query('SELECT myproperties.*,auction_bids.id AS bidid,auction_bids.customerid AS bidderid,auction_bids.amount AS bidamount,auction_bids.uuid,auction_bids.`status` AS bidstatus   FROM (SELECT properties.*, auction_properties.id AS auctionpropertyid,auction_properties.lotno,auction_properties.`status` AS result FROM auction_properties  LEFT JOIN properties ON properties.id = auction_properties.propertyid WHERE auction_properties.auctionid = ?) AS myproperties LEFT JOIN auction_bids ON myproperties.auctionpropertyid = auction_bids.auctionpropertyid',[auctionid], function (err, result) {
       if (err) throw err;
       resolve(result)
     })
