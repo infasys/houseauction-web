@@ -9,27 +9,50 @@ body{
     background-color: #fff;
     overflow: hidden;
 }
+body{
+  background-image: url('/images/26196821.jpg');
+/*  background-image: url('/images/13520306.jpg');*/
+  background-size:cover;
+  
+  width: 100%;
+  box-sizing: border-box;
+  background-position: center;
+    overflow: hidden;
+}
 .loginheader{
     font-size: 26px;
 color: #000;
 font-weight: 700;
 }
+.bannerimagecen2{
+     background:unset;
+
+}
+header{
+     background:unset;
+     box-shadow:unset;
+}
+.main{
+     background:unset;
+}
+.sitetxta{
+    border-radius:8px;
+    padding:8px 10px;
+    font-size:16px;
+    border:2px solid #888;
+}
 </style>
 
 <div class='bannerimagecen2'>
-    <div class='bannerimgtint2' style='height:100%;'>
+    <div  style='padding-top:30px;'>
       <div class='container'>
           <div style='text-align:center'>
 <div class='form-page-container'>
-    <div class='form-page-inner' style='width:500px;margin: 0px auto;padding:20px;text-align: center;'>
-  <div style='padding:20px;box-sizing: border-box;' class='loginheader'>
-    <p>
-        Forgotten Password Recovery
-    </p>
+    <div class='' style='width:380px;margin: 0px auto;padding:20px;text-align: center;background:#fffa'>  <div style='padding:20px;box-sizing: border-box;font-family: "Brandon Grotesque";' class='loginheader'>Forgotten Password
 </div>
 <form action="/account/forgot-password" method="post">
     <div class=''>
-        <input type='text' class='sitetxta'  name="Email"  placeholder='E-Mail Address'/>
+        <input type='text' class='sitetxta'  name="Email"  placeholder='E-Mail Address' value='<%-tmpuser%>'/>
     </div>
     <div style='clear:both;'></div>
      <div style='text-align: right;'>

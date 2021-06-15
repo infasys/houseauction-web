@@ -1,0 +1,62 @@
+
+<div class='contactwrapper'>
+    <div class='mycontainer'>
+    <div class='contactbox' style='margin-bottom:40px;'>
+        <h4>Ask a Question</h4>
+        <div id='formstatus'></div>
+    <div class='inrowf'>
+        <div class='inrow-25f'>
+            <input type='text' class='sitetxtc' id='firstname' placeholder='First name'/>
+        
+            <input type='text' class='sitetxtc' id='lastname' placeholder='Last name'/>
+        </div>
+        <div class='inrow-25f'>
+            <input type='text' class='sitetxtc' id='emailaddr' placeholder='Email address'/>
+        
+            <input type='text' class='sitetxtc' id='telephone' placeholder='Telephone'/>
+        </div>
+    </div>
+    <div class='inrowf'>
+        <div class='inrow-25f'>
+            <textarea  class='sitetxtc' id='queryaddinfo' placeholder="Enquiry" rows="5"></textarea>
+        </div>
+    </div>
+    <div style='text-align:right;'>
+        <button id="btnSubmitQueryContact" class="sitebtn-small" style="margin-right:5px;">Submit Query</button>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+<script>
+    $('#btnSubmitQueryContact').click(function(){
+        var error = 0;
+        var errormsgs = []
+        var firstname = $('#firstname').val()
+        if(!firstname){error++;errormsgs.push('First Name is Required*')}
+        var lastname = $('#lastname').val()
+        if(!lastname){error++;errormsgs.push('Last Name is Required*')}
+        var email = $('#emailaddr').val()
+        if(!email){error++;errormsgs.push('E-Mail address is Required*')}
+        var telephone = $('#telephone').val()
+        if(!telephone){error++;errormsgs.push('Telephone Number is Required*')}
+        var info =  $('#queryaddinfo').val()
+
+        if(error){
+            var msg = '<div class="inrow" style="padding:20px 40px;">';
+            errormsgs.forEach(m=>{
+                msg+='<div class="errorstr">'+m+'</div>'
+            })
+            msg+= '</div>'
+            $('#formstatus').html(msg)
+        }else{
+            $.post('/savequery',{firstname,lastname,email,telephone,info},function(data){
+                if(data.status){
+                    window.location = '/thank-you'
+                }
+            },'json')
+        }
+        //window.location = '/thank-you'
+    })
+</script>

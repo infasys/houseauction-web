@@ -378,11 +378,21 @@ footer {
 }
 
 .lotitemholder {
+  flex: 0 0 33%;
   flex-wrap: wrap;
   overflow: hidden;
-  flex: 0 0 33%;
   padding: 10 10 40 10px;
   box-sizing: border-box;
+}
+@media screen and (max-width: 800px) {
+  .lotitemholder {
+    flex: 0 0 50%;
+  }
+}
+@media screen and (max-width: 450px) {
+  .lotitemholder {
+    flex: 0 0 100%;
+  }
 }
 
 .lotitem {
@@ -435,6 +445,18 @@ footer {
   font-size: 22px;
   font-weight: 900;
 }
+@media screen and (max-width: 800px) {
+  .lotPrice {
+    font-size: 18px;
+    font-weight: 600;
+  }
+}
+@media screen and (max-width: 450px) {
+  .lotPrice {
+    font-size: 18px;
+    font-weight: 600;
+  }
+}
 
 .lotDesc {
   font-family: "Brandon Grotesque";
@@ -448,6 +470,18 @@ footer {
   height: 60px;
   overflow: hidden;
   vertical-align: middle;
+}
+@media screen and (max-width: 800px) {
+  .lotDesc {
+    font-size: 16px;
+    font-weight: 600;
+  }
+}
+@media screen and (max-width: 450px) {
+  .lotDesc {
+    font-size: 16px;
+    font-weight: 600;
+  }
 }
 
 .lotlink {
@@ -496,7 +530,6 @@ footer {
 
 .mycontainer {
   max-width: 1200px;
-  min-width: 800px;
   width: 97%;
   margin: auto;
 }
@@ -627,6 +660,7 @@ padding-top: 32.5%;
   bottom: 30px;
   text-align: center;
   position: relative;
+  width: 80%;
   margin: auto;
 }
 

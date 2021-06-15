@@ -112,12 +112,6 @@ header a {
   color: #000;
   text-decoration: none;
 }
-header a.logo {
-  font-weight: bold;
-}
-header a.logo img {
-  height: 40px;
-}
 header nav {
   float: right;
 }
@@ -131,6 +125,17 @@ header nav li a {
   color: #000;
   padding: 1em;
   font-weight: 700;
+  white-space: pre;
+}
+@media screen and (max-width: 800px) {
+  header nav li a {
+    padding: 0.9em;
+  }
+}
+@media screen and (max-width: 450px) {
+  header nav li a {
+    padding: 0.7em;
+  }
 }
 
 .caret:before {
@@ -138,6 +143,16 @@ header nav li a {
   font-weight: 900;
   content: " ";
   padding-left: 15px;
+}
+@media screen and (max-width: 800px) {
+  .caret:before {
+    padding: 8px;
+  }
+}
+@media screen and (max-width: 450px) {
+  .caret:before {
+    padding: 4px;
+  }
 }
 
 .highlight {
@@ -568,11 +583,21 @@ footer {
 }
 
 .lotitemholder {
+  flex: 0 0 33%;
   flex-wrap: wrap;
   overflow: hidden;
-  flex: 0 0 33%;
   padding: 10 10 40 10px;
   box-sizing: border-box;
+}
+@media screen and (max-width: 800px) {
+  .lotitemholder {
+    flex: 0 0 50%;
+  }
+}
+@media screen and (max-width: 450px) {
+  .lotitemholder {
+    flex: 0 0 100%;
+  }
 }
 
 .lotitem {
@@ -625,6 +650,18 @@ footer {
   font-size: 22px;
   font-weight: 900;
 }
+@media screen and (max-width: 800px) {
+  .lotPrice {
+    font-size: 18px;
+    font-weight: 600;
+  }
+}
+@media screen and (max-width: 450px) {
+  .lotPrice {
+    font-size: 18px;
+    font-weight: 600;
+  }
+}
 
 .lotDesc {
   font-family: "Brandon Grotesque";
@@ -638,6 +675,18 @@ footer {
   height: 60px;
   overflow: hidden;
   vertical-align: middle;
+}
+@media screen and (max-width: 800px) {
+  .lotDesc {
+    font-size: 16px;
+    font-weight: 600;
+  }
+}
+@media screen and (max-width: 450px) {
+  .lotDesc {
+    font-size: 16px;
+    font-weight: 600;
+  }
 }
 
 .lotlink {
@@ -686,7 +735,6 @@ footer {
 
 .mycontainer {
   max-width: 1200px;
-  min-width: 800px;
   width: 97%;
   margin: auto;
 }
@@ -817,6 +865,7 @@ padding-top: 32.5%;
   bottom: 30px;
   text-align: center;
   position: relative;
+  width: 80%;
   margin: auto;
 }
 
@@ -991,6 +1040,22 @@ font-family: 'PT Mono', monospace;
     font-family: 'Roboto Slab', serif;
 
 */
+.ah-logo-header {
+  height: 95px;
+  top: 5px;
+  vertical-align: middle;
+}
+@media screen and (max-width: 800px) {
+  .ah-logo-header {
+    height: 75px;
+  }
+}
+@media screen and (max-width: 450px) {
+  .ah-logo-header {
+    height: 55px;
+  }
+}
+
 *:focus {
   outline: none;
 }
@@ -1037,6 +1102,18 @@ body {
   float: left;
   width: 40%;
 }
+@media screen and (max-width: 800px) {
+  .banner-top .banner-top-left {
+    font-size: 16px;
+    padding: 16px 10px;
+  }
+}
+@media screen and (max-width: 450px) {
+  .banner-top .banner-top-left {
+    font-size: 14px;
+    padding: 16px 10px;
+  }
+}
 .banner-top .banner-top-right {
   background: #f2f2f2;
   color: #b82b35;
@@ -1053,6 +1130,16 @@ body {
 .banner-top .banner-top-right .fab {
   font-size: 24px;
   margin: 4px 16px;
+}
+@media screen and (max-width: 800px) {
+  .banner-top .banner-top-right .fab {
+    margin: 4px 14px;
+  }
+}
+@media screen and (max-width: 450px) {
+  .banner-top .banner-top-right .fab {
+    margin: 4px 8px;
+  }
 }
 .banner-top .valuationlink {
   color: #fff;
@@ -1102,42 +1189,39 @@ body {
   box-sizing: border-box;
   box-sizing: border-box;
 }
+.inputWithIconButton input[type=text]:focus {
+  outline: 0;
+}
 
 .inputWithIconButton {
   position: relative;
   display: inline-block;
 }
 
+.inputWithIconButton:focus {
+  outline: none;
+}
+
 .inputWithIconButton i {
   position: absolute;
   left: 0;
   top: 8px;
-  padding: 9px 8px;
+  padding: 5px 8px;
   color: #cd1638;
   transition: 0.3s;
   border-right: 2px solid #eee;
+  font-size: 18px;
 }
 
 .inputWithIconButton button {
-  position: absolute;
-  right: 1px;
-  top: 1px;
-  bottom: 20px;
-  width: 120px;
+  padding: 11px 16px;
   box-sizing: border-box;
   background: #cd1638;
   color: #fff;
   transition: 0.3s;
   border: none;
   outline: none;
-}
-
-.inputWithIconButton button:hover {
-  background: #ff1638;
-}
-
-.inputWithIconButton input[type=text]:focus + i {
-  color: #cdca38;
+  font-size: 13px;
 }
 
 .bannerimagecen {
@@ -1154,6 +1238,16 @@ body {
   padding-bottom: 60px;
   padding-bottom: 5%;
   width: 100%;
+}
+@media screen and (max-width: 800px) {
+  .bannerimagecen .bannerimgtint {
+    padding: 60px 20px;
+  }
+}
+@media screen and (max-width: 450px) {
+  .bannerimagecen .bannerimgtint {
+    padding: 60px 20px;
+  }
 }
 
 .bannerimagecen2 {
@@ -1181,6 +1275,12 @@ body {
   max-width: 700px;
   min-width: 400px;
 }
+@media screen and (max-width: 450px) {
+  .valuation-box {
+    width: 100%;
+    min-width: 200px;
+  }
+}
 
 .bannermessage {
   color: #fff;
@@ -1190,6 +1290,19 @@ body {
   margin-bottom: 60px;
   max-width: 600px;
   min-width: 400px;
+  padding: 16px 10px;
+}
+@media screen and (max-width: 800px) {
+  .bannermessage {
+    width: 100%;
+    font-size: 30px;
+  }
+}
+@media screen and (max-width: 450px) {
+  .bannermessage {
+    width: 100%;
+    font-size: 26px;
+  }
 }
 
 .sitebtn-small {
@@ -1208,6 +1321,82 @@ body {
   background: #b82b35;
 }
 
+button.full {
+  width: 100%;
+}
+
+button.btn {
+  box-sizing: border-box;
+  background: transparent;
+  color: white;
+  border: 2px solid white;
+  font-size: 15px;
+  letter-spacing: 2px;
+  padding: 14px 30px;
+  text-transform: uppercase;
+  cursor: pointer;
+  display: inline-block;
+  -webkit-transition: all 0.4s;
+  -moz-transition: all 0.4s;
+  transition: all 0.4s;
+}
+
+button.btn-3 {
+  color: black;
+  -webkit-transition: all 0.4s;
+  -moz-transition: all 0.4s;
+  transition: all 0.4s;
+  border: 2px solid black;
+}
+
+button.btn-3:hover {
+  background-color: black;
+  color: white;
+  -webkit-transition: all 0.4s;
+  -moz-transition: all 0.4s;
+  transition: all 0.4s;
+}
+
+button.btn-1:hover {
+  background-color: white;
+  color: black;
+  -webkit-transition: all 0.4s;
+  -moz-transition: all 0.4s;
+  transition: all 0.4s;
+}
+
+button.btn-2 {
+  overflow: hidden;
+  position: relative;
+}
+
+button.btn-2:hover {
+  color: black;
+}
+
+.btnrow {
+  padding: 20px 60px 0px 60px;
+}
+
+button.btn-2:after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  -webkit-transition: all 0.4s;
+  -moz-transition: all 0.4s;
+  transition: all 0.4s;
+  width: 100%;
+  height: 0;
+  top: 0;
+  left: 0;
+  background: #fff;
+}
+
+button.btn-2:hover:after,
+button.btn-2:active:after {
+  height: 100%;
+}
+
 .right {
   float: right;
 }
@@ -1217,6 +1406,18 @@ body {
   font-size: 32px;
   color: #777;
   font-weight: 500;
+}
+@media screen and (max-width: 800px) {
+  .tagmsg {
+    padding: 30px 20px;
+    font-size: 28px;
+  }
+}
+@media screen and (max-width: 450px) {
+  .tagmsg {
+    padding: 20px 20px;
+    font-size: 24px;
+  }
 }
 
 .strong {
@@ -1262,11 +1463,25 @@ body {
   margin-bottom: 20px;
 }
 
+.sitetxt-ib:focus {
+  outline: none;
+}
+
 .section-box {
   padding: 20px;
   width: 25%;
   float: left;
   box-sizing: border-box;
+}
+@media screen and (max-width: 800px) {
+  .section-box {
+    width: 50%;
+  }
+}
+@media screen and (max-width: 450px) {
+  .section-box {
+    width: 100%;
+  }
 }
 
 .categorychoiceimg {

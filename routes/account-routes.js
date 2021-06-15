@@ -13,14 +13,15 @@ const {v4:uuidv4} = require('uuid');
 
 
 router.get('/account/log-in',authCheckNoLogIn ,(req,res)=>{
-	var msg = '';
-	if(req.session.loginmessage){
-		msg = req.session.loginmessage
-	}
-    res.render('site/login.ejs',{message:msg})
+	var msg = req.session.loginmessage? req.session.loginmessage : ''
+	var tmpuser = req.session.tmpusername? req.session.tmpusername : ''
+	
+    res.render('site/login.ejs',{message:msg,tmpuser})
 })
 router.get('/account/forgotten-password',authCheckNoLogIn ,(req,res)=>{
-    res.render('site/forgot.ejs')
+		var tmpuser = req.session.tmpusername? req.session.tmpusername : ''
+
+    res.render('site/forgot.ejs',{tmpuser})
 })
 
 router.get('/pwa:id' ,authCheckNoLogIn,async (req,res)=>{
@@ -229,7 +230,7 @@ router.get('/account/log-out', (req, res) => {
     console.log(request.body)
 	var username = request.body.Email;
     var password = request.body.Password;
-    
+    request.session.tmpusername = username;
 	let hash = crypto.createHash('md5').update(password).digest("hex");
 	if (username && password) {
 		var results = await db.getLogin(username,hash)
@@ -238,6 +239,7 @@ router.get('/account/log-out', (req, res) => {
 			request.session.username = results[0]['username'];
 			request.session.userid = results[0]['id'];
 			delete request.session.loginmessage;
+			delete request.session.tmpusername;
 			response.redirect('/portal/dashboard');
 		}else{
 			request.session.loginmessage = "Incorrect Username and Password Combination";

@@ -5,7 +5,7 @@ const authCheck = require('../custom/authCheck');
 const azBlob = require('../custom/storageManager');
 var stripe = require('stripe')(process.env.STRIPE_KEY_SK);
 const axios = require('axios');
-
+const ejs_helpers = require('../custom/helper_ejs.js')
 router.get('/portal',authCheck, (req, res) => {
 	
 	res.redirect('/portal/dashboard');
@@ -53,12 +53,7 @@ router.get('/portal/property/:id',authCheck,async (req, res) => {
 	var apikey = process.env.GOGGLEMAPS_API
     var lot = await db.getPropertyById(req.params.id)
     var images = await db.getPropertyImagesById(req.params.id)
-    if(!images.length){
-        images.push({filename:'abc/b2c63fa2-dd22-498d-a5f9-162a2523a58b.jpg'})
-    }
-    images.forEach(i=>{
-      i.uri = azBlob.generateSasToken(i.filename).uri;
-    })
+	images = await getImages(images,'filename')
     var maps = await db.getPropertyMapsById(req.params.id)
     maps.forEach(i=>{
         i.uri = azBlob.generateSasToken(i.filename).uri;
@@ -75,7 +70,7 @@ router.get('/portal/property/:id',authCheck,async (req, res) => {
         if(dbres.length) isAdded = true;
 		biddeposit = dbres[0].bid_deposit;
     }
-    res.render('portal/property',{biddeposit,property,images,details,isAdded,maps,catalogs,apikey,customer});
+    res.render('portal/property',{biddeposit,property,images,details,isAdded,maps,catalogs,apikey,customer,helper:ejs_helpers});
 });
 
 router.get('/portal/properties',authCheck,async (req, res) => {
@@ -83,10 +78,8 @@ router.get('/portal/properties',authCheck,async (req, res) => {
 	var results = await db.getCustomerById(myuserid)
 	var customer = results[0]
 	var lots = await db.getPropertiesByUserId(req.session.userid);
-    lots.forEach(p=>{
-        if(!p.img)p.img ='abc/b2c63fa2-dd22-498d-a5f9-162a2523a58b.jpg'
-        p.uri = azBlob.generateSasToken(p.img).uri;
-      })
+
+	  lots = await getImages(lots,'img')
 	res.render('portal/properties',{lots:lots,menusel:2,customer});
 });
 router.get('/portal/myaccount',authCheck,async (req, res) => {
@@ -148,9 +141,8 @@ router.get('/portal/deposits',authCheck,async (req, res) => {
 		if(p.bid_interest){		
 			total+=p.price
 		}
-        if(!p.img)p.img ='abc/b2c63fa2-dd22-498d-a5f9-162a2523a58b.jpg'
-        p.uri = azBlob.generateSasToken(p.img).uri;
       })
+	  lots = await getImages(lots,'img')
 	  if(total<3){
 		  total = 3;
 	  }
@@ -354,7 +346,7 @@ router.post('/portal/fileuploaddetails',async(req,res)=>{
 	if(req.session.memberid){
 		myuserid = req.session.memberid;	
 	}
-	console.log(req.body.filename.name)
+	console.log('FILENAME:'+req.body.filename.name)
 	var results = await db.addVerificationDocument(myuserid,req.body.doctype,req.body.filename.name)
 	await db.updateCustomerDocusUploaded(myuserid);
 	res.json({status:true})
@@ -417,10 +409,53 @@ router.get('/portal/verificationdocs',authCheck, async (req, res) => {
 	}
 	var verificationDocTypes = await db.getVerificationDocumentTypes();
 	var docs = await db.getVerificationDocument(myuserid)
-	docs.forEach(p=>{
-		p.uri = azBlob.generateSasToken(p.name).uri;
-	})
+	console.log(docs)
+	docs = await getImages(docs,'name')
 	console.log(docs)
 	res.render('portal/verificationdocs',{verificationDocTypes,docs,members,customer,mysel:4,menusel:3});
 });
+
+
+
+
+
+
+
+
+
+async function getImages(list,key){
+    for(var i=0;i<list.length;i++){
+        var itm = list[i]
+       // console.log(itm.img)
+        if(!itm[key])itm[key] ='abc/fb2a4e95-d6e7-43e1-a438-c7889db6c029.jpg'
+        var mytoken = await azBlob.generateSasToken(itm[key]);
+        itm.uri =  mytoken.uri;
+    }
+    return list;
+}
+
+
+
+
+router.get('/legalpack/:id',authCheck, async (req, res) => {
+	var myuserid = req.session.userid;
+	var results = await db.getCustomerById(myuserid)
+	var customer = results[0]
+	var apikey = process.env.GOGGLEMAPS_API
+	var property = await db.getPropertyById(req.params.id)
+	property = property[0]
+	var legal_documents = await db.getDocuments(req.params.id);
+	legal_documents = await getImages(legal_documents,'file')
+	if(property.img){
+	  var mysasToken =  await azBlob.generateSasToken(property.img)
+	  property.primaryimgurl=mysasToken.uri;
+	}
+    res.render('legalpack/legalpack',{property,legal_documents,customer,helper:ejs_helpers});
+
+});
+
+
+
+
+
 module.exports = router;

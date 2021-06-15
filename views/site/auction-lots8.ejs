@@ -10,7 +10,7 @@ const formatToCurrency = amount => {
   return "£" + amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
 
-lots.forEach(data=>{%><div class='lotitemholder'><div class='lotitem'>
+lots.forEach(data=>{%><div class='lotitemholder'><a href='/lot/details/<%-data.id%>'><div class='lotitem'>
     <div class='lotno' style='position: absolute;'>LOT <%-data.lotno%></div>
 
       
@@ -22,6 +22,6 @@ lots.forEach(data=>{%><div class='lotitemholder'><div class='lotitem'>
       </div>
     <a class='lotlink' href='/lot/details/<%-data.id%>'>Full details  &nbsp;&nbsp;&nbsp;	&#8594; </a>
     <div style='clear:both'></div></div>
-  </div></div><%})%>
+  </div></a></div><%})%>
 </div>
 </div>

@@ -6,6 +6,7 @@ const azBlob = require('../custom/storageManager');
 const { json } = require('body-parser');
 const stripe = require('stripe')(process.env.STRIPE_KEY_SK);
 const ejs_helpers = require('../custom/helper_ejs.js')
+
 router.get('/',(req,res)=>{
     res.redirect('/home')
 })
@@ -31,6 +32,11 @@ router.get('/contact',async(req,res)=>{
     var question = req.query.question
     res.render('site/contact.ejs',{question})
 })
+router.get('/askaquestion',async(req,res)=>{
+    console.log(req.query)
+    var question = req.query.question
+    res.render('site/askaquestion.ejs',{question})
+})
 router.get('/about-us',async(req,res)=>{
     var members = await db.getMembers();
     res.render('site/about-us.ejs',{members})
@@ -54,7 +60,6 @@ router.get('/company/why-choose-auction-house',async (req,res)=>{
 })
 
 router.post('/savequery',async(req,res)=>{
-    console.log('TAHID')
     var q = req.body;
     console.log(q)
     await db.saveEnquriy(q.firstname,q.lastname,q.email,q.telephone,q.addr1,q.addr2,q.town,q.postcode,q.info)
@@ -67,17 +72,13 @@ router.get('/lot/details/:id',async (req,res)=>{
     if(!images.length){
         images.push({filename:'abc/b2c63fa2-dd22-498d-a5f9-162a2523a58b.jpg'})
     }
-    images.forEach(i=>{
-      i.uri = azBlob.generateSasToken(i.filename).uri;
-    })
+    
     var maps = await db.getPropertyMapsById(req.params.id)
-    maps.forEach(i=>{
-        i.uri = azBlob.generateSasToken(i.filename).uri;
-      })
+    
       var catalogs = await db.getPropertyCatalogById(req.params.id)
-      catalogs.forEach(i=>{
-        i.uri = azBlob.generateSasToken(i.filename).uri;
-      })
+      images = await getImages(images,'filename')
+      maps = await getImages(maps,'filename')
+      catalogs = await getImages(catalogs,'filename')
     var details = await db.getPropertyDetailsById(req.params.id)
     var property = lot[0]
     var isAdded = false
@@ -85,32 +86,29 @@ router.get('/lot/details/:id',async (req,res)=>{
         var dbres =  await db.getSellerFavourites(req.session.userid,req.params.id)
         if(dbres.length) isAdded = true;
     }
+    console.log(catalogs)
     res.render('site/viewlot',{property,images,details,isAdded,maps,catalogs,apikey,helper:ejs_helpers});
 })
+
+
+
 router.get('/auction-lots',async (req, res) => {
     var lots = await db.getProperties();
-    lots.forEach(p=>{
-        if(!p.img)p.img ='abc/b2c63fa2-dd22-498d-a5f9-162a2523a58b.jpg'
-        p.uri = azBlob.generateSasToken(p.img).uri;
-      })
+    lots = await getImages(lots,'img')
 	res.render('site/auction-lots',{lots,msg:'',helper:ejs_helpers});
 });
+
+
+
 router.get('/online/auction/:id',async (req, res) => {
 
     var lots = await db.getPropertiesByAuctionId(req.params.id);
-    console.log(lots)
-    lots.forEach(p=>{
-        if(!p.primaryimage)p.primaryimage ='abc/b2c63fa2-dd22-498d-a5f9-162a2523a58b.jpg'
-        p.uri = azBlob.generateSasToken(p.primaryimage).uri;
-      })
+    lots = await getImages(lots,'primaryimage')
 	res.render('site/auction-id-lot',{lots,msg:''});
 });
 router.get('/auction-lots-list',async (req, res) => {
     var lots = await db.getProperties();
-    lots.forEach(p=>{
-        if(!p.img)p.img ='abc/b2c63fa2-dd22-498d-a5f9-162a2523a58b.jpg'
-        p.uri = azBlob.generateSasToken(p.img).uri;
-      })
+    lots = await getImages(lots,'img')
 	res.render('site/auction-lots-list',{lots,msg:'',helper:ejs_helpers});
 });
 
@@ -118,21 +116,39 @@ router.get('/auction-lots-list',async (req, res) => {
 
 router.get('/auction-maps',async (req,res)=>{
     var lots = await db.getProperties();
-    lots.forEach(p=>{
-        if(!p.img)p.img ='abc/b2c63fa2-dd22-498d-a5f9-162a2523a58b.jpg'
-        p.uri = azBlob.generateSasToken(p.img).uri;
-      })
+    lots = await getImages(lots,'img')
       var apikey = process.env.GOGGLEMAPS_API
     res.render('site/auction-maps',{lots,msg:'',apikey,helper:ejs_helpers});
 })
 
 
+
+
+async function getImages(list,key){
+    for(var i=0;i<list.length;i++){
+        var itm = list[i]
+       // console.log(itm.img)
+        if(!itm[key])itm[key] ='abc/fb2a4e95-d6e7-43e1-a438-c7889db6c029.jpg'
+        var mytoken = await azBlob.generateSasToken(itm[key]);
+        itm.uri =  mytoken.uri;
+    }
+    return list;
+}
+
+
+
+
+
+
 router.post('/auction-lots8',async (req, res) => {
     var lots = await db.getPropertiesLimit8();
-    lots.forEach(p=>{
-        if(!p.img)p.img ='abc/b2c63fa2-dd22-498d-a5f9-162a2523a58b.jpg'
-        p.uri = azBlob.generateSasToken(p.img).uri;
-      })
+    lots = await getImages(lots,'primaryimage')
+    // lots.forEach(async p=>{
+    //     if(!p.img)p.img ='abc/b2c63fa2-dd22-498d-a5f9-162a2523a58b.jpg'
+    //     var sasToken = await azBlob.generateSasToken(p.img)
+    //     console.log(sasToken)
+    //     p.uri = sasToken.uri;
+    //   })
 	res.render('site/auction-lots8',{lots,msg:'',helper:ejs_helpers});
 });
 
@@ -169,11 +185,7 @@ router.get('/thank-you',async (req,res)=>{
 router.post('/auctiondetails',async (req, res) => {
 
     var lots = await db.getPropertiesByAuctionIdCompleted(req.body.id);
-
-    lots.forEach(p=>{
-        if(!p.primaryimage)p.primaryimage ='abc/b2c63fa2-dd22-498d-a5f9-162a2523a58b.jpg'
-        p.uri = azBlob.generateSasToken(p.primaryimage).uri;
-      })
+    lots = await getImages(lots,'primaryimage')
 	res.json({lots,msg:''});
 });
 module.exports = router;

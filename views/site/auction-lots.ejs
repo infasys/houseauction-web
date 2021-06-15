@@ -38,12 +38,10 @@ const formatToCurrency = amount => {
 };
 
 lots.forEach(data=>{%><div class='lotitemholder'>
-
+  <a class='lotlink' href='/lot/details/<%-data.id%>'>
 <div class='lotitem'>
     <div class='lotno'>LOT <%-data.lotno%></div>
  
-    <div style='text-align: center;'><div style='display:inline;text-align:center;border-radius: 5px;background:#000;color:#fff;font-size: 16px;padding:5px;;;'><%-helper.formatDateOnlyFull(data.datetime)%></div></div>
-
  <div class='lotitmlstimg' style='background-image: url(<%-data.uri%>);'></div>
  <div style='padding:10px;box-sizing: border-box;'>
    <div class='lotPrice'>*<%-formatToCurrency(data.price)%>+</div>
@@ -51,9 +49,14 @@ lots.forEach(data=>{%><div class='lotitemholder'>
  <div class='lotDesc'><%-data.propname%></div>
  <a class='lotlink' href='/lot/details/<%-data.id%>'>Full details  &nbsp;&nbsp;&nbsp;	&#8594; </a>
  <div style='clear:both'></div></div>
-  </div></div><%})%>
+  </div></a></div><%})%>
 </div>
 </div>
 </div>
 
 <%- include('../partials/footer.ejs')%>
+<style>
+  .lotlink{
+    text-align:right;
+  }
+  </style>

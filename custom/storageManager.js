@@ -4,8 +4,38 @@ const azure = require("azure-storage");
 const { v4: uuidv4 } = require("uuid");
 const path = require("path");
 var getStream = require('into-stream')
+const redis = require("redis");
+const { isRegExp } = require("util");
+const client = redis.createClient();
+client.on('error', (err) => {
+    console.log('Redis error: ', err);
+  });
+
+async function getRedis(key){
+  return new Promise((resolve,reject)=>{
+    client.get(key,(err,reply)=>{
+      if(err)throw err
+      var replyobj = JSON.parse(reply);
+      resolve(replyobj)
+    })
+  })
+}
+
 class AzStorageManager {
-  generateSasToken(blobName) {
+
+
+
+  async generateSasToken(blobName) {
+    var myobj = await getRedis(blobName);
+    var exists = false;
+    if(myobj){
+      if(myobj.expiryDate){
+        if(new Date(myobj.expiryDate)>new Date()){
+          exists = true;
+          return { uri: myobj.uri};
+        }
+      }
+    }
     var container = process.env.AZURE_STORAGE_CONTAINER_NAME;
     var blobService = azure.createBlobService(process.env.AZURE_STORAGE_CONNECTION_STRING);
 
@@ -14,7 +44,7 @@ class AzStorageManager {
     var startDate = new Date();
     startDate.setMinutes(startDate.getMinutes() - 5);
     var expiryDate = new Date(startDate);
-    expiryDate.setMinutes(startDate.getMinutes() + 60);
+    expiryDate.setMinutes(startDate.getMinutes() + 240);
 
     var sharedAccessPolicy = {
       AccessPolicy: {
@@ -25,8 +55,9 @@ class AzStorageManager {
     };
 
     var sasToken = blobService.generateSharedAccessSignature(container, blobName, sharedAccessPolicy);
-
-    return { uri: blobService.getUrl(container, blobName, sasToken, true) };
+    var blobUri = { uri: blobService.getUrl(container, blobName, sasToken, true),expiryDate }
+    client.set(blobName,JSON.stringify(blobUri))
+    return blobUri;
   }
   getBlobName(originalName) {
     var dotextension = path.extname(originalName);
