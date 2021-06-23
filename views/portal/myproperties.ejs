@@ -114,6 +114,7 @@ a{
     </div>
 
 <script>
+    <%console.log(lots)%>
     var lots = <%-JSON.stringify(lots)%>;
     const formatToCurrency = amount => {
         return "£" + amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,");
@@ -133,25 +134,82 @@ a{
     var strTime = `${day}/${month}/${year} ${hours}:${mins}`;
     return strTime;
     }
-    var lotstr ='<table class="myTable">'
+    var auctionproperties = []
+    var apfound = false;
+    console.log('start')
+    lots.forEach(l=>{
+        apfound = false
+        auctionproperties.forEach(ap=>{
+            if(ap.date == l.datetime){
+                apfound = true;
+                ap.properties.push(l)
+            }
+        })
+        if(!apfound){
+            var newauctionproperty = {date:l.datetime,status:l.auctionstatus,properties:[l]}
+            auctionproperties.push(newauctionproperty)
+        }
+    })
+    var lotstr =''
+     
+        auctionproperties.forEach(ap=>{
+            var auctiondate = 'Awaiting Auction Date'
+            if(ap.date){
+                auctiondate = 'Auction:'+formatDateTimeMe(ap.date)
+            }
+            if(ap.status == 7){
+                lotstr+='<div style="padding:8px 8px;background: green;color:#fff;font-weight: 500;">Deposit Required for Bidding via Credit Card is now open. If you wish to Bid on a property please first add the deposit for that property</div>'
+                }
+            lotstr+='<div style="padding:8px 8px;background: #BD2D33;color:#fff;font-weight: 500;">'+auctiondate+'<div style="float:right;"></div><div style="clear:both"></div></div>'
+            lotstr+='<table class="myTable" style="margin-bottom:30px;">'
         lotstr +="<tr class='assetrowmain'>";
             lotstr+='<td style="width:200px;"></td><td ></td><td style="width:300px;"></td>'
         lotstr +="</tr>";
-    lots.forEach(l=>{
+            ap.properties.forEach(l=>{
         var auctiondate = ''
         if(l.datetime){
-            auctiondate = "Auction Date: "+formatDateTimeMe(l.datetime)+"<div>";
-                if(l.auctionstatus == 3){
-            auctiondate +="<a href='/portal/property/"+l.id+"'><button class='sitebtn-small2' style='margin-top:10px;'>Bidding Deposit</button></a></div>"
-                }
+            auctiondate = "Auction Date: "+formatDateTimeMe(l.datetime)+"<div>"; 
         }
         lotstr +="<tr class='assetrow'>";
         lotstr +="<td style='border-bottom:0px;'><div class='lotitmlstimgtd' style='background-image: url("+l.uri+");'>&nbsp;</div></td>";
         lotstr +="<td><table class='lotdetailstable' width='100%' height='110px'><tr><td style='vertical-align:top;padding:10px 10px;'><a href='/portal/property/"+l.id+"' >"+l.propname+"</a></td></tr><tr height='100%'><td style='vertical-align: bottom;padding:0px 10px;'>*Guide | <strong>"+formatToCurrency(l.price)+"</strong>+ (plus fees)</td></tr></table></td>"
-        lotstr +="<td><table class='lotdetailstable' width='100%' height='110px'><tr><td style='vertical-align:top;padding:10px 10px;text-align:right;'>"+auctiondate+"</td></tr><tr height='100%'><td style='vertical-align: bottom;text-align:right;padding:10px 10px;'><i class='far fa-heart'></i></td></tr></table></td>"
+        lotstr +="<td><table class='lotdetailstable' width='100%' height='110px'><tr><td style='vertical-align:top;padding:10px 10px;text-align:right;'>"+auctiondate+"</td></tr><tr height='100%'><td style='vertical-align: bottom;text-align:right;padding:10px 10px;'>";
+        if(ap.status == 7){
+            var ischecked = ''
+            if(l.bid_interest){
+                ischecked = ' checked '
+            }
+            lotstr+=`
+<div class="toggle-switch" tabindex="0">
+  <input type="checkbox" name="my_checkbox" value="yes" class="mycheckbox" id="checkbox-${l.customerpropertyid}" ${ischecked} />
+  <label for="checkbox-${l.customerpropertyid}">
+    Deposit
+    <div class="area" aria-hidden="true">
+      <div class="background">
+        <div class="handle"></div>
+      </div>
+    </div>
+   
+  </label>
+</div>`
+        }
+        lotstr+="</td></tr></table></td>"
         lotstr +="</tr>";
     })
-     lotstr +='</table>'
-    console.log(lotstr)
+    lotstr +='</table>'
+})
+
+
+    
     $('#myproperties').append(lotstr);
+   $('.mycheckbox').change(function(){
+       var myid = this.id.split('-')[1]
+       var mycheck = 0;
+       if(this.checked) {
+        mycheck = 1;
+    }
+       $.post('/auctionaction/biddeposit',{myid,mycheck},function(){
+        window.location.reload()
+       },'json')
+   })
 </script>

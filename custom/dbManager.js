@@ -480,10 +480,10 @@ insertPropertyListing(name,addr,header,description,customdata,sellerid,price,pri
 getPropertiesByUserId(userid){
   return new Promise((resolve,reject)=>{
   //  db = mysql.createConnection(params);
-    db.query(`SELECT myproperties.*,customerpropertylist.bid_deposit AS bid_interest
+    db.query(`SELECT myproperties.*,customerpropertylist.id as customerpropertyid,customerpropertylist.bid_deposit AS bid_interest
     from customerpropertylist 
     left JOIN 
-    (select  auctions.id as auctionid, auctions.datetime,auctions.status AS auctionstatus, p.id,p.name as propname,i.img,p.price,p.town,p.county from properties p left join (select propertyid,max(filename) as img from propertyimages group by propertyid) i on i.propertyid = p.id left join customers s on s.id = p.clientid LEFT JOIN auction_properties on p.id = auction_properties.propertyid LEFT JOIN auctions ON auctions.id = auction_properties.auctionid    )
+    (select  auctions.id as auctionid, auctions.datetime,auctions.status AS auctionstatus, p.id,p.name as propname,p.primaryimage as img,p.price,p.town,p.county from properties p left join customers s on s.id = p.clientid LEFT JOIN auction_properties on p.id = auction_properties.propertyid LEFT JOIN auctions ON auctions.id = auction_properties.auctionid    )
      AS myproperties
     ON myproperties.id = customerpropertylist.propertyid WHERE userid=?
     `,[userid], function (err, result) {
@@ -495,15 +495,15 @@ getPropertiesByUserId(userid){
 }
 getPropertyById(id){
   return new Promise((resolve,reject)=>{
-    db.query(`select auctions.id as auctionid,auction_properties.lotno, auctions.datetime,auctions.status AS auctionstatus, p.id,p.name as propname,p.virtualtourlink,i.img,p.price,p.town,p.county,p.latitude,p.longitude from properties p left join (select propertyid,max(filename) as img from propertyimages group by propertyid) i on i.propertyid = p.id left join customers s on s.id = p.clientid LEFT JOIN auction_properties on p.id = auction_properties.propertyid LEFT JOIN auctions ON auctions.id = auction_properties.auctionid where p.id = ?;`,[id], function (err, result) {
+    db.query(`select auctions.id as auctionid,auctions.name AS auctionname,auction_properties.lotno, auctions.datetime,auctions.status AS auctionstatus,aps.name AS auctionstatusname, p.id,p.name as propname,p.virtualtourlink,p.primaryimage as img,p.price,p.town,p.county,p.latitude,p.longitude from properties p left join customers s on s.id = p.clientid LEFT JOIN auction_properties on p.id = auction_properties.propertyid LEFT JOIN auctions ON auctions.id = auction_properties.auctionid left JOIN opt_auction_property_status aps ON aps.id=auction_properties.status  where p.id =   ?;`,[id], function (err, result) {
       if (err) throw err;
       resolve(result)
     })
   })
 }
-savePayment(stripeid,userid,properties){
+savePayment(stripeid,userid,properties,auctionid,amount){
   return new Promise((resolve,reject)=>{
-      db.query('insert into payment_deposits (stripeid, customerid,status) values (?)',[[stripeid,userid,1]], function (err, result) {
+      db.query('insert into payment_deposits (datetime,stripeid, customerid,status,auctionid,amount) values (NOW(),?,?,1,?,?)',[stripeid,userid,auctionid,amount], function (err, result) {
         if (err) throw err;
         var paymentid = result.insertId
         var paymentlist = []
@@ -705,7 +705,7 @@ getAuctions() {
 }
 getUpcomingAuctions() {
   return new Promise((resolve, reject) => {
-    db.query("select * from auctions where status < 3 or status is null", function (err, result) {
+    db.query("select * from auctions where status < 8 or status is null", function (err, result) {
       if (err) throw err;
       resolve(result);
     });
@@ -726,7 +726,7 @@ getAuctionsById(id) {
     db.query("select * from auctions where id = ?",[id], function (err, result) {
         var auction = result[0]
         auction.properties = []
-        db.query("SELECT ap.id,ap.lotno,property.* FROM auction_properties ap LEFT JOIN (select p.id as propertyid,p.name as propname,p.town,s.forename as sellername,i.img,p.price,p.county from properties p left join (select propertyid,max(filename) as img from propertyimages group by propertyid) i on i.propertyid = p.id left join customers s on s.id = p.clientid) AS property on property.propertyid=ap.propertyid WHERE  ap.auctionid = ? order by ap.lotno",[id], function (err, result) {
+        db.query("SELECT ap.id,ap.lotno,property.* FROM auction_properties ap LEFT JOIN (select p.id as propertyid,p.name as propname,p.town,s.forename as sellername,p.primaryimage as img,p.price,p.county from properties p left join customers s on s.id = p.clientid) AS property on property.propertyid=ap.propertyid WHERE  ap.auctionid = ? order by ap.lotno",[id], function (err, result) {
           if (err) throw err;
           result.forEach(r=>{auction.properties.push(r)})
           
@@ -739,6 +739,16 @@ getAuctionsById(id) {
   getDocuments(propertyid) {
     return new Promise((resolve, reject) => {
       db.query("select * from property_legal_pack where propertyid = ?",propertyid, function (err, result) {
+        if (err) throw err;
+        resolve(result);
+      });
+    });
+  }
+
+  updateBidDeposit(propertyid,status){
+    return new Promise((resolve, reject) => {
+      console.log(propertyid)
+      db.query("update customerpropertylist set bid_deposit=? where id = ?",[status,propertyid], function (err, result) {
         if (err) throw err;
         resolve(result);
       });

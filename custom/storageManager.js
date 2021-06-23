@@ -22,7 +22,16 @@ async function getRedis(key){
 }
 
 class AzStorageManager {
-
+  async getFiles(list,key,outkey='uri'){
+    for(var i=0;i<list.length;i++){
+        var itm = list[i]
+       // console.log(itm.img)
+        if(!itm[key])itm[key] ='abc/fb2a4e95-d6e7-43e1-a438-c7889db6c029.jpg'
+        var mytoken = await this.generateSasToken(itm[key]);
+        itm[outkey] =  mytoken.uri;
+    }
+    return list;
+  }
 
 
   async generateSasToken(blobName) {

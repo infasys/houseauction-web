@@ -53,7 +53,7 @@ router.get('/portal/property/:id',authCheck,async (req, res) => {
 	var apikey = process.env.GOGGLEMAPS_API
     var lot = await db.getPropertyById(req.params.id)
     var images = await db.getPropertyImagesById(req.params.id)
-	images = await getImages(images,'filename')
+	images = await azBlob.getFiles(images,'filename')
     var maps = await db.getPropertyMapsById(req.params.id)
     maps.forEach(i=>{
         i.uri = azBlob.generateSasToken(i.filename).uri;
@@ -73,15 +73,6 @@ router.get('/portal/property/:id',authCheck,async (req, res) => {
     res.render('portal/property',{biddeposit,property,images,details,isAdded,maps,catalogs,apikey,customer,helper:ejs_helpers});
 });
 
-router.get('/portal/properties',authCheck,async (req, res) => {
-	var myuserid = req.session.userid;
-	var results = await db.getCustomerById(myuserid)
-	var customer = results[0]
-	var lots = await db.getPropertiesByUserId(req.session.userid);
-
-	  lots = await getImages(lots,'img')
-	res.render('portal/properties',{lots:lots,menusel:2,customer});
-});
 router.get('/portal/myaccount',authCheck,async (req, res) => {
 	var myuserid = req.session.userid;
 	var results = await db.getCustomerById(myuserid)
@@ -142,7 +133,7 @@ router.get('/portal/deposits',authCheck,async (req, res) => {
 			total+=p.price
 		}
       })
-	  lots = await getImages(lots,'img')
+	  lots = await azBlob.getFiles(lots,'img')
 	  if(total<3){
 		  total = 3;
 	  }
@@ -151,6 +142,7 @@ router.get('/portal/deposits',authCheck,async (req, res) => {
 	  
 	  var paymentIntent = await stripe.paymentIntents.create({amount:amount,currency: 'gbp', payment_method_types: ['card'],capture_method: 'manual'});
 	  console.log(paymentIntent)
+	 
 	res.render('portal/deposits',{customer,total:total,lots:lots,payments,paymentIntent:paymentIntent,total,menusel:5});
 });
 router.get('/portal/amlchecks',authCheck,async (req, res) => {
@@ -410,7 +402,7 @@ router.get('/portal/verificationdocs',authCheck, async (req, res) => {
 	var verificationDocTypes = await db.getVerificationDocumentTypes();
 	var docs = await db.getVerificationDocument(myuserid)
 	console.log(docs)
-	docs = await getImages(docs,'name')
+	docs = await azBlob.getFiles(docs,'name')
 	console.log(docs)
 	res.render('portal/verificationdocs',{verificationDocTypes,docs,members,customer,mysel:4,menusel:3});
 });
@@ -423,19 +415,6 @@ router.get('/portal/verificationdocs',authCheck, async (req, res) => {
 
 
 
-async function getImages(list,key){
-    for(var i=0;i<list.length;i++){
-        var itm = list[i]
-       // console.log(itm.img)
-        if(!itm[key])itm[key] ='abc/fb2a4e95-d6e7-43e1-a438-c7889db6c029.jpg'
-        var mytoken = await azBlob.generateSasToken(itm[key]);
-        itm.uri =  mytoken.uri;
-    }
-    return list;
-}
-
-
-
 
 router.get('/legalpack/:id',authCheck, async (req, res) => {
 	var myuserid = req.session.userid;
@@ -445,7 +424,7 @@ router.get('/legalpack/:id',authCheck, async (req, res) => {
 	var property = await db.getPropertyById(req.params.id)
 	property = property[0]
 	var legal_documents = await db.getDocuments(req.params.id);
-	legal_documents = await getImages(legal_documents,'file')
+	legal_documents = await azBlob.getFiles(legal_documents,'file')
 	if(property.img){
 	  var mysasToken =  await azBlob.generateSasToken(property.img)
 	  property.primaryimgurl=mysasToken.uri;

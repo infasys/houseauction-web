@@ -191,6 +191,7 @@ payments.forEach(p=>{
     const formatToCurrency = amount => {
         return "£" + amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,");
     };
+   
     function formatDateTimeMe(date) {
     var d = new Date(date),
     month = '' + (d.getMonth() + 1),
@@ -206,12 +207,13 @@ payments.forEach(p=>{
     var strTime = `${day}/${month}/${year} ${hours}:${mins}`;
     return strTime;
     }
-
+    var auctionid = 0;
     var auctions = [];
     lots.forEach(l=>{
        
         if(l.auctionid){
-            if(l.auctionstatus == 3){
+            auctionid = l.auctionid;
+            if(l.auctionstatus == 7){
                     var found = false;
             auctions.forEach(a=>{
                 if(a.auctionid == l.auctionid){
@@ -241,7 +243,7 @@ payments.forEach(p=>{
         var auctiondate = ''
         if(l.datetime){
             auctiondepositid.push(l.id)
-            auctiondate = "Auction Date: "+formatDateTimeMe(l.datetime)+"<div><a href='/portal/deposits'><button class='sitebtn-small2' style='margin-top:10px;'>Bidding Deposit</button></a></div>"
+            auctiondate = ""
         }
         lotstr +="<tr class='assetrow'>";
         lotstr +="<td style='border-bottom:0px;width:200px;'><div class='lotitmlstimgtd' style='background-image: url("+l.uri+");'>&nbsp;</div></td>";
@@ -257,17 +259,20 @@ payments.forEach(p=>{
 </script>
 
 <script>
+    var totalamount = <%-total%>;
     var spinner ='<div class="sk-chase"><div class="sk-chase-dot"></div><div class="sk-chase-dot"></div><div class="sk-chase-dot"></div><div class="sk-chase-dot"></div><div class="sk-chase-dot"></div><div class="sk-chase-dot"></div></div>';
     var paymentIntent = <%-JSON.stringify(paymentIntent)%>;
     $('#btnTest').click(function(){
-    
+        console.log(auctiondepositid)
           var stripe = Stripe('pk_test_EwHGEw5dBO9G4c7MiWqic4Vc');
           var card = {
       number: $('.card-number').val(),
       cvc: $('.card-cvc').val(),
       exp_month: $('.card-expiry-month').val(),
       exp_year: $('.card-expiry-year').val(),
-      properties: auctiondepositid
+      properties: auctiondepositid,
+      auctionid:auctionid,
+      amount:totalamount
     }
     $('#paymentbox').html(spinner+'processing payment');
     $.post('/processCard',card,function(data){

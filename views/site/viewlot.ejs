@@ -1,46 +1,44 @@
 <%- include('../partials/header.ejs')%>
+<title><%-property.propname%></title>
+<%console.log(property)%>
 <%
 const formatToCurrency = function numberWithCommas(x) {
   return "£" +x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-}/*
+}
+
+var banner = ''
+var issold = false;
+if(property.auctionstatusname=='Sold'){
+  banner = '<div class="ribbon red ribbonlarge"> <span>Sold</span></div>'
+  issold = true;
+}
+
+/*
 const formatToCurrency = amount => {
   return "£" + amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,");
 };*/
+
 %>
-<style>
-  body{
-    background:#fff;
-  }
-</style>
+
 <div style='margin-top:60px;'></div>
 <div class='lottitle shadow-md' style='box-sizing: border-box;'>
     <div class='mycontainer' style='display:table;'>
-    <div style="display: table-cell;vertical-align: middle;height:80px; background-color:rgb(245, 245, 245);border-right:3px solid red;">
+    <div style="display: table-cell;vertical-align: middle;height:80px; background-color:rgb(245, 245, 245);">
     <div class='propertylotno' style='display:inline;vertical-align: middle;padding-right:20px;width: 500px;'>
         Lot No. <%-property.lotno%></br><div style='display:inline-block;font-weight:500;font-size:16px;'>Residential - Flats/Aparatment</div></div>
 
     
     </div>
     <div style="display: table-cell;vertical-align: middle;height:80px; background-color:rgb(245, 245, 245);">
-        <div class='propertyheader' style='display:inline;vertical-align: middle;padding-left:40px;'><%-property.name%></div>
+        <!-- <div class='propertyheader' style='display:inline;vertical-align: middle;padding-left:40px;'><%-property.propname%></div> -->
         
-    </div>
-    <div style='text-align: right;display: table-cell;vertical-align: middle;height:80px; '>
- <%if(isuser){
-  if(!isAdded){%>
-      <button id='btnAddFav' class='sitebtn-small'> <i class="far fa-heart"></i> Save </button>
-      <%}else {%>
-        <button id='btnRemoveFav' class='sitebtn-small'> <i class="far fa-heart"></i> Remove </button>
-        <%}%>
-      <%}else{%>
-        <button id='btnRegisterInterest' class='sitebtn-small'> <i class="far fa-heart"></i> Register Interest </button>
-      <%}%>
     </div>
 </div>
 </div>
 <div class='mycontainer' style='margin-top:30px;'>
     <div class='leftpanel' style='width:55%'>
-<div  class="slideshow-container">
+<div  class="slideshow-container" >
+  <%-banner%>
     <%
     var i = 0;
     var count = images.length
@@ -62,7 +60,7 @@ const formatToCurrency = amount => {
         <%})%>
       </div>
 </div>
-<div class='imglist'>
+<div class='imglist' style='display:none;'>
   <div class='imglistinside'  id='imgList'>
   <%
   var i =0;
@@ -76,6 +74,33 @@ const formatToCurrency = amount => {
    
 </div>
    
+<!-- The Modal -->
+<div id="myModal" class="modal" style='display: none;;'>
+  <span class="close">&times;</span>
+  
+  <img class="modal-content" id="img01" style='margin-bottom:90px;'>
+  
+  <div id="caption"></div>
+  
+</div>
+
+<script>
+  var modal = document.getElementById("myModal");
+  var modalImg = document.getElementById("img01");
+  $('.photoimg').click(function(e){
+    modal.style.display = "block";
+     modalImg.src = this.src;
+  captionText.innerHTML = this.alt;
+    e.preventDefault()
+  })
+  var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  
+  modal.style.display = "none";
+} 
+</script>
    <div class='propertytitle'><%-property.header%></div>
 <div class='catdesc'><%-property.description%></div>
 
@@ -101,28 +126,34 @@ const formatToCurrency = amount => {
   <div style='float:right;'><img src='/images/logo.png' style='height:45px;'/>  </div>
   <div style='font-weight:600;color:#000;font-size: 18px; max-width:60%;padding-bottom:20px;float:left;'><%-property.propname%></div>
   <div style='clear:both;'></div>
+  <%if(!issold){%>
   <div style='margin:30px 0px;;background:#cfd8dc;border-radius: 14px;;'>
   <div style='font-size: 22px;text-align: center;padding-top:40px;'><span  style='font-weight:700;color:#666;'>Call Us:</span><span style='font-weight:700'> 01702 33 33 99</span></div>
   
   <div style='text-align: center;vertical-align: middle;height:80px;padding:20px 20px 0px 20px; padding-top:30px;'>
  <%if(isuser){
   if(!isAdded){%>
-      <button id='btnAddFav' class='sitebtn-small'> <i class="far fa-heart"></i> Save </button>
+      <button onclick="addToFavourites()" class='btn btn-3'> <i class="far fa-heart"></i> Add to My List</button>
       <%}else {%>
-        <button id='btnRemoveFav' class='sitebtn-small'> <i class="far fa-heart"></i> Remove </button>
+        <button onclick='removeFromFavourites()' class='btn btn-3'>  Remove Interest </button>
         <%}%>
       <%}else{%>
-        <button id='btnRegisterInterest' class='btn btn-3' > <i class="far fa-heart"></i> Register Interest </button>
+        <a href='/account/register'><button class='btn btn-3' > <i class="far fa-heart"></i> Register Interest </button></a>
       <%}%>
     </div>
   </div>
+  <%}%>
   <%if(property.datetime){%>
-      <div style='margin-top:10px;'><span  style='font-size:18px;font-weight:bolder;color:#888;'>Auction Date: </span><span style='font-size:18px;font-weight:bolder'><%-helper.formateDateTimeFull(property.datetime)%></span></div>
+    
+      <div style='margin-top:10px;text-align: center;'><span  style='font-size:18px;font-weight:bolder;color:#888;'>Auction Date: </span><br/><span style='font-size:18px;font-weight:bolder'><%-helper.formatDateOnlyFull(property.datetime)%></span></div>
+      
       <%}%>
 
-
+      <%if(!issold){%>
       <div class="propertymainprice" style='text-align:center;margin-top:30px;'><span style='font-weight:500;font-size: 22px;'>*Guide Price</span>&nbsp;<%-formatToCurrency(property.price)%></div>
-   
+      <%}else{%>
+
+        <%}%>
 </div>
 
 
@@ -149,11 +180,6 @@ const formatToCurrency = amount => {
 <div style='clear:both;'></div>
 </div>
 <script>
-
-
-  $('#btnRegisterInterest').click(function(){
-    location = '/account/register'
-  })
 
 
 
@@ -207,30 +233,19 @@ function sideScroll(direction){
     }, speed);
 }
 
-$('#btnAddFav').click(function(){
+function addToFavourites(){
   $.post('/addtofav',{propertyid:propertyid},function(data){
     console.log(data)
     location.reload();
   },'json')
-})
-$('#btnRemoveFav').click(function(){
+}
+
+function removeFromFavourites(){
   $.post('/removefromfav',{propertyid:propertyid},function(data){
     console.log(data)
     location.reload();
   },'json')
-})
-$('#btnBidDeposit').click(function(){
-  $.post('/addBidDeposit',{propertyid:propertyid},function(data){
-    console.log(data)
-    location.reload();
-  },'json')
-})
-$('#btnRemoveBidDeposit').click(function(){
-  $.post('/removeBidDeposit',{propertyid:propertyid},function(data){
-    console.log(data)
-    location.reload();
-  },'json')
-})
+}
 </script>
 <%console.log(property)%>
 <script>

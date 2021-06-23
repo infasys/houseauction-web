@@ -30,7 +30,7 @@ const paymentMethod = await stripe.paymentMethods.create({
   });
   console.log(paymentMethod)
   console.log(req.session.userid)
-  dbManager.savePayment(paymentMethod.id,req.session.userid,c.properties)
+  dbManager.savePayment(paymentMethod.id,req.session.userid,c.properties,c.auctionid,c.amount)
   res.json({id:paymentMethod.id})
 });
 

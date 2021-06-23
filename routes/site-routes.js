@@ -65,36 +65,13 @@ router.post('/savequery',async(req,res)=>{
     await db.saveEnquriy(q.firstname,q.lastname,q.email,q.telephone,q.addr1,q.addr2,q.town,q.postcode,q.info)
     res.json({status:true})
 })
-router.get('/lot/details/:id',async (req,res)=>{
-    var apikey = process.env.GOGGLEMAPS_API
-    var lot = await db.getPropertyById(req.params.id)
-    var images = await db.getPropertyImagesById(req.params.id)
-    if(!images.length){
-        images.push({filename:'abc/b2c63fa2-dd22-498d-a5f9-162a2523a58b.jpg'})
-    }
-    
-    var maps = await db.getPropertyMapsById(req.params.id)
-    
-      var catalogs = await db.getPropertyCatalogById(req.params.id)
-      images = await getImages(images,'filename')
-      maps = await getImages(maps,'filename')
-      catalogs = await getImages(catalogs,'filename')
-    var details = await db.getPropertyDetailsById(req.params.id)
-    var property = lot[0]
-    var isAdded = false
-    if(req.session.userid){
-        var dbres =  await db.getSellerFavourites(req.session.userid,req.params.id)
-        if(dbres.length) isAdded = true;
-    }
-    console.log(catalogs)
-    res.render('site/viewlot',{property,images,details,isAdded,maps,catalogs,apikey,helper:ejs_helpers});
-})
+
 
 
 
 router.get('/auction-lots',async (req, res) => {
     var lots = await db.getProperties();
-    lots = await getImages(lots,'img')
+    lots = await azBlob.getFiles(lots,'img')
 	res.render('site/auction-lots',{lots,msg:'',helper:ejs_helpers});
 });
 
@@ -103,12 +80,12 @@ router.get('/auction-lots',async (req, res) => {
 router.get('/online/auction/:id',async (req, res) => {
 
     var lots = await db.getPropertiesByAuctionId(req.params.id);
-    lots = await getImages(lots,'primaryimage')
+    lots = await azBlob.getFiles(lots,'primaryimage')
 	res.render('site/auction-id-lot',{lots,msg:''});
 });
 router.get('/auction-lots-list',async (req, res) => {
     var lots = await db.getProperties();
-    lots = await getImages(lots,'img')
+    lots = await azBlob.getFiles(lots,'img')
 	res.render('site/auction-lots-list',{lots,msg:'',helper:ejs_helpers});
 });
 
@@ -116,24 +93,11 @@ router.get('/auction-lots-list',async (req, res) => {
 
 router.get('/auction-maps',async (req,res)=>{
     var lots = await db.getProperties();
-    lots = await getImages(lots,'img')
+    lots = await azBlob.getFiles(lots,'img')
       var apikey = process.env.GOGGLEMAPS_API
     res.render('site/auction-maps',{lots,msg:'',apikey,helper:ejs_helpers});
 })
 
-
-
-
-async function getImages(list,key){
-    for(var i=0;i<list.length;i++){
-        var itm = list[i]
-       // console.log(itm.img)
-        if(!itm[key])itm[key] ='abc/fb2a4e95-d6e7-43e1-a438-c7889db6c029.jpg'
-        var mytoken = await azBlob.generateSasToken(itm[key]);
-        itm.uri =  mytoken.uri;
-    }
-    return list;
-}
 
 
 
@@ -142,7 +106,7 @@ async function getImages(list,key){
 
 router.post('/auction-lots8',async (req, res) => {
     var lots = await db.getPropertiesLimit8();
-    lots = await getImages(lots,'primaryimage')
+    lots = await azBlob.getFiles(lots,'primaryimage')
     // lots.forEach(async p=>{
     //     if(!p.img)p.img ='abc/b2c63fa2-dd22-498d-a5f9-162a2523a58b.jpg'
     //     var sasToken = await azBlob.generateSasToken(p.img)
@@ -185,7 +149,7 @@ router.get('/thank-you',async (req,res)=>{
 router.post('/auctiondetails',async (req, res) => {
 
     var lots = await db.getPropertiesByAuctionIdCompleted(req.body.id);
-    lots = await getImages(lots,'primaryimage')
+    lots = await azBlob.getFiles(lots,'primaryimage')
 	res.json({lots,msg:''});
 });
 module.exports = router;
