@@ -151,7 +151,7 @@ function generate(n) {
 router.post('/account/resendverifycode',authCheck ,async (req,res)=>{
 	var userid = req.session.userid;
 	console.log(userid)
-	var code = generate(7)
+	var code = generate(6)
 	await db.updateVerificationCode(userid,code)
 	var myobj = {userid,code}
 	var hashuserid = encrypt(JSON.stringify(myobj))
@@ -185,7 +185,7 @@ router.post('/account/register',authCheckNoLogIn,async (req,res)=>{
 		issues.push('User Already Exists')
 		errors++
 	}
-	var code = generate(7)
+	var code = generate(6)
 	if(!errors){
 		await db.addnewCustomer(reg,code)
 

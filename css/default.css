@@ -1,6 +1,7 @@
 @charset "UTF-8";
 /* You can add global styles to this file, and also import other style files */
 @import url("https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Open+Sans+Condensed:ital,wght@0,300;0,700;1,300&family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700&family=Roboto+Condensed:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Roboto+Mono:wght@300;400;500;600;700&family=Roboto+Slab:wght@100;200;300;400;500;600;700;800;900&family=Roboto:wght@300;400;500;700;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Merriweather+Sans:wght@400;500;600;700&display=swap");
 @import url(https://fonts.googleapis.com/css?family=Lato:700);
 .nav {
   font-size: 16px;
@@ -29,6 +30,8 @@ ul.nav > li ul {
   padding: 0px;
   padding-top: 16px;
   box-sizing: border-box;
+  top: 30px;
+  border-top: 1px solid #ccc;
 }
 
 ul.nav > li ul li {
@@ -56,6 +59,10 @@ ul li ul:focus {
   visibility: visible;
   opacity: 1;
   display: block;
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  z-index: 200;
+  padding-top: 0px;
 }
 
 ul.nav > li ul li {
@@ -69,7 +76,8 @@ ul.nav > li ul li {
 
 ul.nav > li ul li a {
   color: #777;
-  font-weight: 600;
+  font-weight: 400;
+  font-size: 12px;
 }
 
 ul.nav > li ul li:hover > a {
@@ -121,10 +129,10 @@ header nav ul {
   display: flex;
 }
 header nav li a {
-  font-family: "Brandon Grotesque";
   color: #000;
   padding: 1em;
-  font-weight: 700;
+  font-weight: 500;
+  font-size: 13px;
   white-space: pre;
 }
 @media screen and (max-width: 800px) {
@@ -263,53 +271,11 @@ header nav li a {
     opacity: 1;
   }
 }
-@font-face {
-  font-family: "Butler";
-  src: url("/fonts/Butler-Medium.woff2") format("woff2"), url("/fonts/Butler-Medium.woff") format("woff");
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Brandon Grotesque";
-  src: url("/fonts/BrandonGrotesque-Medium.woff2") format("woff2"), url("/fonts/BrandonGrotesque-Medium.woff") format("woff");
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Brandon Grotesque";
-  src: url("/fonts/BrandonGrotesque-Light.woff2") format("woff2"), url("/fonts/BrandonGrotesque-Light.woff") format("woff");
-  font-weight: 300;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Minion Pro";
-  src: url("/fonts/MinionPro-Regular.woff2") format("woff2"), url("/fonts/MinionPro-Regular.woff") format("woff");
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Brandon Grotesque";
-  src: url("/fonts/BrandonGrotesque-Regular.woff2") format("woff2"), url("/fonts/BrandonGrotesque-Regular.woff") format("woff");
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Brandon Grotesque";
-  src: url("/fonts/BrandonGrotesque-Bold.woff2") format("woff2"), url("/fonts/BrandonGrotesque-Bold.woff") format("woff");
-  font-weight: bold;
-  font-style: normal;
-  font-display: swap;
-}
 .ribbon {
   pointer-events: none;
   position: absolute;
   right: -5px;
-  top: -5px;
+  top: -6px;
   z-index: 1;
   overflow: hidden;
   width: 155px;
@@ -333,7 +299,7 @@ header nav li a {
   text-transform: uppercase;
   text-align: center;
   font-weight: bold;
-  line-height: 30px;
+  line-height: 40px;
   transform: rotate(45deg);
   width: 200px;
   display: block;
@@ -341,7 +307,7 @@ header nav li a {
   background: linear-gradient(#9BC90D 0%, #79A70A 100%);
   box-shadow: 0 3px 10px -5px black;
   position: absolute;
-  top: 47px;
+  top: 39px;
   right: -39px;
 }
 
@@ -694,7 +660,7 @@ footer {
 }
 
 .lotno {
-  font-family: "Roboto", sans-serif;
+  font-family: "Merriweather Sans", sans-serif;
   font-weight: 500;
   color: #fff;
   font-size: 16px;
@@ -726,14 +692,14 @@ footer {
 }
 
 .lotDesc {
-  font-family: "Brandon Grotesque";
+  font-family: "Merriweather Sans", sans-serif;
   min-height: 40px;
   color: #000;
   text-align: left;
   padding: 16px 0px;
   overflow: hidden;
-  font-size: 18px;
-  font-weight: 900;
+  font-size: 16px;
+  font-weight: 500;
   height: 60px;
   overflow: hidden;
   vertical-align: middle;
@@ -1135,7 +1101,7 @@ font-family: 'PT Mono', monospace;
 body {
   background: #fff;
   margin: 0;
-  font-family: "Roboto", sans-serif;
+  font-family: "Merriweather Sans", sans-serif;
   font-size: 14px;
 }
 
@@ -1503,7 +1469,7 @@ button.btn-2:active:after {
 }
 
 .sitetxta {
-  font-family: "Open Sans", sans-serif;
+  font-family: "Merriweather Sans", sans-serif;
   padding: 12px;
   border: 1px solid #ddd;
   resize: none;
@@ -1739,7 +1705,7 @@ option {
 
 h4 {
   border-left: 6px solid #C8102E;
-  font-family: "Brandon Grotesque";
+  font-family: "Merriweather Sans", sans-serif;
   padding: 4px;
   padding-left: 24px;
   font-size: 24px;
@@ -1750,7 +1716,7 @@ a {
 }
 
 .categorychoicemsg {
-  font-family: "Brandon Grotesque";
+  font-family: "Merriweather Sans", sans-serif;
   font-weight: 500;
 }
 

@@ -39,6 +39,8 @@ router.get('/askaquestion',async(req,res)=>{
 })
 router.get('/about-us',async(req,res)=>{
     var members = await db.getMembers();
+    members = await azBlob.getFiles(members,'image')
+    console.log(members)
     res.render('site/about-us.ejs',{members})
 })
 router.get('/privacy-policy',async(req,res)=>{

@@ -1,0 +1,573 @@
+<%- include('../partials/menu-portal.ejs')%>
+<script src="/js/countdown.js"></script>
+<script src="https://js.stripe.com/v3/"></script>
+<title>Auction Details - Auction House</title>
+<style>
+.summarybox{
+ 
+ display: block;
+ background: #e5e5e5;
+ color: #555;
+ text-decoration: none;
+ min-height: 60px;
+ padding: 20px 35px 8px 35px;
+ font-size: 20px;
+ line-height: 1.1em;
+ text-align: left;
+ margin-bottom: 15px;
+ border: 1px solid;
+ border-color: #e5e6e9 #dfe0e4 #d0d1d5;
+ border-radius: 3px;
+ width:100%;
+ font-size: 14px;
+}
+  .lotno{
+      height:30px;
+      text-align: center;
+      background-color: #c8102e;
+      color:#fff;
+  }
+  .lotitmlstimgtd{
+      width: 100%;
+background-repeat: no-repeat;
+background-size: cover;
+box-sizing: border-box;
+background-position: center;
+margin:0px;
+padding-top:10%;
+flex:1;
+  }
+  .assetdescription{
+      flex:4;
+      padding:20px;
+      display:flex;
+  }
+.assetrow{
+  background-color: #e8e8e8;
+  border:none;
+  border-bottom: 1px solid #dae0e3;
+  padding:0px;
+  margin-bottom:20px;
+  color:#777;
+  display:flex;
+}
+.assetname{
+  font-weight: 500;
+  color:#333;
+  font-size:12px;
+}
+.assetname a{
+  font-size: 12px;
+  text-decoration: none;
+  color: unset;
+}
+.assetprice{
+  flex:1;
+  padding:0px 10px;
+  display:flex;
+  flex-direction: column;
+  font-size: 12px;
+
+}
+.assetpricedetail{
+  text-align:right;
+}
+.assetdatedetail{
+  text-align:right;
+}
+
+@media only screen and (max-width: 768px) {
+/* For mobile phones: */
+.assetrow {
+  display:unset;
+}
+.lotitmlstimgtd{
+  padding-top:50%;
+}
+}
+
+.myremoveprop{
+  text-decoration: none;
+  color:red;
+  font-weight: 600;
+}
+#myproperties{
+  width:100%;
+}
+.auctiontitle{
+  padding:8px 8px;
+  background: #e0e0e0;
+  color:#fff;font-weight: 500;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  }
+  button.btn-6 {
+  color: black;
+  -webkit-transition: all 0.4s;
+  -moz-transition: all 0.4s;
+  transition: all 0.4s;
+  border: 2px solid black;
+  background: white;
+  font-size: 10px;
+  padding:10px 8px;
+}
+button.btn-6:hover {
+  background-color: black;
+  color: white;
+  -webkit-transition: all 0.4s;
+  -moz-transition: all 0.4s;
+  transition: all 0.4s;
+}
+.stripebox{
+    display: block;
+    background: #e5e5e5;
+    color: #555;
+    text-decoration: none;
+    min-height: 60px;
+    padding: 20px 35px 8px 35px;
+    font-size: 20px;
+    line-height: 1.1em;
+    text-align: left;
+    margin-bottom: 15px;
+    border: 1px solid;
+    border-color: #e5e6e9 #dfe0e4 #d0d1d5;
+    border-radius: 3px;
+    font-size: 14px;
+
+width:360px;margin:10 auto;
+
+}
+.stripebtn{
+  color:#fff;
+  background:#3face6;
+  border: 1px solid;
+    border-color: #e5e6e9 #dfe0e4 #d0d1d5;
+    border-radius: 8px;
+    width: 100%;
+    padding: 15px 35px 15px 35px;
+}
+.stripentry{
+  padding:5px;
+  width:100%;border:none;
+  font-size:18px;
+}
+.stripelbl{
+  width:100%;padding:5px;color:#ccc;
+}
+.countdown{
+  text-align:center;
+  margin: 20px 0px;
+  font-size: 24px;
+  color:#444;
+}
+.countdown > p{
+  display:inline-block;
+}
+.actionresults{
+  position: relative;
+  float:right;font-weight:700;color:#3face6
+}
+
+
+.lotitem {
+    border-top: 0px solid #C8102E;
+}
+.lotDesc {
+    font-size: 11px;
+    text-decoration: none;;
+}
+a{
+  text-decoration:none;
+}
+.lotPrice{
+  font-size: 13px;
+}
+#paymentcontainer{
+  position:fixed;
+  background:#000000aa;
+  top:0px;bottom:0px;
+  left:0px;right:0px;
+  padding-top:120px;
+  display: none;
+}
+#auctiontypecontainer{
+  position:fixed;
+  background:#000000aa;
+  top:0px;bottom:0px;
+  left:0px;right:0px;
+  padding-top:120px;
+  display: none;
+}
+.hiddeninfo{
+    display:none;
+    bottom:30px;
+    right:30px;
+    position: absolute;
+    padding:10px;
+    background:#ffff00;
+    border: 1px solid;
+    border-color: #e5e6e9 #dfe0e4 #d0d1d5;
+    border-radius: 3px;
+    color:#444;
+    width:400px;
+    font-size: 12px;;
+    font-weight:400;
+}
+.actionresults:hover>.hiddeninfo{
+    display:block;
+}
+
+.pending{
+    color:red;
+    text-decoration: underline;
+    cursor: pointer;
+}
+.modal{
+  margin:100px auto;
+  width:600px;
+  display: block;
+    background: #e5e5e5;
+    color: #555;
+    text-decoration: none;
+    min-height: 60px;
+    padding: 20px 35px 8px 35px;
+    font-size: 20px;
+    line-height: 1.1em;
+    text-align: left;
+    margin-bottom: 15px;
+    border: 1px solid;
+    border-color: #e5e6e9 #dfe0e4 #d0d1d5;
+    border-radius: 3px;
+    font-size: 14px;
+    width: 360px;
+    margin: 10 auto;
+}
+.sitebtn-small{
+  margin:10px;
+}
+.mycarderror{
+  padding:8px 3px;
+  border:1px dashed #aaa;
+  text-align:center;
+  margin:0px 10px;
+}
+</style>
+<div class='main'>
+  
+  <div class='maincontent'>
+
+    <div style='width:100%;'>
+        <div class='maincontent'>
+          
+        <div style='flex:5;padding:0px 20px 0px 0px;'>
+            <div style='padding:10px 14px;font-weight:400;background:#fff;box-sizing: border-box;border:1px solid #ccc;display:flex;'>
+              <div style='flex:1'>
+              <div style='color:#bbb;min-width:90px;display:inline-block;font-size:12px;padding:10px 0;'>Auction Venue:</div>
+              <div style=''><%-auction.venuename%></div>
+              <div style='color:#bbb;min-width:90px;display:inline-block;font-size:12px;padding:10px 0;'>Address:</div>
+              <div style=''><%-auction.address%></div>
+              <div style='color:#bbb;min-width:90px;display:inline-block;font-size:12px;padding:10px 0;'>Date Time:</div>
+              <div style=''><%-helper.formateDateTimeFull(auction.datetime)%></div>
+              </div>
+              <div>
+                <div style='color:#999;font-size:12px;padding-bottom:10px;'>Catalogue Download</div>
+                <div><a href='<%-auction.cataloguri%>'><img src='/images/Catalogue-1.jpg' style='height:130px;'/></a></div>
+              </div>
+            </div>
+         
+        <div class='countdown'>
+          <div style='font-size:14px;'>Auction Starts In:</div>
+          <div class='countdown' id='countdownplaceholder'></div>
+        </div>
+      </div>
+      <div style='flex:2'>
+        <% 
+          var ai = "<div class='hiddeninfo'><p>There are various ways you can attend an auction to bid.</p></div>"
+        
+          var bidding_method = "<div class='actionresults pending'>NOT ATTENDING"+ai+"</div>";
+          if(auctionattendce){
+            bidding_method = "<div class='actionresults'>"+auctionattendce.name+ai+"</div>";
+          }
+          var aml_status ='';
+          var tmpstatus = 'PENDING';
+          var amldate = '';
+            var aif = "<div class='hiddeninfo'><p>An AML Check or Anti Money Laundering Check needs to be performed against all Customers wishing to bid.</p><p>Currently no AML Check have been run for you.</p></div>"
+            var aip = "<div class='hiddeninfo'><p>An AML Check or Anti Money Laundering Check needs to be performed against all Customers wishing to bid.</p><p>Your AML Status is Pass</p></div>"
+               
+            if(amlCheck){
+                if(amlCheck[0]){
+                    // amldate = helper.formateDateTimeFull(amlCheck[0].rundate);
+                     tmpstatus = amlCheck[0].bandtext;
+                }
+            }
+            aml_status = "<div class='actionresults'>"+tmpstatus+aip +"</div>"+"<div class='actionresults'>"+amldate+"</div>"
+          
+        %>
+        <div class='summarybox'>Attendence:<div class='actionresults'  onclick='biddingmethod()'><%-bidding_method%></div></div>
+        <div class='summarybox'>AML Check: <div class='actionresults'><%-aml_status%></div></div>
+        <%
+        var ai = "<div class='hiddeninfo'><p>The number of properties within this auction you have selected to actually bid on.</p></div>"
+        var countprops = 0;
+        var auctiondepositid = []
+        myproperties.forEach(l=>{
+          if(l.bid_interest){
+            countprops++;
+            auctiondepositid.push(l.id)
+          }
+        })
+        
+        %>
+        <div class='summarybox'>Bidding Properties:<div class='actionresults'><%-countprops%><%-ai%></div></div>
+        <% 
+var clickstatus = "";
+var depositsstatus = 'NOT AVAILABLE';
+if(auction.status == 7){
+  clickstatus = " onclick='paymentForm()' ";
+  depositsstatus='Deposits Open'
+}else{
+}
+
+
+
+
+        var ai = "<div class='hiddeninfo'><p>If you are bidding on any properties within the auction a 10% deposit has to be provided.</p></div>"
+        var countprops = 0;
+        myproperties.forEach(l=>{
+          if(l.bid_interest){
+            countprops++;
+          }
+        })
+        
+        var auctionstatusstr = "<div class='actionresults' "+clickstatus+">"+depositsstatus+ai+"</div>";
+
+        if(payments){
+          if(payments.amount){
+            ai = "<div class='hiddeninfo'><p>A Deposit has been made and put on hold for the amount below.</p></div>"
+            auctionstatusstr = "<div class='actionresults'>Held: "+helper.formatToCurrency(payments.amount)+ai+"</div>";
+          }
+        }
+        %> 
+        <div class='summarybox'>Auction Deposit: <%-auctionstatusstr%></div>
+      </div>
+      <div id='auctiontypecontainer'>
+        <div class='modal'>
+          <div style='display:flex;flex-direction: column;text-align:center;'>
+            <div>How are you going to be Attending and Bidding in the Auction?</div>
+            <%
+            
+            attendencetypes.forEach(atf=>{
+              %><button class='sitebtn-small' onclick="auctionAttend(<%-atf.id%>)"><%-atf.name%></button><%
+            })
+            %>
+            
+          </div>
+        </div>
+        
+      </div>
+      <div id='paymentcontainer' >
+       
+        <div id="stripe-form">
+          <div  class='stripebox'>
+           <!-- <form id="payment-form">
+          <div id="card-element"> </div>
+          <button id="submit">
+            <div class="spinner hidden" id="spinner"></div>
+            <span id="button-text">Pay now</span>
+          </button>
+          <p id="card-error" role="alert"></p>
+          <p class="result-message hidden">
+            Payment succeeded, see the result in your
+            <a href="" target="_blank">Stripe dashboard.</a> Refresh the page to pay again.
+          </p>
+        </form>-->
+        <div style='display: inline-block;padding:5px;font-size:18px;cursor:pointer;' onclick='closePayment()'>x</div>
+            <div style='padding:30px;text-align:center;'><img src='/images/Powered by Stripe - blurple.png' height=30 /></div>
+                      <div style='text-align:center;'><div style='font-weight:700;font-size:14px;padding:20px 0px;'>Deposit (Payment Hold)</div>Payment Hold is done for the highest amount of property you wish to bid on.</div>
+                        
+                 
+                      <div style='background:#fff;border:1px solid #ccc;margin-top:20px;'>
+                  <div  style='border-bottom:1px solid #ccc;'>
+                    <label class='stripelbl'>Card No:</label>
+                    <input type="text" size="30" autocomplete="off" class="card-number stripentry" value='4000002760003184' />
+                  </div>
+                  <div style='display: flex;'>
+
+                    <div style='flex:3;border-right:1px solid #ccc;;'>
+                      <label class='stripelbl'>Exp: MM/YYYY</label>
+                      <input type="text" size="2" class="card-expiry-month stripentry" placeholder=''/>
+                      </div>
+                    <div style='flex:2;'>
+                      <label class='stripelbl'>CSV:</label>
+                    <input type="text" size="4" autocomplete="off" class="card-cvc stripentry" />
+                    </div>
+                  </div>
+                  </div>
+                  <input type="hidden" name="amount" value="2000" id="cc-amount">
+                  <!-- <button type="submit" class="submit-button">Submit Payment</button> -->
+                
+                    <button onclick='processPayment()' class='stripebtn' style='margin-top:20px;margin-bottom:50px;'>Make Deposit <%-helper.formatToCurrency(total)%></button>  
+  
+        
+          <div id='paymentbox'></div>
+          </div>
+               </div>
+              </div>
+    </div>
+   <div class='maincontentt'>
+    <div class='pagetitle'>My Shortlisted</div>
+</div>
+    <div id='myproperties'>
+
+    </div>
+    <div class='maincontentt'>
+        <div class='pagetitle'>Other Properties In Auction</div>
+    </div>
+    <div class='lotlistwrapper'>
+    <%
+    lots.forEach(data=>{%><div class='lotitemholder'><a href='/lot/details/<%-data.id%>'><div class='lotitem'>
+    <div class='lotno' style='position: absolute;'>LOT <%-data.lotno%></div>
+    <div class='lotitmlstimg' style='background-image: url(<%-data.uri%>);'></div>
+    <div style='padding:10px;box-sizing: border-box;'>
+      <div class='lotPrice'>*<%-helper.formatToCurrency(data.price)%>+</div>
+    <div style='clear:both;'></div>
+    <div class='lotDesc'><%-data.propname%>
+      </div>
+    <div style='clear:both'></div></div>
+  </div></a></div><%})%>
+    </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+
+  function biddingmethod(){
+    $('#auctiontypecontainer').show();
+  }
+
+function closePayment(){
+  $('#paymentcontainer').hide();
+}
+  function paymentForm(){
+    $('#paymentcontainer').show();
+  }
+    var lots = <%-JSON.stringify(myproperties)%>;
+    const formatToCurrency = amount => {
+        return "£" + amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,");
+    };
+  
+    var lotstr = '';
+    lots.forEach(l=>{
+        
+        lotstr +="<div class='assetrow' id='assetrow-"+l.id+"'>";
+        lotstr +="<div class='lotitmlstimgtd' style='background-image: url("+l.uri+");'>&nbsp;</div>";
+        lotstr +="<div class='assetdescription'><div class='assetname'><a href='/portal/property/"+l.id+"' >"+l.propname+"</a></div><div class='assetprice'><div class='assetpricedetail'>*Guide | <strong>"+formatToCurrency(l.price)+"</strong>+ (plus fees)</div>"
+        lotstr +='<div class="assetdatedetail"><a  href="/legalpack/'+l.id+'"><button class="btn btn-6" style="margin:10px 0px;">Legal Pack</button></a></div>';
+       
+            var ischecked = ''
+            if(l.bid_interest){
+                ischecked = ' checked '
+            }
+            lotstr+=`
+<div class="assetdatedetail"><div class="toggle-switch" tabindex="0">
+  <input type="checkbox" name="my_checkbox" value="yes" class="mycheckbox" id="checkbox-${l.customerpropertyid}" ${ischecked} />
+  <label for="checkbox-${l.customerpropertyid}">
+    I wish to Bid
+    <div class="area" aria-hidden="true">
+      <div class="background">
+        <div class="handle"></div>
+      </div>
+    </div>
+   
+  </label>
+</div></div>`
+lotstr +="</div>";
+lotstr +="</div>";
+lotstr +="</div>";
+      })
+
+      $('#myproperties').append(lotstr);
+
+$('.mycheckbox').change(function(){
+    var myid = this.id.split('-')[1]
+    var mycheck = 0;
+    if(this.checked) {
+     mycheck = 1;
+ }
+    $.post('/auctionaction/biddeposit',{myid,mycheck},function(){
+     window.location.reload()
+    },'json')
+})
+
+
+countdown(new Date("<%-auction.datetime.toISOString()%>"),'countdownplaceholder') 
+
+function auctionAttend(choiceid){
+  var auctionid = <%-auction.id%>;
+  $.post('/auction/attendType',{choiceid,auctionid},function(){
+    window.location.reload();
+  },'json')
+}
+
+
+var totalamount = <%-total%>;
+    var spinner ='<div class="sk-chase"><div class="sk-chase-dot"></div><div class="sk-chase-dot"></div><div class="sk-chase-dot"></div><div class="sk-chase-dot"></div><div class="sk-chase-dot"></div><div class="sk-chase-dot"></div></div>';
+    var paymentIntent = <%-JSON.stringify(paymentIntent)%>;
+    var auctiondepositid = <%-JSON.stringify(auctiondepositid)%>;
+    var auctionid = <%-auction.id%>;
+
+    
+  function processPayment(){
+      var cardno = $('.card-number').val();
+      var cardcsv = $('.card-cvc').val();
+      var cardmonth =  $('.card-expiry-month').val();
+    var cardyear = '';
+    if(!cardno){
+        $('#paymentbox').html('<div class="mycarderror">Card Number Missing</div>');
+        return;
+      }
+      if(!cardcsv){
+        $('#paymentbox').html('<div class="mycarderror">Card CSV detail Missing</div>');
+        return;
+      }
+      if(!cardmonth){
+        $('#paymentbox').html('<div class="mycarderror">Card Month detail Missing</div>');
+        return;
+      }else{
+        if(cardmonth.includes('/')){
+        var monthstr = cardmonth.split('/');
+        cardmonth = monthstr[0];
+        cardyear =  monthstr[1];
+        }else{
+          $('#paymentbox').html('<div class="mycarderror">Card Month/Year missing "/"</div>');
+          return;
+        }
+        
+      }
+          var stripe = Stripe('pk_test_EwHGEw5dBO9G4c7MiWqic4Vc');
+          var card = {
+      number: cardno,
+      cvc: cardcsv,
+      exp_month: cardmonth,
+      exp_year: cardyear,
+      properties: auctiondepositid,
+      auctionid:auctionid,
+      amount:totalamount
+    }
+    console.log(card);
+    $('#paymentbox').html(spinner+'processing payment');
+    $.post('/processCard',card,function(data){
+              stripe.confirmCardPayment(paymentIntent.client_secret, {payment_method:data.id})
+              .then(function(result) {
+      console.log(result)
+        if(result.error){
+          $('#paymentbox').html('<div class="mycarderror">Payment Failed</div>');
+        }else{
+          $('#paymentbox').html('<div class="mycarderror">Payment Successful</div>');
+        }
+    });
+          },'json')
+  
+  }
+</script>

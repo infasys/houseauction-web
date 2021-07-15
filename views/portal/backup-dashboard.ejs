@@ -1,0 +1,232 @@
+<%- include('../partials/menu-portal.ejs')%>
+<%
+
+function formatDateTimeMe(date) {
+    var d = new Date(date),
+    month = '' + (d.getMonth() + 1),
+    day = '' + d.getDate(),
+    year = d.getFullYear(),
+    hours = d.getHours(),
+    mins = d.getMinutes();
+    if (month.length < 2)  month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+    if (hours.length < 2) hours = '0' + hours;
+    if (mins.length < 2) mins = '0' + mins;
+   console.log(mins)
+    var strTime = `${day}/${month}/${year} ${hours}:${mins}`;
+    return strTime;
+    }
+%>
+<style>
+    .checklist>div>img{
+        display: inline-block;
+        margin-left:20px;
+        margin-right:20px;
+        height:24px;
+        vertical-align: middle;
+    }
+    .checklist>div{
+        -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom:10px;
+        vertical-align: top;
+    }
+    .checklist>div>i{
+        -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+        font-size: 20px;
+        font-weight: 600;
+        display: inline-block;
+        margin-right: 5px;
+        vertical-align: middle;
+    }
+
+
+    .sectionError{
+    color:rgb(199, 0, 0);
+    font-weight: 700;
+    font-size: 14px;
+  }
+  .mycontainer{
+    max-width:1200px;
+    min-width: 800px;
+    margin:0px auto;
+}
+.startbtn{
+    background-color:#188601;
+    border-radius: 10px;
+    font-size:18px;
+    padding:8px 16px;
+}
+.green{
+    color:green
+}
+.summarybox{
+    display: block;
+    background: #e5e5e5;
+    color: #555;
+    text-decoration: none;
+    min-height: 60px;
+    padding: 20px 65px 8px 65px;
+    position: relative;
+    font-size: 20px;
+    line-height: 1.1em;
+    text-align: left;
+    margin-bottom: 15px;
+    border: 1px solid;
+    border-color: #e5e6e9 #dfe0e4 #d0d1d5;
+    border-radius: 3px;
+}
+</style>
+<main>
+<div class='container'>
+    <div class='smallcontainer'>
+        <div class='summarybox'>Saved Properties</div>
+        <div class='summarybox'>Saved Properties</div>
+        <div class='summarybox'>Saved Properties</div>
+        <div class='summarybox'>Saved Properties</div>
+       
+    </div>
+    <div class='inrow-25' style='padding-right:30px;box-sizing: border-box;'>
+    </div>
+    <div class='smallcontainer'>
+        <div class='summarybox'>Saved Properties</div>
+        <div class='summarybox'>Saved Properties</div>
+        <div class='summarybox'>Saved Properties</div>
+        <div class='summarybox'>Saved Properties</div>
+       
+    </div>
+    <div style='clear:both;'></div>
+</div>
+<div class='mycontainer' style='padding:20px;'>
+ 
+        <div class='dash-box' >
+            <div class='dash-title'>Welcome</div>
+            <div class='dash-content'>
+                <p class="MsoNormal">Hello </p><p class="MsoNormal">&nbsp;</p><p class="MsoNormal">The
+                    Team here at Auction House are dedicated to delivering the highest 
+                   quality of service in the most professional manner possible but we need 
+                   your help if we’re going to do that so:</p><p class="MsoNormal">&nbsp;</p><ol style="margin-top :  0cm; " type="1" start="1"><li class="x_347814597MsoListParagraph" style="margin-left :  0cm; ">If you have a question pick up the phone and ask, we’re here to help</li><li class="x_347814597MsoListParagraph" style="margin-left :  0cm; ">Please
+                    complete as much of the information in your customer account profile as
+                    you are able to assist us in doing our job properly</li><li class="x_347814597MsoListParagraph" style="margin-left :  0cm; ">Whatever you need to know we can tell you so don’t be shy we’re here for you</li></ol><p class="MsoNormal">&nbsp;</p><p class="MsoNormal">From
+                    this portal you will be able to view property particulars, register as a
+                    seller or a bidder, find useful information that will guide you through
+                    the process of buying or selling at auction. </p><p class="MsoNormal">&nbsp;</p><p class="MsoNormal">We hope you find this website useful and look forward to being of service to you. </p><p class="MsoNormal">&nbsp;</p><p class="MsoNormal">Best Regards</p><p class="MsoNormal">Team Auction House</p>
+            </div>
+        </div> 
+
+
+<div class='inrow-50' style='padding-right:30px;box-sizing: border-box;'>
+ 
+    <div class='dash-box' style='min-height:300px;'>
+        <div class='dash-title'>Online Bidding Eligibility</div>
+        <div class='dash-content'>
+            <div class='checklist'>
+                <% 
+                var verif1 = '';
+                var verif2 = '';
+                var verif3 = '';
+                if(customer.isVerified){
+                    verif1 = 'green';
+                }if(customer.profile_updated){
+                    verif2 = 'green';
+                }if(customer.documentsuploaded){
+                    verif3 = 'green';
+                }%>
+                <div><i class="fa fa-check-circle <%-verif1%>"></i>Verify Account</div>
+                <div><i class="fa fa-check-circle  <%-verif2%>"></i>Update Bidding Profile <a href='/portal/profile'>click here</a></div>
+                <div><i class="fa fa-check-circle  <%-verif3%>"></i>Upload Verification Documents <a href='/portal/profile'>click here</a></div>
+           </div>
+        </div>
+    </div>
+    
+
+</div>
+<div class='inrow-50'>
+
+    <div class='dash-box' style='min-height:300px;'>
+        <div class='dash-title'>AML Status</div>
+        <div class='dash-content'>
+            WAITING
+        </div>
+    </div>
+    
+
+</div>
+<div style='clear:both;'></div>
+<% if(!customer.isVerified){%>
+    <div class='dash-box' id='verifyboxmain'>
+         <div class='dash-title'>E-Mail Verification Pending *</div>
+         <div class='dash-content'  style='text-align: center;''>
+             <div id='verficationcoderequest'>
+             <p>Your account still requires verification, you should have recieved a link with a code:</p>
+             <div style='width:400px;max-width:100%;margin:0px auto;text-align: center;'><div id='error-code' class='sectionError'></div><input id='verficationcode' type='text' class='mytxt' placeholder="verification code" style='text-align:center;box-sizing: border-box;font-weight:700'/>
+             <button class='sitebtn-small2 ' id='btnVerify' style='margin-top:30px;'>Verify</button>
+             <p>Not recieved a code, <a href='#codereset' id='codereset'>Click Here</a> to have a new code sent to your mailbox.</p>
+             <div id='coderesults'></div>
+            </div>
+             <div style='clear:both'></div>
+             </div>
+         </div>
+     </div>
+     <%}%>
+
+
+     <% 
+     
+     auctions.forEach(a => {
+        if(a.status==3){ %>
+            <div class='dash-box'>
+    <div class='dash-title'>Taking Bidding Deposits</div>
+    <div class='dash-content'>
+        Auction: <%-formatDateTimeMe(a.datetime)%>
+        
+    </div>
+</div>
+        
+        <%
+        }
+     });
+     
+     
+     %>
+
+<div class='dash-box'>
+    <div class='dash-title'>Join Live Steam</div>
+    <div class='dash-content'>
+        Please click <a href='https://stream.tahid.co.uk'>here</a> to access the Online Auction
+
+    </div>
+</div>
+</main>
+
+<script>
+    var spinner ='<div class="sk-chase"><div class="sk-chase-dot"></div><div class="sk-chase-dot"></div><div class="sk-chase-dot"></div><div class="sk-chase-dot"></div><div class="sk-chase-dot"></div><div class="sk-chase-dot"></div></div>';
+
+$(function(){
+
+    $('#btnVerify').click(function(){
+        $('#error-code').html('')
+        var verficationcode = $('#verficationcode').val()
+        if(verficationcode.length>=6){
+            $.post('/profile/verifycode',{verficationcode},function(data){
+                console.log(data)
+                if(data.status){
+                    $('#verficationcoderequest').html('DONE')
+                    $('#verifyboxmain').html('')
+                }else{
+                    $('#error-code').html('Looks like your the code does not match')
+                }
+            },'json')
+        }else{
+            $('#error-code').html('Looks like your missing digits')
+        }
+    })
+
+   
+
+
+})
+</script>

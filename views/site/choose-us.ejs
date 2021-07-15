@@ -4,37 +4,40 @@
     .mypoint {
     background-repeat: no-repeat;
     display: inline-block;
-    padding: 20px 0px;
+    padding: 8px 0px;
     background-size: contain;
     background-image: url('/images/housebullet.png');
     color: #fff;
     text-align: center;
-    width: 60px;
-height: 70px;
+    width: 35px;
+height: 35px;
     box-sizing: border-box;
     font-weight: 700;
     vertical-align: middle;
+    font-size: 14px;;
 }
     .lititle{
         display: inline-block;
     }
     .bulletpoint{
-        padding:20px;
-        font-size: 20px;
         vertical-align: middle;
         color: #464646;
     }
     .bulletpoint>.header{
         color: #ae3634;
         padding:20px;
-        font-size: 32px;
+        font-size: 18px;
         font-weight: 700;
         vertical-align: middle;
         display: inline-block;
     }
     .bulletpoint>.comments{
-        margin-top: 10px;;
+        margin-top: 12px;
+        font-size: 12px;
         font-style: italic;
+    }
+    .bulletpoint>.details{
+        font-size: 14px;
     }
 </style>
 <div class='bannerimagecen2'>
@@ -90,7 +93,7 @@ height: 70px;
         var i = 0;
         notes.forEach(function(n){
             i++
-            notesStr+="<div class='bulletpoint'><div class='mypoint' >"+i+"</div><div class='header'>"+n.name+"</div><div>"+n.text+"</div><div class='comments'>"+'"'+n.comments+'"'+"</div></div>";
+            notesStr+="<div class='bulletpoint'><div class='mypoint' >"+i+"</div><div class='header'>"+n.name+"</div><div class='details'>"+n.text+"</div><div class='comments'>"+'"'+n.comments+'"'+"</div></div>";
             
         })
         $('#notesholder').html(notesStr);

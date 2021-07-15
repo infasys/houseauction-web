@@ -1,74 +1,137 @@
 <%- include('../partials/menu-portal.ejs')%>
-<%
-
-function formatDateTimeMe(date) {
-    var d = new Date(date),
-    month = '' + (d.getMonth() + 1),
-    day = '' + d.getDate(),
-    year = d.getFullYear(),
-    hours = d.getHours(),
-    mins = d.getMinutes();
-    if (month.length < 2)  month = '0' + month;
-    if (day.length < 2) day = '0' + day;
-    if (hours.length < 2) hours = '0' + hours;
-    if (mins.length < 2) mins = '0' + mins;
-   console.log(mins)
-    var strTime = `${day}/${month}/${year} ${hours}:${mins}`;
-    return strTime;
-    }
-%>
+<title>Dashboard - Auction House</title>
 <style>
-    .checklist>div>img{
-        display: inline-block;
-        margin-left:20px;
-        margin-right:20px;
-        height:24px;
-        vertical-align: middle;
-    }
-    .checklist>div{
-        -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-        font-size: 14px;
-        font-weight: 600;
-        margin-bottom:10px;
-        vertical-align: top;
-    }
-    .checklist>div>i{
-        -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-        font-size: 20px;
-        font-weight: 600;
-        display: inline-block;
-        margin-right: 5px;
-        vertical-align: middle;
-    }
-
-
-    .sectionError{
-    color:rgb(199, 0, 0);
-    font-weight: 700;
+.summarybox{
+    position: relative;
+    display: block;
+    background: #e5e5e5;
+    color: #555;
+    text-decoration: none;
+    min-height: 60px;
+    padding: 20px 35px 8px 35px;
+    font-size: 20px;
+    line-height: 1.1em;
+    text-align: left;
+    margin-bottom: 15px;
+    border: 1px solid;
+    border-color: #e5e6e9 #dfe0e4 #d0d1d5;
+    border-radius: 3px;
+    width:100%;
     font-size: 14px;
+}
+.summarybox>div>a{
+    text-decoration: none;
+    color:unset;
+}
+.sidepanel{
+    flex:2;
+    padding:0px 10px;
+}
+.sidepanelsmall{
+    flex:1;
+    padding:0px 10px;
+}
+.middlepanel{
+    flex:3;
+    padding:0px 10px;
+}
+
+.dash-box{
+    box-sizing: border-box;
+    background:#fff;
+    
+    /* border:1px solid #ddd; */
+    box-shadow: rgba(0, 0, 0, 0.133) 0px 3.2px 7.2px 0px, rgba(0, 0, 0, 0.11) 0px 0.6px 1.8px 0px;
+    margin-bottom:20px;
+}
+    .dash-title{
+      padding:6px 8px;
+      font-size:13px;
+      font-weight: 700;
+      background:#b82b35;
+      color:#fff;
+      font-weight: 700;
   }
-  .mycontainer{
-    max-width:1200px;
-    min-width: 800px;
-    margin:0px auto;
+  .dash-content{
+      padding:20px;
+      font-size:13px;
+  }
+  .actionresults{
+  float:right;font-weight:700;color:#3face6;
+  cursor: pointer;
 }
-.startbtn{
-    background-color:#188601;
-    border-radius: 10px;
-    font-size:18px;
-    padding:8px 16px;
+
+@media only screen and (max-width: 768px) {
+  /* For mobile phones: */
+  .maincontent {
+    display:unset;
+  }
 }
-.green{
-    color:green
+
+.hiddeninfo{
+    display:none;
+    bottom:70px;
+    right:30px;
+    position: absolute;
+    padding:10px;
+    background:#ffff00;
+    border: 1px solid;
+    border-color: #e5e6e9 #dfe0e4 #d0d1d5;
+    border-radius: 3px;
+    color:#444;
+    width:400px;
+    font-size: 12px;;
+    font-weight:400;
 }
-</style>
-<div class='mycontainer' style='padding:20px;'>
- 
-        <div class='dash-box' >
+.actionresults:hover>.hiddeninfo{
+    display:block;
+}
+.digittxt{
+    padding:13px 8px;
+    border:2px solid #d6d6d6;
+    outline:none;
+    font-size: 22px;
+    border-radius:6px;
+    text-align:center;
+    width:45px;
+    margin:5px 6px;
+}
+.pending{
+    color:red;
+    text-decoration: underline;
+}
+.statusmessages{
+    padding: 10px;
+    font-size: 14px;
+    border: 1px dashed #ccc;
+    margin:10px 0px;
+    
+}
+.successmsg{
+    background: #d5f7d5;
+}
+
+.failedmsg{
+    background: #ffbcbc;
+}
+    </style>
+<div class='main'>
+    <div class='maincontent'>
+        <div class='pagetitle'>Dashboard</div>
+    </div>
+    <div class='maincontent'>
+    <div class='sidepanelsmall'>
+        
+        <div class='summarybox'>Saved Properties</div>
+    </div>
+
+    <div class='middlepanel'>
+
+
+
+        <div class='dash-box'>
             <div class='dash-title'>Welcome</div>
-            <div class='dash-content'>
+            <div class='dash-content' style='    background: #e5e5e5;color: #555;'>
                 <p class="MsoNormal">Hello </p><p class="MsoNormal">&nbsp;</p><p class="MsoNormal">The
                     Team here at Auction House are dedicated to delivering the highest 
                    quality of service in the most professional manner possible but we need 
@@ -79,123 +142,137 @@ function formatDateTimeMe(date) {
                     seller or a bidder, find useful information that will guide you through
                     the process of buying or selling at auction. </p><p class="MsoNormal">&nbsp;</p><p class="MsoNormal">We hope you find this website useful and look forward to being of service to you. </p><p class="MsoNormal">&nbsp;</p><p class="MsoNormal">Best Regards</p><p class="MsoNormal">Team Auction House</p>
             </div>
-        </div> 
-
-
-<div class='inrow-50' style='padding-right:30px;box-sizing: border-box;'>
- 
-    <div class='dash-box' style='min-height:300px;'>
-        <div class='dash-title'>Online Bidding Eligibility</div>
-        <div class='dash-content'>
-            <div class='checklist'>
-                <% 
-                var verif1 = '';
-                var verif2 = '';
-                var verif3 = '';
-                if(customer.isVerified){
-                    verif1 = 'green';
-                }if(customer.profile_updated){
-                    verif2 = 'green';
-                }if(customer.documentsuploaded){
-                    verif3 = 'green';
-                }%>
-                <div><i class="fa fa-check-circle <%-verif1%>"></i>Verify Account</div>
-                <div><i class="fa fa-check-circle  <%-verif2%>"></i>Update Bidding Profile <a href='/portal/profile'>click here</a></div>
-                <div><i class="fa fa-check-circle  <%-verif3%>"></i>Upload Verification Documents <a href='/portal/profile'>click here</a></div>
-           </div>
         </div>
-    </div>
-    
 
-</div>
-<div class='inrow-50'>
 
-    <div class='dash-box' style='min-height:300px;'>
-        <div class='dash-title'>AML Status</div>
-        <div class='dash-content'>
-            WAITING
-        </div>
-    </div>
-    
-
-</div>
-<div style='clear:both;'></div>
-<% if(!customer.isVerified){%>
-    <div class='dash-box' id='verifyboxmain'>
-         <div class='dash-title'>E-Mail Verification Pending *</div>
-         <div class='dash-content'  style='text-align: center;''>
-             <div id='verficationcoderequest'>
-             <p>Your account still requires verification, you should have recieved a link with a code:</p>
-             <div style='width:400px;max-width:100%;margin:0px auto;text-align: center;'><div id='error-code' class='sectionError'></div><input id='verficationcode' type='text' class='mytxt' placeholder="verification code" style='text-align:center;box-sizing: border-box;font-weight:700'/>
-             <button class='sitebtn-small2 ' id='btnVerify' style='margin-top:30px;'>Verify</button>
-             <p>Not recieved a code, <a href='#codereset' id='codereset'>Click Here</a> to have a new code sent to your mailbox.</p>
-             <div id='coderesults'></div>
+        <%if(!customer.isVerified){%>
+        <div class='dash-box' id='verifyboxmain'>
+            <div class='dash-title'>E-Mail Verification*</div>
+            <div class='dash-content'  style='text-align: center;'>
+                <div id='coderesults'></div>
+                <div id='verficationcoderequest'>
+                <p>Your account still requires verification, you should have recieved a link with a code:</p>
+                
+                <div style='width:400px;max-width:100%;margin:0px auto;text-align: center;'><div id='error-code' class='sectionError'></div>
+                
+                <div>
+                    <input type='text' class='digittxt' maxlength="1" id='d1' />
+                    <input type='text' class='digittxt' maxlength="1" id='d2' />
+                    <input type='text' class='digittxt' maxlength="1" id='d3'/>
+                    <input type='text' class='digittxt' maxlength="1" id='d4'/>
+                    <input type='text' class='digittxt' maxlength="1" id='d5'/>
+                    <input type='text' class='digittxt' maxlength="1" id='d6'/>
+        
+                </div>
+                <button class='btn btn-3 ' id='btnVerify' style='margin-top:20px;min-width: 200px;margin-bottom:20px' onclick='verifycode()'>Verify</button>
+                <p>Not recieved a code, <a href='#codereset' id='codereset'>Click Here</a> to have a new code sent to your mailbox.</p>
+                
+               </div>
+                <div style='clear:both'></div>
+                </div>
             </div>
-             <div style='clear:both'></div>
-             </div>
-         </div>
-     </div>
-     <%}%>
+        </div>
+        <%}%>
 
 
-     <% 
-     
-     auctions.forEach(a => {
-        if(a.status==3){ %>
-            <div class='dash-box'>
-    <div class='dash-title'>Taking Bidding Deposits</div>
-    <div class='dash-content'>
-        Auction: <%-formatDateTimeMe(a.datetime)%>
-        
-    </div>
-</div>
-        
-        <%
-        }
-     });
-     
-     
-     %>
-
-<div class='dash-box'>
-    <div class='dash-title'>Join Live Steam</div>
-    <div class='dash-content'>
-        Please click <a href='https://stream.tahid.co.uk'>here</a> to access the Online Auction
 
     </div>
-</div>
-</div>
+    <div class='sidepanel'>
+        <% 
+            var ai = "<div class='hiddeninfo'><p>Your E-Mail Address has not been verified, You should have recieved an email during registration with a verification code. This page has a verification box to enter in the details.</p> <p>If you have not received an email address please request the email to be sent again</p></div>"
+            var email_verifcation_status = customer.isVerified?"<div class='actionresults'>COMPLETE"+ai+"</div>":"<div class='actionresults pending'>PENDING"+ai+"</div>"
+            
+            var ai = "<div class='hiddeninfo'><p>The bidding profile is not complete, please click here to complete</p></div>"
+           
+            var bidding_profile_complete = customer.profile_updated?"<div class='actionresults'><a href='/portal/profile'>COMPLETE</a>"+ai+"</div>":"<div class='actionresults pending'><a href='/portal/profile'>PENDING</a>"+ai+"</div>"
+            var additionalinfo = "<div class='hiddeninfo'><p>The bidding profile is not complete, please click here to complete</p></div>"
+           
+            var verification_documents_uploaded = customer.documentsuploaded?"<div class='actionresults'><a href='/portal/verificationdocs'>COMPLETE</a>"+ai+"</div>":"<div class='actionresults pending'>"+ai+"<a href='/portal/verificationdocs'>PENDING</a></div>"
+            var ai = "<div class='hiddeninfo'><p>An AML Check or Anti Money Laundering Check needs to be performed against all Customers wishing to bid.</p><p>Currently no AML Check have been run for you.</p></div>"
+            console.log(amlCheck);
+            if(amlCheck){
+                if(amlCheck[0]){
+                    var ai = "<div class='hiddeninfo'><p>An AML Check or Anti Money Laundering Check needs to be performed against all Customers wishing to bid.</p><p>Your AML Status is Pas</p></div>"
+                    customer.amldate = helper.formateDateTimeFull(amlCheck[0].rundate);
+                    customer.amlstatus = amlCheck[0].bandtext;
+                }
+            }
+            var aml_status = customer.amlstatus?"<div class='actionresults'>"+customer.amlstatus+ai +"</div>"+"<div class='actionresults'>"+customer.amldate+"</div>":"<div class='actionresults pending'>"+ai+"PENDING</div>"
+            
+            var additionalinfo = "<div class='hiddeninfo'><p>Your account manager is your first point of call, please feel free to contact him with any queries you might have.</p></div>"
+            var additionalinfounassigned = "<div class='hiddeninfo'><p>Your account manager is your first point of call, Currently you have not been assigned an account manager.<br> Complete a few of the steps and an account manager will be assigned or feel free to contact Auction House directly.</p></div>"
+            customer.accountmanager = customer.agentfname?customer.agentfname+' '+customer.agentlname:'';
+            var account_manager = customer.accountmanager?"<div class='actionresults'>"+customer.accountmanager+additionalinfo+"</div>":"<div class='actionresults pending'>UNASSIGNED"+additionalinfounassigned    +"</div>"
 
+        %>
+        <div class='summarybox'>E-Mail Verification:  <%-email_verifcation_status%></div>
+        <div class='summarybox'>Bidding Profile:  <%-bidding_profile_complete%></div>
+        <div class='summarybox'>Verification Document:  <%-verification_documents_uploaded%></div>
+        <div class='summarybox'>AML Status: <%-aml_status%></div>
+        <div class='summarybox'>Account Manager:  <%-account_manager%></div>
+    </div>
+</div>
+</div>
 <script>
-    var spinner ='<div class="sk-chase"><div class="sk-chase-dot"></div><div class="sk-chase-dot"></div><div class="sk-chase-dot"></div><div class="sk-chase-dot"></div><div class="sk-chase-dot"></div><div class="sk-chase-dot"></div></div>';
+     $('.digittxt').keyup(function(e) {
+        // if(e.keyCode==8){
+             
+        //      $(this).prev('.digittxt').focus();
+        //      console.log('test')
+        //   }
+    //       if(this.value.length == $(this).attr('maxlength')) {
+    //     $(this).next('.digittxt').focus();
+    //  }
+     
+ });
+ var spinner ='<div class="sk-chase"><div class="sk-chase-dot"></div><div class="sk-chase-dot"></div><div class="sk-chase-dot"></div><div class="sk-chase-dot"></div><div class="sk-chase-dot"></div><div class="sk-chase-dot"></div></div>';
 
-$(function(){
-
-    $('#btnVerify').click(function(){
-        $('#error-code').html('')
-        var verficationcode = $('#verficationcode').val()
+ function verifycode(){
+    $('#error-code').html('');
+    $('#coderesults').html(spinner)
+        var verficationcode = $('#d1').val()+$('#d2').val()+$('#d3').val()+$('#d4').val()+$('#d5').val()+$('#d6').val();
+        
         if(verficationcode.length>=6){
             $.post('/profile/verifycode',{verficationcode},function(data){
                 console.log(data)
                 if(data.status){
-                    $('#verficationcoderequest').html('DONE')
-                    $('#verifyboxmain').html('')
+                    $('#coderesults').html('<div class="statusmessages successmsg">Great you are verified</div>')
+
+                    setTimeout(function(){
+                        window.location.reload();
+                    },3000)
+                    window.location.reload();
+                    
                 }else{
-                    $('#error-code').html('Looks like your the code does not match')
+                 
+                    $('#coderesults').html('<div class="statusmessages failedmsg">Wrong code, please try again.<br/>Do you know you can request a new code.</div>')
                 }
             },'json')
         }else{
-            $('#error-code').html('Looks like your missing digits')
+            $('#coderesults').html('<div class="statusmessages failedmsg">Looks like you might be missing a few of digits</div>')
         }
-    })
+ }
 
-    $('#codereset').click(function(){
+
+ $('#codereset').click(function(){
         $('#coderesults').html(spinner)
         $.post('/account/resendverifycode',function(data){
-            $('#coderesults').html('Code Request Sent, please check your spam folder')
+            $('#coderesults').html('<div class="statusmessages successmsg">Code Request Sent, if you have not recieved anything please check your spam folder</div>')
         },'json')
     })
-
-
-})
+ $('.digittxt').keydown(function(e) {
+     console.log(e)
+         if(e.keyCode==8){
+            $(this).val("") 
+            $(this).prev('.digittxt').focus();
+         }else{
+            if ((e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 96 && e.keyCode <= 105)){
+                $(this).val(e.key) 
+                if(this.value.length == $(this).attr('maxlength')) {
+                    $(this).next('.digittxt').focus();
+                }
+            }
+            e.preventDefault();
+         }
+ });
 </script>

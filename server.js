@@ -30,7 +30,7 @@ var mysession = session({
   store: new redisStore({ host: 'localhost', port: 6379, client: redisClient }),
   name: '_redisDemoPortal',
   resave: false,
-  cookie: { secure: false, maxAge: 2000000 }, // Set to secure:false and expire in 1 minute for demo purposes
+  cookie: { secure: false, maxAge: 40000000 }, // Set to secure:false and expire in 1 minute for demo purposes
   saveUninitialized: true
 })
 app.use(mysession)

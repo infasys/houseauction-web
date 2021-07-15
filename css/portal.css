@@ -6,7 +6,7 @@
   pointer-events: none;
   position: absolute;
   right: -5px;
-  top: -5px;
+  top: -6px;
   z-index: 1;
   overflow: hidden;
   width: 155px;
@@ -30,7 +30,7 @@
   text-transform: uppercase;
   text-align: center;
   font-weight: bold;
-  line-height: 30px;
+  line-height: 40px;
   transform: rotate(45deg);
   width: 200px;
   display: block;
@@ -38,7 +38,7 @@
   background: linear-gradient(#9BC90D 0%, #79A70A 100%);
   box-shadow: 0 3px 10px -5px black;
   position: absolute;
-  top: 47px;
+  top: 39px;
   right: -39px;
 }
 
@@ -106,6 +106,17 @@
 .blue span::after {
   border-right-color: #1e5799;
   border-top-color: #1e5799;
+}
+
+.container {
+  max-width: 1300;
+  margin: 0px auto;
+  display: flex;
+}
+
+.smallcontainer {
+  flex: 20%;
+  box-sizing: border-box;
 }
 
 .sk-chase {
@@ -423,14 +434,14 @@ footer {
 }
 
 .lotDesc {
-  font-family: "Brandon Grotesque";
+  font-family: "Roboto", sans-serif;
   min-height: 40px;
   color: #000;
   text-align: left;
   padding: 16px 0px;
   overflow: hidden;
-  font-size: 18px;
-  font-weight: 900;
+  font-size: 16px;
+  font-weight: 500;
   height: 60px;
   overflow: hidden;
   vertical-align: middle;
@@ -1104,6 +1115,11 @@ option {
 .inrow-50 {
   float: left;
   width: 50%;
+}
+
+.inrow-25 {
+  float: left;
+  width: 25%;
 }
 
 .inrow-50-padr {

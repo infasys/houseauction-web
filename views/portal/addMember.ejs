@@ -1,14 +1,11 @@
 <%- include('../partials/menu-portal.ejs')%>
 
-<style>
-     .mycontainer {
-    max-width: 600px;
-    min-width: 800px;
-    margin: 0px auto;
-    padding:20px;
-}
-  </style>
-    <div class="mycontainer" style='margin-top:100px;'>
+<div class='main'>
+    <div class='maincontentt'>
+      <div class='pagetitle'>Add a Company Member</div>
+  </div>
+  <div class='maincontent'>
+    <div class="mycontainer">
         <div class="clearfix"></div>
         <p>
             Please enter user email address, this will then add the customer to your company, if the user exist already they will recieve an invite to join the company.
@@ -39,6 +36,7 @@
                 </div>
             </div>
         </div>
+    </div>
 <script>
     function validateEmail(email) {
   const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;

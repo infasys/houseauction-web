@@ -13,11 +13,9 @@ router.get("/paymentdemo", async (req, res) => {
 
 
 router.post("/processCard",authCheck, async (req, res) => {
-
-    var c = req.body;
-    console.log(c)
-
-const paymentMethod = await stripe.paymentMethods.create({
+  var c = req.body;
+  console.log(c)
+  const paymentMethod = await stripe.paymentMethods.create({
     type: 'card',
     card: {
       number: c.number,

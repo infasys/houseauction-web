@@ -1,4 +1,5 @@
 <%- include('../partials/menu-portal.ejs')%>
+<title>Bidding Profile - Auction House</title>
 <script src="/dob-picker/dobpicker.js"></script>
 <link href="/progress-bar-master/example/css/main.css" rel="stylesheet" />
 <script src="/progress-bar-master/progress-bar.js"></script>
@@ -27,9 +28,15 @@
     min-width: 80px;
 }
 </style>
-<div style=' width:800px;margin:30px auto 10px auto;'>
-  <div class="progress-bar-wrapper"></div>
+<div class='main'>
+  <div class='maincontentt'>
+    <div class='pagetitle'>Edit Bidding Profile</div>
 </div>
+<div class='maincontent'>
+  <div>
+
+  <div class="progress-bar-wrapper"></div>
+
 <%
 console.log(customer)
 %>
@@ -307,7 +314,9 @@ console.log(customer)
   <div class='myinputrow' style='text-align: center;'><a href='/portal/profile'><button class='sitebtn-small2'>Done</button></a></div>
 </div>
 <div class='myinputrow'><button id='btnPrev' class='sitebtn-small2' style='float:left'>Previous</button><button id='btnNext' class='sitebtn-small2' style='float:right'>Next</button><button id='btnFinish' class='sitebtn-small2' style='float:right'>Complete</button></div>
+</div></div>
 <div style='clear:both; margin-bottom:200px;'></div>
+
 <script>
 
 $(document).ready(function() {

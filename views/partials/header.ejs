@@ -1,7 +1,8 @@
 <script src="//localhost:35729/livereload.js?snipver=1" async="" defer=""></script> 
 <div class='main'>
-    <header>
+    <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://fonts.googleapis.com/css2?family=Merriweather+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="/css/default.css">
         <link rel="stylesheet" href="/css/login.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous"></script>
@@ -9,6 +10,8 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/fontawesome.min.css" integrity="sha512-shT5e46zNSD6lt4dlJHb+7LoUko9QZXTGlmWWx0qjI9UhQrElRb+Q5DM7SVte9G9ZNmovz2qIaV7IWv0xQkBkw==" crossorigin="anonymous" />
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/svg-with-js.min.css" integrity="sha512-cNvC5iR8rfuBpqb4VRh48Y77JTM5nwjsEBQYS/LHzoWyf4bmmQ8LNMbg5KsEFOBO5vGbLUXwH3BAjG0m0oNWqA==" crossorigin="anonymous" />
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/solid.min.css" integrity="sha512-xIEmv/u9DeZZRfvRS06QVP2C97Hs5i0ePXDooLa5ZPla3jOgPT/w6CzoSMPuRiumP7A/xhnUBxRmgWWwU26ZeQ==" crossorigin="anonymous" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
           <style>
               .mywrapper{
@@ -36,6 +39,9 @@ header nav{
     margin-bottom: 20px;
 }
               </style>
+              <title>Auction House</title>
+              </head>
+            <header>
     <div class='mywrapper'>
         <div class='flex1'><a href="/" class="logo"><img class="ah-logo-header" alt="Auction House Logo" src="/images/logo.png" /><!--<span style='display:inline-block;padding-left:50px;'>Auction House</span>--></a></div>
         <div class='flex2'>  <nav class='flex-item-bottom'>
@@ -99,7 +105,7 @@ header nav{
                                 </ul>
                             </li>
                             <%if(isuser){%>
-                                <li><a href="/portal/dashboard" title="My Account">My Account</a></li>
+                                <li><a class='highlight' href="/portal/dashboard" title="My Account">My Account</a></li>
                             <%}else{%>
                                 <li>
                                     <a href='/account/log-in'>Login</a>

@@ -1,7 +1,34 @@
 var dateFormat = require('dateformat');
 
+const months = {
+  0: 'January',
+  1: 'February',
+  2: 'March',
+  3: 'April',
+  4: 'May',
+  5: 'June',
+  6: 'July',
+  7: 'August',
+  8: 'September',
+  9: 'October',
+  10: 'November',
+  11: 'December'
+}
+ const days = [
+  'Sun',
+  'Mon',
+  'Tue',
+  'Wed',
+  'Thu',
+  'Fri',
+  'Sat'
+]
+
 class helper{
 
+   formatToCurrency = amount => {
+    return "£" + amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,");
+};
 
   formatDateOnlyFull(date){
     var d = new Date(date)
@@ -17,6 +44,24 @@ class helper{
     dateString = dateFormat(d, "DDD, dS mmm");
     return dateString;
   }
+  
+       formatDateTimeMe(date) {
+      var d = new Date(date),
+      monthIndex = '' + (d.getMonth() + 1);
+      var monthName = months[monthIndex]
+      var day = '' + d.getDate(),
+      year = d.getFullYear(),
+      hours = d.getHours().toString(),
+      mins = d.getMinutes().toString();
+      const dayIndex = d.getDay()
+  const dayName = days[dayIndex]
+      if (day.length < 2) day = '0' + day;
+      if (hours.length < 2) hours = '0' + hours;
+      if (mins.length < 2) mins = '0' + mins;
+     
+      var strTime = `${dayName}, ${day} ${monthName} ${year} @ ${hours}:${mins}`;
+      return strTime;
+      }
   formateDateTimeFull(date){
     var d = new Date(date)
     var options = { weekday: 'short', year: 'numeric', month: 'long', day: 'numeric' };

@@ -1,0 +1,31 @@
+
+
+.main {
+    padding: 100px 20px 0px 20px;
+  }
+  
+
+  .maincontentt{
+    max-width: 1200px;
+    margin:0px auto; display:flex;
+}
+.maincontent{
+    max-width: 1200px;
+    margin:0px auto;
+  display:flex;
+  padding:10px;
+}
+.pagetitle{
+    font-weight: bold;
+    font-size:18px;
+    padding-bottom:5px;
+    border-bottom:3px solid red;
+    width:100%;
+    margin-bottom:20px;
+}
+@media only screen and (max-width: 768px) {
+  /* For mobile phones: */
+  .maincontent {
+    display:unset;
+  }
+}

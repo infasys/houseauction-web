@@ -6,7 +6,7 @@
   .uploadentrytype{
         background: rgb(223, 238, 219);
 padding: 6px 14px;
-margin-bottom: 30px;
+margin-top: 30px;
 font-size: 10px;;
 min-height:80px;;
     }
@@ -117,13 +117,50 @@ min-height:80px;;
     width: 100%;
   }
 } 
+.profilebox{
+  padding: 20px;
+  margin:30px; 
+  background-color: #fff; 
+  box-shadow: 0 0.2rem 0.6rem 0 rgba(0, 0, 0, 0.075);
+  margin-top:30px;
+  overflow: hidden;
+  margin:20px;
+}
+.profilecontainer{
+  flex:1;
+}
+.profileselectcontainer{
+  padding: 20px;
+  margin:30px; 
+  background-color: #fff; 
+  box-shadow: 0 0.2rem 0.6rem 0 rgba(0, 0, 0, 0.075);
+  margin-top:30px;
+  overflow: hidden;
+  margin:20px;
+  flex:1;
+}
+h3{
+  padding-bottom:20px;
+  font-weight: 500;
+  font-size:18px;
+}
   </style>
 
+<div class='main'>
+  <div class='maincontentt'>
+    <div class='pagetitle'>Identity Verification Documents</div>
+</div>
+
+<div class='maincontent'>
+<p>Everyone hoping to bid in an auction needs to have photographic ID together with a proof of residency. If you are the successful bidder, the auctions team will take copies of your ID, and they may carry out electronic ID verification as well, in order to meet the HMRC Anti-Money Laundering Regulations. Remote bidders (Telephone/Proxy/Online) will also need to provide this ID before their bid can be accepted.</p>
+</div>
 <%
 if(members.length>1){
 %>
+
+<div class='maincontent'>
+  <div class='profileselectcontainer'>
 <div class='mycontainer'>
-<div class='dash-box'>
   <div class='dash-title'>Active Member</div>
   <div class='dash-content'>
   <label>You Are Editing Member:</label>
@@ -150,16 +187,19 @@ if(members.length>1){
   </script>
 </div>
 </div>
-</div>
+</div></div>
+
 <%
 }
 %>
-<div class='mycontainer'>
+<div class='maincontent' style='display:unset;'>
 
-  <p>Everyone hoping to bid in an auction needs to have photographic ID together with a proof of residency. If you are the successful bidder, the auctions team will take copies of your ID, and they may carry out electronic ID verification as well, in order to meet the HMRC Anti-Money Laundering Regulations. Remote bidders (Telephone/Proxy/Online) will also need to provide this ID before their bid can be accepted.</p>
+
+<div class="profilecontainer">
+    <div class="profilebox">
   <div class='uploadcat'>
   <h3>Photographic ID</h3>
-  <div class='inrow-30-padr'>
+ 
 <div class='info' style='font-size: 16px;'>
 <ul>
 <li>Current signed passport</li>
@@ -169,8 +209,7 @@ if(members.length>1){
 <li>Firearms or shotgun certificate</li>
 </ul>
 </div>
-</div>
-<div class='inrow-70'>
+<div class=''>
 <%verificationDocTypes.forEach(v=>{
   
   if(v.verification_category==1){
@@ -196,9 +235,13 @@ if(members.length>1){
  </div>
  <div style='clear:both;'></div>
  </div>
- <div class='uploadcat'>
+</div>
+</div>
+ <div class="profilecontainer">
+    <div class="profilebox">
+  <div class='uploadcat'>
  <h3>Proof of Residency</h3>
- <div class='inrow-30-padr'>
+ <div>
 
 <ul>
 <li>Utility bill/statement – dated within past 3 months</li>
@@ -208,7 +251,7 @@ if(members.length>1){
 <li>Current UK / EU Drivers Licence (paper version)</li>
 </ul>
 </div>
-<div class='inrow-70'>
+<div class='inrow'>
 <%verificationDocTypes.forEach(v=>{
   
  if(v.verification_category==2){
@@ -230,7 +273,9 @@ if(members.length>1){
 <%}})%>
 
 </div>
+</div>
 <div style='clear:both;'></div>
+</div>
 </div>
 </div>
 <!-- The Modal -->

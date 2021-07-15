@@ -16,7 +16,8 @@ router.get('/portal/dashboard',authCheck,async (req, res) => {
 	var results = await db.getCustomerById(myuserid)
 	var customer = results[0]
 	var auctionsresults = await db.getAuctions()
-	res.render('portal/dashboard',{msg:'',menusel:1,customer,auctions:auctionsresults});
+	var amlCheck = await db.getAMLReportsByUser(myuserid);
+	res.render('portal/dashboard',{msg:'',menusel:1,customer,auctions:auctionsresults,amlCheck,helper:ejs_helpers});
 });
 
 router.get('/portal/company',authCheck, async (req, res) => {
@@ -72,6 +73,36 @@ router.get('/portal/property/:id',authCheck,async (req, res) => {
     }
     res.render('portal/property',{biddeposit,property,images,details,isAdded,maps,catalogs,apikey,customer,helper:ejs_helpers});
 });
+router.get('/portal/auctionattendence/:id',authCheck,async (req, res) => {
+	var myuserid = req.session.userid;
+	var auction = await db.getAuctionById(req.params.id);
+	var catalog = await db.getAuctionCatalog(req.params.id);
+	var auctionattendce = await db.getAuctionAttendence(myuserid,req.params.id);
+	var attendencetypes = await db.getAuctionAttendenceTypes();
+	auction.cataloguri = (await azBlob.generateSasToken(catalog.file)).uri;
+	auction.uri = (await azBlob.generateSasToken(auction.image)).uri;
+	var lots = await db.getPropertiesByAuctionId(req.params.id);
+    lots = await azBlob.getFiles(lots,'primaryimage')
+	var myproperties = await db.getPropertiesByUserIdandAuctionId(req.session.userid,req.params.id);
+	myproperties  = await azBlob.getFiles(myproperties,'img')
+	var amlCheck = await db.getAMLReportsByUser(myuserid);
+	var total = 0
+    myproperties.forEach(p=>{
+		if(p.bid_interest){		
+			total+=p.price
+		}
+      })
+	  lots = await azBlob.getFiles(lots,'img')
+	  if(total<3){
+		  total = 3;
+	  }
+	  total= total*10/100;
+	  amount= parseInt(total *100);
+	  var paymentIntent = await stripe.paymentIntents.create({amount:amount,currency: 'gbp', payment_method_types: ['card'],capture_method: 'manual'});
+	  var payments = await db.getPaymentsbyuserandauction(myuserid,req.params.id)
+	  console.log(payments)
+    res.render('portal/auctionattendence',{auction,lots,myproperties,helper:ejs_helpers,total,auctionattendce,attendencetypes,amlCheck,paymentIntent,payments});
+});
 
 router.get('/portal/myaccount',authCheck,async (req, res) => {
 	var myuserid = req.session.userid;
@@ -104,47 +135,6 @@ async function getPaymentDetails(paymentid){
 }
 
 
-router.get('/portal/deposits',authCheck,async (req, res) => {
-	var myuserid = req.session.userid;
-	if(req.session.memberid){
-		myuserid = req.session.memberid;	
-	}
-	var results = await db.getCustomerById(myuserid)
-	var customer = results[0]
-	var members = [];
-	if(customer.companyid){
-		members = await db.getCompanyMembersByCompanyId(customer.companyid)
-	}
-	var payments = await db.getPayments(req.session.userid)
-	for(var j = 0; j<payments.length; j++){
-		var tmpPayment = payments[j];
-		console.log(tmpPayment)
-		if(tmpPayment.status){
-		tmpPayment.details = await getPaymentDetails(tmpPayment.stripeid)
-		console.log('==========================')
-		console.log(tmpPayment)
-		console.log('==========================')
-		}
-	}
-	var lots = await db.getPropertiesByUserId(req.session.userid);
-	var total = 0
-    lots.forEach(p=>{
-		if(p.bid_interest){		
-			total+=p.price
-		}
-      })
-	  lots = await azBlob.getFiles(lots,'img')
-	  if(total<3){
-		  total = 3;
-	  }
-	  total= total*10/100;
-	  amount= parseInt(total *100);
-	  
-	  var paymentIntent = await stripe.paymentIntents.create({amount:amount,currency: 'gbp', payment_method_types: ['card'],capture_method: 'manual'});
-	  console.log(paymentIntent)
-	 
-	res.render('portal/deposits',{customer,total:total,lots:lots,payments,paymentIntent:paymentIntent,total,menusel:5});
-});
 router.get('/portal/amlchecks',authCheck,async (req, res) => {
 	var myuserid = req.session.userid;
 	if(req.session.memberid){
@@ -414,24 +404,6 @@ router.get('/portal/verificationdocs',authCheck, async (req, res) => {
 
 
 
-
-
-router.get('/legalpack/:id',authCheck, async (req, res) => {
-	var myuserid = req.session.userid;
-	var results = await db.getCustomerById(myuserid)
-	var customer = results[0]
-	var apikey = process.env.GOGGLEMAPS_API
-	var property = await db.getPropertyById(req.params.id)
-	property = property[0]
-	var legal_documents = await db.getDocuments(req.params.id);
-	legal_documents = await azBlob.getFiles(legal_documents,'file')
-	if(property.img){
-	  var mysasToken =  await azBlob.generateSasToken(property.img)
-	  property.primaryimgurl=mysasToken.uri;
-	}
-    res.render('legalpack/legalpack',{property,legal_documents,customer,helper:ejs_helpers});
-
-});
 
 
 

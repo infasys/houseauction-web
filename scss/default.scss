@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import url('https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Open+Sans+Condensed:ital,wght@0,300;0,700;1,300&family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700&family=Roboto+Condensed:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Roboto+Mono:wght@300;400;500;600;700&family=Roboto+Slab:wght@100;200;300;400;500;600;700;800;900&family=Roboto:wght@300;400;500;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Merriweather+Sans:wght@400;500;600;700&display=swap');
 $small: 450px;
 $medium: 800px;
 $primary :#fff;
@@ -11,11 +12,10 @@ $primary :#fff;
 $test :rgb(255, 154, 2);
 $menufont:#777;
 $bglight:#f4f5f8;
-$myfont: 'Roboto', sans-serif;
-$myfont_a: 'Roboto', sans-serif;
-$myfont_b: 'Roboto', sans-serif;
-
-@import  'components/navigation','components/modal','components/fonts','components/ribbons','components/spinner','components/site','components/footer','components/guide','components/auction','components/contactform';
+$myfont:'Merriweather Sans', sans-serif;
+$myfont_a: 'Merriweather Sans', sans-serif;
+$myfont_b: 'Merriweather Sans', sans-serif;
+@import  'components/navigation','components/modal','components/ribbons','components/spinner','components/site','components/footer','components/guide','components/auction','components/contactform';
 /*
 font-family: 'PT Mono', monospace;
     font-family: 'DM Mono', monospace;
@@ -386,7 +386,7 @@ width:100%;
 #cat-auctionresults{
   background-image: url('/images/kam-idris-_HqHX3LBN18-unsplash.jpg');
 }
-.sitetxta{font-family: 'Open Sans', sans-serif;
+.sitetxta{font-family: $myfont;
   padding:12px;
   border:1px solid #ddd;
   resize: none;
@@ -608,7 +608,7 @@ option{
 
 h4{
   border-left:6px solid #C8102E;
-  font-family: 'Brandon Grotesque';
+  font-family:$myfont;
   padding:4px;
   padding-left:24px;
   font-size: 24px;;
@@ -618,7 +618,7 @@ a{
       text-decoration: none;
 }
 .categorychoicemsg{
-  font-family: 'Brandon Grotesque';
+  font-family: $myfont;
   font-weight: 500;;
 }
 #questiontxt:focus,#questiontxt:active{

@@ -15,15 +15,19 @@
     }
   }
 %>
-  
+<div class='main'>
+  <div class='maincontentt'>
+    <div class='pagetitle'>Bidding Profile</div>
+</div>
+<div class='maincontent'>
 <%
 if(members.length>1){
 %>
+<div class='profileselectcontainer'>
 <div class='mycontainer'>
 <div class='dash-box'>
-  <div class='dash-title'>Active Member</div>
   <div class='dash-content'>
-  <label>You Are Editing Member:</label>
+  <label>Select Profile</label>
   <div class='select'><select class='mytxt3' id='memberselect'>
   <%members.forEach(function(m){
     
@@ -48,9 +52,12 @@ if(members.length>1){
 </div>
 </div>
 </div>
+</div>
 <%
 }
 %>
+</div>
+<div class='maincontent'>
 <script src="/dob-picker/dobpicker.js"></script>
 <link href="/progress-bar-master/example/css/main.css" rel="stylesheet" />
 <script src="/progress-bar-master/progress-bar.js"></script>
@@ -80,6 +87,8 @@ if(members.length>1){
     display: inline-block;
     min-width: 130px;;
     vertical-align: middle;
+    font-weight: 400;
+    font-size: 13px;;
   }
   .row2{
     white-space: nowrap;
@@ -105,9 +114,31 @@ if(members.length>1){
 
   border: 1px solid #ddd;
 }
+.profilebox{
+  padding: 20px;
+  margin:30px; 
+  background-color: #fff; 
+  box-shadow: 0 0.2rem 0.6rem 0 rgba(0, 0, 0, 0.075);
+  margin-top:30px;
+  overflow: hidden;
+  margin:20px;
+}
+.profilecontainer{
+  flex:1;
+}
+.profileselectcontainer{
+  padding: 20px;
+  margin:30px; 
+  background-color: #fff; 
+  box-shadow: 0 0.2rem 0.6rem 0 rgba(0, 0, 0, 0.075);
+  margin-top:30px;
+  overflow: hidden;
+  margin:20px;
+  flex:1;
+}
 </style>
-
-    <div style="padding: 20px;margin:30px; background-color: #fff; box-shadow: 0 0.2rem 0.6rem 0 rgba(0, 0, 0, 0.075);margin-top:30px;overflow: hidden; width:600px;margin:20px auto;">
+<div class="profilecontainer">
+    <div class="profilebox">
     
       <div style='float:left;margin-right:20px'><img src="/images/user.gif" class="cimg" /></div>
       <div style='float:left;'>
@@ -117,6 +148,9 @@ if(members.length>1){
       </div>
       <div style='float:right'><a href='/portal/profileedit'><button id='start' class='sitebtn-small2' style='float:right'>edit</button></a></div>
     <div style='clear:both;padding:5px;'></div>
+</div>
+
+    
     <% 
       var c = customer; 
       if(c.profile_updated){
@@ -126,15 +160,25 @@ if(members.length>1){
          addrBuilder2 = (c.premises?c.premises+', ': '')+ (c.door?c.door+' ':'')+(c.street+', ')+ (c.town?c.town: '');
       }
       %>
+      <div class="profilebox">
       <div class='row2'><div class='flbl'>Title:</div><div class='fnameval'><%-customer.titlename%>&nbsp;</div></div>
       <div class='row2'><div class='flbl'>First Name:</div><div class='fnameval'><%-customer.forename%>&nbsp;</div></div>
-      <div class='row2'><div class='flbl'>Last Name:</div><div  class='fnameval'><%-customer.surname%>&nbsp;</div></div>
       <div class='row2'><div class='flbl'>Middle Name:</div><div  class='fnameval'><%-customer.middlename%>&nbsp;</div></div>
+
+      <div class='row2'><div class='flbl'>Last Name:</div><div  class='fnameval'><%-customer.surname%>&nbsp;</div></div>
+      </div>
+      <div class="profilebox">
       <div class='row2'><div class='flbl'>Address:</div><div  class='fnameval'><%-addrBuilder2%>&nbsp;</div></div>
       <div class='row2'><div class='flbl'>Postcode:</div><div  class='fnameval'><%-customer.postcode%>&nbsp;</div></div>
+    </div>
+      <div class="profilebox">
       <div class='row2'><div class='flbl'>E-Mail:</div><div  class='fnameval'><%-customer.username%>&nbsp;</div></div>
       <div class='row2'><div class='flbl'>Telephone:</div><div  class='fnameval'><%-customer.mobile%>&nbsp;</div></div>
+    </div>
+    
       <%if(c.iscompany){%>
+        <div class="profilebox">
+         
       <div class='row2'><div class='flbl'>Company:</div><div  class='fnameval'><%-customer.companyname%></div></div>
       <%
       entityname = ''
@@ -146,8 +190,24 @@ if(members.length>1){
         entityname = 'Limited Company';
       }
       %>
+
       <div class='row2'><div class='flbl'>Entity Type:</div><div  class='fnameval'><%-entityname%></div></div>
       <div class='row2'><div class='flbl'>Company Address:</div><div  class='fnameval'><%-customer.companyaddr%></div></div>
+      <div class='row2'><div class='flbl'>All Stakeholders within the company with a share of higher then 20% must be complete a credit check to register for bidding as company
+      <a href='/portal/addcompanymember'><button class='sitebtn-small2'>Add Member</button></a>
+
+      <%members.forEach(m => {
+    var tmpname = '';
+    if(m.forename){
+      tmpname= m.forename + ' ' +m.surname 
+    }else{
+      tmpname= m.username
+    }
+    %><li><%-tmpname%></li><%
+  });%>
+  </div></div>
+    </div>
+      <div class="profilebox">
       <%} var i=0;
       addrs.forEach(a=>{
         i++;
@@ -156,14 +216,56 @@ if(members.length>1){
         %><div class='row2'><div class='flbl'>Address History <%-i%>:</div><div  class='fnameval'><%-addrBuilder3%>&nbsp;</div></div>
         <div class='row2'><div class='flbl'>Since:</div><div  class='fnameval'><%-a.start_year%> <%-a.start_month%>&nbsp;</div></div><%
       })%>
+    </div>
+      <div class="profilebox">
       <div class='row2'><div class='flbl'>Date of Birth:</div><div  class='fnameval'><%-formatDate(customer.dob)%>&nbsp;</div></div>
       <div class='row2'><div class='flbl'>Nation Insurance:</div><div  class='fnameval'><%-customer.nationalinsurance%>&nbsp;</div></div>
       <div class='row2'><div class='flbl'>Driving License:</div><div  class='fnameval'><%-customer.drivinglicense%>&nbsp;</div></div>
       <div class='row2'><div class='flbl'>Passport Number:</div><div  class='fnameval'><%-customer.passport%>&nbsp;</div></div>
+
+    </div>
       <%}%>
     </div>
   </div>
- 
-  <div style="padding: 20px;margin:30px;">
 
-      </div>
+
+  
+  <div class='maincontentt'>
+    <div class='pagetitle'>My Account</div>
+</div>
+  <div class='maincontent'>
+    <div class="profilecontainer">
+    <div class="profilebox">
+  <div class='myinputrow'>
+    To change your password please type enter a new Password.
+    <input id="txtpassword" class="mytxt" type="password" value="" placeholder='New Passowrd'/>
+    <input id="txtpasswordconfirm" class="mytxt" type="password" value="" placeholder='Password Confirm'/>
+  </div>
+  <div class='myinputrow'>
+    <button class="sitebtn-small2" style='float:right' id="btnupdatepassword">Update Password</button>
+  </div>
+</div>
+</div>
+<script>
+  $('#btnupdatepassword').click(function(){
+    console.log('start')
+    var pass1 = $('#txtpassword').val();
+    var pass2 = $('#txtpasswordconfirm').val();
+    var error  = false;
+    var msg = '';
+    if(pass1.length<4){
+      error= true
+      msg = 'Password length does not meet requirements'
+    }else if (pass1!=pass2){
+      error= true
+      msg = 'Passwords do not match'
+    }
+    if(!error){
+      $.post('/account/updatepassword',{password:pass1},function(){
+        $('#statusreponse').html('<div class="statusmsg">Password Updated Successfully</div>')
+      },'json')
+    }else{
+      $('#statusreponse').html('<div class="statuserr">'+msg+'</div>')
+    }
+  })
+  </script>

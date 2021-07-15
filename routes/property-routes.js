@@ -50,5 +50,9 @@ router.post('/auctionaction/biddeposit',authCheck,async (req, res) => {
   db.updateBidDeposit(req.body.myid,req.body.mycheck)
 	res.json({status:true});
 });
-
+router.post('/auction/attendType',authCheck,async (req, res) => {
+  var myuserid = req.session.userid;
+  db.updateAuctionAttendance(req.body.choiceid,req.body.auctionid,myuserid)
+	res.json({status:true});
+});
 module.exports = router;

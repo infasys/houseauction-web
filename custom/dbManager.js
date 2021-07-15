@@ -127,7 +127,15 @@ getAddressHistoryById(id,userid){
 
 getCustomerById(userid){
   return new Promise((resolve,reject)=>{
-      db.query('select customers.*,company.name AS companyname, company.entitytypeid ,company.address AS companyaddr,opttitles.name as titlename from customers left join opttitles on opttitles.id=customers.title LEFT JOIN company ON company.id=customers.companyid where customers.id = ?',[userid], function (err, result) {
+      db.query('select customers.*,users.forename as agentfname,users.surname as agentlname,company.name AS companyname, company.entitytypeid ,company.address AS companyaddr,opttitles.name as titlename from customers left join opttitles on opttitles.id=customers.title LEFT JOIN company ON company.id=customers.companyid   left join users on users.id=customers.agentid where customers.id = ?',[userid], function (err, result) {
+        if (err) throw err;
+        resolve(result)
+      })
+    })
+}
+getCustomerAccountManager(userid){
+  return new Promise((resolve,reject)=>{
+      db.query('select customer. = ?',[userid], function (err, result) {
         if (err) throw err;
         resolve(result)
       })
@@ -428,6 +436,22 @@ getPropertyCommercialtype(){
   })
 }
 
+getAuctionById(auctionid){
+  return new Promise((resolve,reject)=>{
+    db.query( 'select auctions.*,venues.name as venuename,venues.image,venues.address,venues.town from auctions left join venues on venues.id = auctions.venueid where auctions.id = ?;',[auctionid], function (err, [auction]) {
+      if (err) throw err;
+      resolve(auction)
+    })
+  })
+}
+getAuctionCatalog(auctionid){
+  return new Promise((resolve,reject)=>{
+    db.query( 'select * from catalog_auctions left join catalogs on catalog_auctions.catalogid = catalogs.id where catalog_auctions.auctionid = ?;',[auctionid], function (err, [auction]) {
+      if (err) throw err;
+      resolve(auction)
+    })
+  })
+}
 getPropertyTypes(){
   return new Promise((resolve,reject)=>{
     db.query('select * from propertytype', function (err, result) {
@@ -477,6 +501,22 @@ insertPropertyListing(name,addr,header,description,customdata,sellerid,price,pri
    // db.end();
   })
 }
+getPropertiesByUserIdandAuctionId(userid,auctionid){
+  return new Promise((resolve,reject)=>{
+  //  db = mysql.createConnection(params);
+    db.query(`SELECT myproperties.*,customerpropertylist.id as customerpropertyid,customerpropertylist.bid_deposit AS bid_interest
+    from customerpropertylist 
+    left JOIN 
+    (select  auctions.id as auctionid, auctions.datetime,auctions.status AS auctionstatus, p.id,p.name as propname,p.primaryimage as img,p.price,p.town,p.county from properties p left join customers s on s.id = p.clientid LEFT JOIN auction_properties on p.id = auction_properties.propertyid LEFT JOIN auctions ON auctions.id = auction_properties.auctionid    )
+     AS myproperties
+    ON myproperties.id = customerpropertylist.propertyid WHERE userid=? and auctionid = ?
+    `,[userid,auctionid], function (err, result) {
+      if (err) throw err;
+      resolve(result)
+    })
+    //db.end();
+  })
+}
 getPropertiesByUserId(userid){
   return new Promise((resolve,reject)=>{
   //  db = mysql.createConnection(params);
@@ -485,7 +525,7 @@ getPropertiesByUserId(userid){
     left JOIN 
     (select  auctions.id as auctionid, auctions.datetime,auctions.status AS auctionstatus, p.id,p.name as propname,p.primaryimage as img,p.price,p.town,p.county from properties p left join customers s on s.id = p.clientid LEFT JOIN auction_properties on p.id = auction_properties.propertyid LEFT JOIN auctions ON auctions.id = auction_properties.auctionid    )
      AS myproperties
-    ON myproperties.id = customerpropertylist.propertyid WHERE userid=?
+    ON myproperties.id = customerpropertylist.propertyid WHERE userid=? 
     `,[userid], function (err, result) {
       if (err) throw err;
       resolve(result)
@@ -528,6 +568,16 @@ getPayments(userid){
     //db.end();
   })
 }
+getPaymentsbyuserandauction(userid,auctionid){
+  return new Promise((resolve,reject)=>{
+  //  db = mysql.createConnection(params);
+    db.query('select * from payment_deposits where customerid = ? and auctionid =?',[userid,auctionid], function (err, [result]) {
+      if (err) throw err;
+      resolve(result)
+    })
+    //db.end();
+  })
+}
 getProperties(){
   return new Promise((resolve,reject)=>{
  
@@ -539,10 +589,11 @@ getProperties(){
     //db.end();
   })
 }
+
 getPropertiesByAuctionId(auctionid){
   return new Promise((resolve,reject)=>{
   //  db = mysql.createConnection(params);d = ap.propertyid where auctions.id =?   
-    db.query('SELECT myproperties.*,auction_bids.id AS bidid,auction_bids.customerid AS bidderid,auction_bids.amount AS bidamount,auction_bids.uuid,auction_bids.`status` AS bidstatus   FROM (SELECT properties.*, auction_properties.id AS auctionpropertyid,auction_properties.lotno,auction_properties.`status` AS result FROM auction_properties  LEFT JOIN properties ON properties.id = auction_properties.propertyid WHERE auction_properties.auctionid = ?) AS myproperties LEFT JOIN auction_bids ON myproperties.auctionpropertyid = auction_bids.auctionpropertyid',[auctionid], function (err, result) {
+    db.query('select p.id,ap.lotno,p.name as propname,auctions.datetime,p.town,p.primaryimage as img,p.primaryimage,p.price,p.town,p.county from properties p left join auction_properties ap on ap.propertyid = p.id left join auctions on auctions.id = ap.auctionid where auctions.id = ?;',[auctionid], function (err, result) {
       if (err) throw err;
       resolve(result)
     })
@@ -736,14 +787,6 @@ getAuctionsById(id) {
 })
   }
 
-  getDocuments(propertyid) {
-    return new Promise((resolve, reject) => {
-      db.query("select * from property_legal_pack where propertyid = ?",propertyid, function (err, result) {
-        if (err) throw err;
-        resolve(result);
-      });
-    });
-  }
 
   updateBidDeposit(propertyid,status){
     return new Promise((resolve, reject) => {
@@ -754,8 +797,88 @@ getAuctionsById(id) {
       });
     });
   }
+ 
+  updateAuctionAttendance(attendencetype,auctionid,userid){
+    return new Promise((resolve, reject) => {
+      
+      console.log(userid)
+      db.query("SELECT * FROM customer_auction where userid = ?",[userid],(err,[result]) => {
+        if (err) throw err;
+        if(!result){
+          db.query("insert into customer_auction (updated,auctionid,attendencetype,userid) values (?)",[[new Date(),auctionid,attendencetype,userid]], function (err, result) {
+            if (err) throw err;
+            resolve(result);
+          });
+        }else{
+          db.query("update customer_auction set updated=?,auctionid=?,attendencetype=? where userid = ?",[new Date(),auctionid,attendencetype,userid], function (err, result) {
+            if (err) throw err;
+            resolve(result);
+          });
+        }
+      })
+ 
+      
+    });
+  }
+
+  getAuctionAttendence(userid,auctionid){
+    return new Promise((resolve, reject) => {
+      
+      console.log(userid)
+      db.query("SELECT t.* FROM customer_auction left join auction_attendence_types t on t.id= customer_auction.attendencetype where userid = ? and auctionid = ?",[userid,auctionid],(err,[result]) => {
+         if (err) throw err;
+            resolve(result);
+      })
+ 
+      
+    });
+  }
+
+  getAuctionAttendenceTypes(){
+    return new Promise((resolve, reject) => {
+      db.query("SELECT * from auction_attendence_types",(err,result) => {
+         if (err) throw err;
+            resolve(result);
+      })
+ 
+      
+    });
+  }
 
 
+
+  getDocuments(propertyid) {
+    return new Promise((resolve, reject) => {
+      db.query(`SELECT l.id,f.id as fileid,f.name, f.file,f.uploaded,l.notes,f.revision,f.revisionnotes,c.name as cat from legalpack  l
+      left join legalpack_files f on l.id=f.legalpackid
+       left join legalpack_categories c on c.id=l.categoryid
+        where l.propertyid = 
+      ? order by l.id, f.revision`, propertyid, function (err, result) {
+        if (err) throw err;
+        resolve(result);
+      });
+    });
+  }
+  getLegalpack(id) {
+    return new Promise((resolve, reject) => {
+      db.query(`SELECT * from legalpack_files where id  = ?`, id, function (err, [result]) {
+        if (err) throw err;
+        resolve(result);
+      });
+    });
+  }
+  recorddownload(legalpackid,userid) {
+    return new Promise((resolve, reject) => {
+      console.log('LEGAL PACK USERID:'+userid)
+      db.query(`INSERT INTO legalpack_downloads (legalpackid,customerid,downloaded) values (?)`, [[legalpackid,userid,new Date()]], function (err, result) {
+        if (err) throw err;
+        resolve(result);
+      });
+    });
+  }
 
 }
+
+
+
 module.exports =  new dbManager();

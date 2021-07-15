@@ -1,39 +1,12 @@
 <%- include('../partials/menu-portal.ejs')%>
+<title>Property Favourites - Auction House</title>
+<div class='main'>
+    <div class='maincontentt'>
+      <div class='pagetitle'>Saved Properties</div>
+  </div>
+  <div class='maincontent'>
 <style>
-    body{
-        background-color: #fff;
-    }
-    .banner{
-        background: url('branding/pngtree-hand-drawn-cartoon-house-print-ad-image_148888.jpg');
-        background-size: cover;
-        background-repeat: no-repeat;
-        height:400px;
-        width:100%;
-    }
-    .submenu{
-        margin:10px 30px;
-        padding:10px 20px;
-        border-bottom:2px solid #000;
-    }
-    .mitem{
-        display: inline-block;
-        margin-right:20px;
-        cursor: pointer;
-    }
-    .right{
-        float:right;
-    }
-    .lotitem{
-        float:left;
-        background: #fff;
-        width:25%;
-        max-width:240px;
-        min-width:140px;
-        margin:30px 0px 30px 30px;
-        cursor: pointer;
-        box-sizing: border-box;
-        border:1px solid #ccc;
-    }
+
     .lotitem:hover{
         border:2px solid #c8102e;
         box-sizing: border-box;
@@ -47,96 +20,158 @@
     }
     .lotitmlstimgtd{
         width: 100%;
-padding-top:50%;
 background-repeat: no-repeat;
 background-size: cover;
 box-sizing: border-box;
 background-position: center;
 margin:0px;
+padding-top:15%;
+flex:2;
     }
-.assetrow td{
-    background-color: #f8f9fa;
+    .assetdescription{
+        flex:4;
+        padding:20px;
+        display:flex;
+    }
+.assetrow{
+    background-color: #e8e8e8;
     border:none;
     border-bottom: 1px solid #dae0e3;
     padding:0px;
+    margin-bottom:20px;
+    color:#777;
+    display:flex;
 }
-
-.myTable{
-    width: 100%;
-    table-layout: fixed;
-    border-collapse: collapse;
-
-}
-.imgcont{
-    box-sizing: border-box;
-    padding:0px  !important;
-}
-.assetrowmain td{
-    background-color: #fff;
-}
-
-.mycontainer{
-    max-width:1200px;
-    min-width: 800px;
-    margin:0px auto;
-}
-.myTable td{
-    vertical-align: top;
+.assetname{
+    font-weight: 500;
     color:#333;
-        text-align: left;
-        padding:0px;
-        overflow: hidden;
-        font-size: 12px;
+   
 }
-.lotdetailstable{
-    border-collapse: collapse;
-    
+.assetname a{
+    font-size: 14px;
+    text-decoration: none;
+    color: unset;
 }
-.lotdetailstable td{
-    border:none;
+.assetprice{
+    flex:1;
+    padding:0px 10px;
+    display:flex;
+    flex-direction: column;
+
 }
+.assetpricedetail{
+    text-align:right;
+}
+.assetdatedetail{
+    text-align:right;
+}
+
+@media only screen and (max-width: 768px) {
+  /* For mobile phones: */
+  .assetrow {
+    display:unset;
+  }
+  .lotitmlstimgtd{
+    padding-top:50%;
+  }
+}
+
 .myremoveprop{
     text-decoration: none;
     color:red;
     font-weight: 600;
 }
-a{
-    text-decoration: none;
-    color: unset;
+#myproperties{
+    width:100%;
+}
+.auctiontitle{
+    padding:8px 8px;
+    background: #c50505;
+    color:#fff;font-weight: 500;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    }
+    button.btn-6 {
+    color: black;
+    -webkit-transition: all 0.4s;
+    -moz-transition: all 0.4s;
+    transition: all 0.4s;
+    border: 2px solid black;
+    background: white;
+    font-size: 10px;
+}
+button.btn-6.small {
+    color: black;
+    -webkit-transition: all 0.4s;
+    -moz-transition: all 0.4s;
+    transition: all 0.4s;
+    border: 2px solid black;
+    background: white;
+    font-size: 10px;
+    min-width:150px;
+    margin-top:20px;
+}
+button.btn-6:hover {
+    background-color: black;
+    color: white;
+    -webkit-transition: all 0.4s;
+    -moz-transition: all 0.4s;
+    transition: all 0.4s;
 }
 </style>
-
-    <div class='mycontainer' style='padding:20px;'>   
+ 
         <div id='myproperties'>
 
         </div>
-        <div style='clear:both'></div>
-    </div>
-
+     
 <script>
     <%console.log(lots)%>
     var lots = <%-JSON.stringify(lots)%>;
     const formatToCurrency = amount => {
         return "£" + amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,");
     };
+    const months = {
+  0: 'January',
+  1: 'February',
+  2: 'March',
+  3: 'April',
+  4: 'May',
+  5: 'June',
+  6: 'July',
+  7: 'August',
+  8: 'September',
+  9: 'October',
+  10: 'November',
+  11: 'December'
+}
+const days = [
+  'Sun',
+  'Mon',
+  'Tue',
+  'Wed',
+  'Thu',
+  'Fri',
+  'Sat'
+]
     function formatDateTimeMe(date) {
     var d = new Date(date),
-    month = '' + (d.getMonth() + 1),
-    day = '' + d.getDate(),
+    monthIndex = '' + (d.getMonth());
+    var monthName = months[monthIndex]
+    var day = '' + d.getDate(),
     year = d.getFullYear(),
-    hours = d.getHours(),
-    mins = d.getMinutes();
-    if (month.length < 2)  month = '0' + month;
+    hours = d.getHours().toString(),
+    mins = d.getMinutes().toString();
+    const dayIndex = d.getDay()
+const dayName = days[dayIndex]
     if (day.length < 2) day = '0' + day;
     if (hours.length < 2) hours = '0' + hours;
     if (mins.length < 2) mins = '0' + mins;
    
-    var strTime = `${day}/${month}/${year} ${hours}:${mins}`;
+    var strTime = `${dayName}, ${day} ${monthName} ${year} @ ${hours}:${mins}`;
     return strTime;
     }
     var auctionproperties = []
     var apfound = false;
-    console.log('start')
     lots.forEach(l=>{
         apfound = false
         auctionproperties.forEach(ap=>{
@@ -146,62 +181,72 @@ a{
             }
         })
         if(!apfound){
-            var newauctionproperty = {date:l.datetime,status:l.auctionstatus,properties:[l]}
+            var newauctionproperty = {date:l.datetime,status:l.auctionstatus,properties:[l],auctionid:l.auctionid}
             auctionproperties.push(newauctionproperty)
         }
     })
     var lotstr =''
      
+    function moveToFirst( stringToMove, arrayIn ){
+      if ( arrayIn.includes(stringToMove) ){
+        let currentIndex = arrayIn.indexOf(stringToMove);
+        arrayIn.splice(currentIndex, 1);
+        arrayIn.unshift(stringToMove);
+      } 
+    }
+    function moveToTheEnd( stringToMove, arrayIn ){
+    if ( arrayIn.includes(stringToMove) ){
+        let currentIndex = arrayIn.indexOf(stringToMove);
+        arrayIn.splice(currentIndex, 1);
+        arrayIn.push(stringToMove);
+      }
+    }
+    auctionproperties.forEach(ap=>{
+        if(ap.status == 7){
+            console.log('Move to First')
+            moveToFirst(ap,auctionproperties);
+        }
+        if(!ap.date){
+            console.log('Move to Last')
+            moveToTheEnd(ap,auctionproperties);
+        }
+    })
+
+
         auctionproperties.forEach(ap=>{
             var auctiondate = 'Awaiting Auction Date'
             if(ap.date){
-                auctiondate = 'Auction:'+formatDateTimeMe(ap.date)
+                auctiondate = 'Auction Date: '+formatDateTimeMe(ap.date) +'<a href="/portal/auctionattendence/'+ap.auctionid+'"><button class="btn btn-6" style="float:right;">Register To Attend Auction</button>'
             }
-            if(ap.status == 7){
-                lotstr+='<div style="padding:8px 8px;background: green;color:#fff;font-weight: 500;">Deposit Required for Bidding via Credit Card is now open. If you wish to Bid on a property please first add the deposit for that property</div>'
-                }
-            lotstr+='<div style="padding:8px 8px;background: #BD2D33;color:#fff;font-weight: 500;">'+auctiondate+'<div style="float:right;"></div><div style="clear:both"></div></div>'
-            lotstr+='<table class="myTable" style="margin-bottom:30px;">'
-        lotstr +="<tr class='assetrowmain'>";
-            lotstr+='<td style="width:200px;"></td><td ></td><td style="width:300px;"></td>'
-        lotstr +="</tr>";
+
+            lotstr+='<div class="auctiontitle">'+auctiondate+'<div style="float:right;"></div><div style="clear:both"></div></div>'
+            lotstr+='<div class="auctionproperties">'
+                // if(ap.status == 7){
+                // lotstr+='<div style="padding:8px 8px;background: green;color:#fff;font-weight: 500;">Online Deposits Open</div>'
+                // }
             ap.properties.forEach(l=>{
-        var auctiondate = ''
-        if(l.datetime){
-            auctiondate = "Auction Date: "+formatDateTimeMe(l.datetime)+"<div>"; 
-        }
-        lotstr +="<tr class='assetrow'>";
-        lotstr +="<td style='border-bottom:0px;'><div class='lotitmlstimgtd' style='background-image: url("+l.uri+");'>&nbsp;</div></td>";
-        lotstr +="<td><table class='lotdetailstable' width='100%' height='110px'><tr><td style='vertical-align:top;padding:10px 10px;'><a href='/portal/property/"+l.id+"' >"+l.propname+"</a></td></tr><tr height='100%'><td style='vertical-align: bottom;padding:0px 10px;'>*Guide | <strong>"+formatToCurrency(l.price)+"</strong>+ (plus fees)</td></tr></table></td>"
-        lotstr +="<td><table class='lotdetailstable' width='100%' height='110px'><tr><td style='vertical-align:top;padding:10px 10px;text-align:right;'>"+auctiondate+"</td></tr><tr height='100%'><td style='vertical-align: bottom;text-align:right;padding:10px 10px;'>";
+        
+        lotstr +="<div class='assetrow' id='assetrow-"+l.id+"'>";
+        lotstr +="<div class='lotitmlstimgtd' style='background-image: url("+l.uri+");'>&nbsp;</div>";
+        lotstr +="<div class='assetdescription'><div class='assetname'><a href='/portal/property/"+l.id+"' >"+l.propname+"</a></div><div class='assetprice'><div class='assetpricedetail'>*Guide | <strong>"+formatToCurrency(l.price)+"</strong>+ (plus fees)</div>"
+        lotstr +='<div class="assetdatedetail"><a  href="/legalpack/'+l.id+'"><button class="btn btn-6 small">Legal Pack</button></a></div>';
+        lotstr +='<div class="assetdatedetail"><button class="btn btn-6 small" onclick="removeSavedProperty('+l.id+')">Remove</button></div>';
         if(ap.status == 7){
             var ischecked = ''
             if(l.bid_interest){
                 ischecked = ' checked '
             }
-            lotstr+=`
-<div class="toggle-switch" tabindex="0">
-  <input type="checkbox" name="my_checkbox" value="yes" class="mycheckbox" id="checkbox-${l.customerpropertyid}" ${ischecked} />
-  <label for="checkbox-${l.customerpropertyid}">
-    Deposit
-    <div class="area" aria-hidden="true">
-      <div class="background">
-        <div class="handle"></div>
-      </div>
-    </div>
-   
-  </label>
-</div>`
         }
-        lotstr+="</td></tr></table></td>"
-        lotstr +="</tr>";
+        lotstr+="</div></div></div>"
+        lotstr +="</div>";
     })
-    lotstr +='</table>'
+    lotstr +='</div>'
 })
 
 
     
     $('#myproperties').append(lotstr);
+
    $('.mycheckbox').change(function(){
        var myid = this.id.split('-')[1]
        var mycheck = 0;
@@ -212,4 +257,16 @@ a{
         window.location.reload()
        },'json')
    })
+   function removeSavedProperty(propertyid){
+       
+       $.post('/removefromfav',{propertyid:propertyid},function(data){
+        $('#assetrow-'+propertyid).hide();
+  },'json')
+      
+    /*$.post('/auctionaction/add',{myid,mycheck},function(){
+        window.location.reload()
+       },'json')*/
+   }
 </script>
+  </div>
+</div>

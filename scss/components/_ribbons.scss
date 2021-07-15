@@ -5,7 +5,7 @@
 
   pointer-events:none;
   position: absolute;
-  right: -5px; top: -5px;
+  right: -5px; top: -6px;
   z-index: 1;
   overflow: hidden;
   width: 155px; height: 155px; 
@@ -23,14 +23,14 @@
   color: #fff; 
   text-transform: uppercase; 
   text-align: center;
-  font-weight: bold; line-height: 30px;
+  font-weight: bold; line-height: 40px;
   transform: rotate(45deg);
   width: 200px; display: block;
   background: #79A70A;
   background: linear-gradient(#9BC90D 0%, #79A70A 100%);
   box-shadow: 0 3px 10px -5px rgba(0, 0, 0, 1);
   position: absolute;
-  top: 47px;
+  top: 39px;
     right: -39px;
 }
 .ribbon2 span {

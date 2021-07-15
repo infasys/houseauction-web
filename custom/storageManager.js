@@ -45,6 +45,7 @@ class AzStorageManager {
         }
       }
     }
+    console.log('test')
     var container = process.env.AZURE_STORAGE_CONTAINER_NAME;
     var blobService = azure.createBlobService(process.env.AZURE_STORAGE_CONNECTION_STRING);
 
@@ -65,6 +66,7 @@ class AzStorageManager {
 
     var sasToken = blobService.generateSharedAccessSignature(container, blobName, sharedAccessPolicy);
     var blobUri = { uri: blobService.getUrl(container, blobName, sasToken, true),expiryDate }
+    console.log(blobUri);
     client.set(blobName,JSON.stringify(blobUri))
     return blobUri;
   }
