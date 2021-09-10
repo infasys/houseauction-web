@@ -1327,6 +1327,7 @@ body {
 }
 @media screen and (max-width: 450px) {
   .bannermessage {
+    display: none;
     width: 100%;
     font-size: 26px;
   }

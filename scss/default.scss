@@ -254,6 +254,7 @@ width:100%;
       font-size: 30px;
    }
    @media screen and (max-width: $small) {
+     display:none;
     width: 100%;
     font-size: 26px;
    }

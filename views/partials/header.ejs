@@ -18,6 +18,23 @@
                   display: flex;
                   padding:0px 20px;
               }
+              .header2{
+                  display: none;
+                  padding:0px 20px;
+              }
+              @media only screen and (max-width: 600px) {
+                .mywrapper{
+                  display: none;
+              }
+              .header2{
+                  display: unset;
+                  padding:0px 20px;
+              }
+              header{
+                  padding:0px;
+              }
+}   
+              
               .flex1{
                   display: flex;
   order: 1;
@@ -38,10 +55,67 @@
 header nav{
     margin-bottom: 20px;
 }
+.bar {
+    display: block;
+    width: 25px;
+    height: 3px;
+    margin: 5px auto;
+    -webkit-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    background-color: #101010;
+}
+.hamburger {
+        display: block;
+        cursor: pointer;
+    }
+
+    .hamburger.active .bar:nth-child(2) {
+        opacity: 0;
+    }
+
+    .hamburger.active .bar:nth-child(1) {
+        -webkit-transform: translateY(8px) rotate(45deg);
+        transform: translateY(8px) rotate(45deg);
+    }
+
+    .hamburger.active .bar:nth-child(3) {
+        -webkit-transform: translateY(-8px) rotate(-45deg);
+        transform: translateY(-8px) rotate(-45deg);
+    }
+    .nav-list>li{
+        display: block;
+    }
               </style>
               <title>Auction House</title>
               </head>
             <header>
+                <div class='header2'>
+                    <div class='flex1' style='float:left;padding:10px;  '><a href="/" class="logo"><img class="ah-logo-header" alt="Auction House Logo" src="/images/logo.png" /></a></div>
+                        <div class="hamburger" style='float:right;padding:20px;'>
+                            <span class="bar"></span>
+                            <span class="bar"></span>
+                            <span class="bar"></span>
+                        </div>
+                        <div>
+                            <!-- <ul class='nav-list'>
+                                <li><a href='/' >Home</a></li>
+                                <li class="dropdown">
+                                                      <a class="dropdown-toggle" data-toggle="dropdown" href="#">Auctions<span class="caret"></span></a>
+                                                      <ul class="dropdown-menu">
+                                                          <li><a href="/auction-lots">Auction Lots</a></li>
+                                                          <li><a href="/auction-upcoming">Upcoming Auctions</a></li>
+                                                          <li><a href="/auction-results">Auction Results</a></li>
+                                                          <li><a href="/auction-rooms">Auction Rooms</a></li>
+                                                          <li><a href="/AuctionConditions.pdf" target="_blank">Auction Conditions</a></li>
+                                                          <li><a href="/auction-finance">Auction Finance</a></li>
+                                                      </ul>
+                                                  </li>
+                                                  <li><a href="/guide">Auction Guide</a></li>
+                                                </ul> -->
+                        </div>
+                    <div style='clear:both;'></div>
+                </div>
+
     <div class='mywrapper'>
         <div class='flex1'><a href="/" class="logo"><img class="ah-logo-header" alt="Auction House Logo" src="/images/logo.png" /><!--<span style='display:inline-block;padding-left:50px;'>Auction House</span>--></a></div>
         <div class='flex2'>  <nav class='flex-item-bottom'>
@@ -59,40 +133,6 @@ header nav{
                                 </ul>
                             </li>
                             <li><a href="/guide">Auction Guide</a></li>
-    <!-- 						
-                            <li class="dropdown">
-                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Buying<span class="caret"></span></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="/buying-at-auction/buyers-route-to-auction-success">Guide to Buying at Auction</a></li>
-                                    <li><a href="/buying-at-auction/benefits-of-buying-at-auction">Why Buy at Auction?</a></li>
-                                    <li><a href="/buying-at-auction/how-to-bid-at-auction">Bidding at Auction</a></li>
-                                </ul>
-                            </li>
-                            <li class="dropdown">
-                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Selling<span class="caret"></span></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="/selling-at-auction/sellers-route-to-auction-success">Guide to Selling at Auction</a></li>
-                                    <li><a href="/selling-at-auction/benefits-of-selling-at-auction">Why Sell At Auction?</a></li>
-                                    
-                                    <li><a href="/selling-at-auction/probate-service">Probate / Executry Service</a></li>
-                                </ul>
-                            </li> -->
-                            <!-- <li class="dropdown">
-                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Commercial<span class="caret"></span></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="/commercial">Commercial</a></li>
-                                    <li><a href="/commercial/service">Commercial Auction Service</a></li>
-                                    <li><a href="/commercial/partner-agent">Commercial Partner Agents</a></li>
-                                </ul>
-                            </li> -->
-                            <!-- <li class="dropdown">
-                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Online<span class="caret"></span></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="/online">Online</a></li>
-                                    <li><a href="/online/sell">Online Auction Sellers Guide</a></li>
-                                    <li><a href="/online/buy">Online Auction Buyers Guide</a></li>
-                                </ul>
-                            </li> -->
                             <li class="dropdown">
                                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">About<span class="caret"></span></a>
                                 <ul class="dropdown-menu">
@@ -121,3 +161,13 @@ header nav{
     </div>
       <div style='clear:both'></div>
     </header>
+    <script>
+            const hamburger = document.querySelector(".hamburger");
+const navMenu = document.querySelector(".nav-menu");
+        hamburger.addEventListener("click", mobileMenu);
+function mobileMenu() {
+
+    hamburger.classList.toggle("active");
+    navMenu.classList.toggle("active");
+}
+        </script>
