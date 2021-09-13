@@ -19,19 +19,20 @@
   left:-5px !important;
 }
 .ribbon span {
-    font-size: 20px;
+    font-size: 16px;
+    line-height: 30px;
   color: #fff; 
   text-transform: uppercase; 
   text-align: center;
-  font-weight: bold; line-height: 40px;
+  font-weight: bold; 
   transform: rotate(45deg);
-  width: 200px; display: block;
+  width: 140px; display: block;
   background: #79A70A;
   background: linear-gradient(#9BC90D 0%, #79A70A 100%);
   box-shadow: 0 3px 10px -5px rgba(0, 0, 0, 1);
   position: absolute;
-  top: 39px;
-    right: -39px;
+  top: 24px;
+    right: -29px;
 }
 .ribbon2 span {
   right:unset;

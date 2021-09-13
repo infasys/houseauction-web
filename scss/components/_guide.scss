@@ -22,9 +22,13 @@
       display: block;
       box-sizing: border-box;
       text-align: center;
-      font-size: 24px;
-font-weight: 700;
-
+      font-size: 20px;
+font-weight: 500;
+@media screen and (max-width: $medium) {
+  font-size: 13px;
+  font-weight: 500;
+  padding: 8px; 
+}
   }
   .tab [type=radio] {
     display: none;   
@@ -57,7 +61,7 @@ font-weight: 700;
   label.faq-question::before{
     font-family: "Font Awesome 5 Free";
       font-weight: 900;
-    font-size: 20px;;
+    font-size: 16px;;
     content: "\f107    ";
     color:#b82b35;
   }
@@ -75,10 +79,13 @@ font-weight: 700;
       transition: ease .5s;
       background-color: #fff;
       text-align: left;
-      font-size: 20px;
+      font-size: 16px;
 font-weight: 500;
 margin-top: 30px;
-
+@media screen and (max-width: $medium) {
+  font-size: 13px;
+  font-weight: 500;
+}
   }
   input + label + .faq-answer {
       display: none;
@@ -92,8 +99,12 @@ margin-top: 30px;
   }
   .faq-answer{
     color:#777;
-    font-size: 16px;
+    font-size: 14px;
     padding:20px;
+    @media screen and (max-width: $medium) {
+      font-size: 12px;
+      font-weight: 500;
+    }
   }
   .split-2{
     float:left;

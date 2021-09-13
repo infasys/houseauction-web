@@ -4,9 +4,23 @@
     .box{
         padding:20px;
         background:#ddd;;
-        margin:20px;
-        flex:1;
+        margin:2%;
+        flex: 1 1 25%;
+        box-sizing: border-box;
     }
+
+@media screen and (max-width: 800px){
+    .box{
+        padding:10px;
+        flex: 1 1 100%;
+        font-size: 12px;
+    }
+    .box>h3{
+        padding:0px;
+        margin: 0px;
+        font-size:14px;
+    }
+  }
     </style>
 <div class="bannerimagecen">
     <div class="bannerimgtint">
@@ -36,18 +50,18 @@
             <div class="col-md-8 col-xs-24 text-center" style='flex:1'>
                 <div style='display:inline-block;padding:20px;'>
                     <a href="https://www.themoneyhub.co.uk/" target="_blank" title="Find out more about Together Finance" data-track="true" data-track-cat="Link" data-track-action="Click" data-track-label="Together Finance">
-                <img src="https://www.themoneyhub.co.uk/images/logo.jpg" title="Together" alt="Together" >
+                <img src="https://www.themoneyhub.co.uk/images/logo.jpg" title="Together" alt="Together" style='max-width:100%;'>
                     </a>
                 </div>
             </div>
             
             </div>
         </div>
-    
+        <div class="mycontainer">
         <h4>Why use an Auction Finance Specialist Lender?</h4>
     
         <div class="row">
-            <div class="col-md-12" style='display:flex'>
+            <div class="col-md-12" style='display:flex;    flex-flow: wrap;'>
                 <div class='box'>
                 <h3>Personal Service</h3>
                 <p>The lenders like to offer a personal service. You will be assigned an experienced and professional case manager to handle your requirements from initial enquiry to loan completion.</p>
@@ -60,8 +74,6 @@
                 <h3>Tailored To You</h3>
                 <p>Each loan is assessed on its individual merits and can be tailored for your specific requirements. Their rates and fees are competitive in the market and will be outlined from the start of your enquiry process.</p>
                 </div>
-            </div>
-            <div class="col-md-12" style='display:flex;margin-bottom:100px;'>
                 <div class='box'>
                 <h3>Non Status Facilities</h3>
                 <p>The lenders do not require business plans or cash flow forecasts, and can be open minded when it comes to credit history. The loans are offered and secured against the value of the property.</p>

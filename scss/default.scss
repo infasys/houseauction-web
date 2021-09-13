@@ -2,7 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Open+Sans+Condensed:ital,wght@0,300;0,700;1,300&family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700&family=Roboto+Condensed:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Roboto+Mono:wght@300;400;500;600;700&family=Roboto+Slab:wght@100;200;300;400;500;600;700;800;900&family=Roboto:wght@300;400;500;700;900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Merriweather+Sans:wght@400;500;600;700&display=swap');
 $small: 450px;
-$medium: 800px;
+$medium: 1200px;
 $primary :#fff;
 $test :rgb(255, 154, 2); 
 $menufont:#6f6f6f;
@@ -134,6 +134,13 @@ body{
     box-sizing: border-box;
     width: 100%;
     border:1px solid #ccc;
+    @media screen and (max-width: $medium) {
+    }
+    @media screen and (max-width: $small) {
+      padding:6px;
+      padding-left: 40px;
+      font-size:14px;
+    }
   }
   
   .inputWithIcon {
@@ -148,14 +155,17 @@ body{
     color: rgb(205, 22, 56);;
     transition: 0.3s;
     border-right: 2px solid #eee;
+    @media screen and (max-width: $small) {
+      padding: 4px 6px;
+      font-size:16px;
+    }
   }
   .inputWithIcon input[type="text"]:focus + i {
     color: rgb(205, 22, 56);;
   }
   
   .inputWithIconButton input[type="text"] {
-    padding-left: 60px;
-    padding-right:180px;
+    padding-left: 40px;
     box-sizing:border-box;
     box-sizing: border-box;
     &:focus{
@@ -238,6 +248,7 @@ width:100%;
    @media screen and (max-width: $small) {
     width: 100%;
     min-width: 200px;
+    padding:20px;
    }
 }
 .bannermessage {
@@ -250,13 +261,17 @@ width:100%;
     min-width: 400px;
     padding: 16px 10px;
     @media screen and (max-width: $medium) {
+      padding: 7px 5px;
       width: 100%;
       font-size: 30px;
    }
    @media screen and (max-width: $small) {
-     display:none;
+    padding: 10px 5px;
     width: 100%;
-    font-size: 26px;
+    font-size: 20px;
+    max-width: unset;
+    min-width: unset;
+    margin-bottom: 20px;
    }
 }
 
@@ -273,6 +288,11 @@ width:100%;
           cursor: pointer;
           &:hover{
             background: #b82b35;
+          }
+          @media screen and (max-width: $small) {
+            padding:4px 8px;
+            font-size:13px;
+            font-weight: 500;
           }
   }
 
@@ -294,6 +314,11 @@ width:100%;
     -webkit-transition: all 0.4s;
     -moz-transition: all 0.4s;
     transition: all 0.4s;
+    @media screen and (max-width: $medium) {
+      padding: 9px 14px;
+      font-size: 12px;
+    }
+    
   }
   button.btn-3{
       
@@ -302,6 +327,7 @@ width:100%;
     -moz-transition: all 0.4s;
     transition: all 0.4s;
     border: 2px solid black;;
+
   }
   button.btn-3:hover{
     background-color: black;
@@ -357,15 +383,15 @@ width:100%;
 
 
 .tagmsg{
-  padding:40px 20px;
-  font-size: 32px;
+  padding:30px 20px;
+  font-size: 14px;
   @media screen and (max-width: $medium) {
     padding:30px 20px;
     font-size: 28px;
  }
  @media screen and (max-width: $small) {
-  padding:20px 20px;
-  font-size: 24px;
+  padding:8px 14px;
+  font-size: 18px;
  }
   
   color:#777;
@@ -395,6 +421,10 @@ width:100%;
   margin-bottom: 10px;
   font-size: 16px;
   box-sizing: border-box;
+  @media screen and (max-width: $medium) {
+    font-size: 12px;
+    padding:6px;
+  }
 }
 .sitetxta::placeholder{
   color:#ccc;
@@ -417,7 +447,8 @@ outline: none;
      width:50%;
   }
   @media screen and (max-width: $small) {
-    width:100%;
+    padding:10px;
+    width:50%;
   }
   float:left;
   box-sizing: border-box;
@@ -438,8 +469,16 @@ cursor: pointer;
 .categorychoicemsg:after{
   content: '\2192';
 }
+.myformrow{
+  display: flex;
+  flex-wrap: wrap;
 
-
+}
+.myformrowitm{
+  flex: 0 0 50%;
+  padding:5px;
+  box-sizing: border-box;
+}
 .myrowaddr{
   clear:both;
 }
@@ -448,6 +487,14 @@ cursor: pointer;
   width:33%;
   padding:2px 20px;
   box-sizing: border-box;
+  @media screen and (max-width: $medium) {
+    padding:0px;
+    width:100%;
+  }
+  @media screen and (max-width: $small) {
+    padding:0px;
+    width:100%;
+  }
 }
 .inrow-30{
   float:left;
@@ -476,11 +523,30 @@ float:left;
 width:100%;
 padding:2px 20px;
 box-sizing: border-box;
+@media screen and (max-width: $medium) {
+  padding:0px;
+}
 }
 .inrow{
 padding:20px;
-}
 
+@media screen and (max-width: $medium) {
+  padding:10px;
+}
+@media screen and (max-width: $small) {
+  padding:10px;
+}
+}
+.homecontainer{
+  width:80%;
+  margin-top:30px;margin:30px auto 20px auto;max-width:1200px;
+  @media screen and (max-width: $medium) {
+    width:85%;
+  }
+  @media screen and (max-width: $small) {
+    width:100%;
+  }
+}
 
 .form-page-container{
   width:100%;
@@ -512,7 +578,13 @@ padding:20px;
 }
 .form-page-content{
 padding:40px;
-font-size: 16px;;
+font-size: 16px;
+@media screen and (max-width: $medium) {
+  padding:25px;
+}
+@media screen and (max-width: $small) {
+  padding:10px;
+}
 }
 .form-anchor>a{
 color:#b82b35;
@@ -523,6 +595,15 @@ font-weight:500;
   font-size: 36px;
   color:#fff;
   padding-bottom:30px;
+
+@media screen and (max-width: $medium) {
+  padding-bottom:15px;
+  font-size: 24px;
+}
+@media screen and (max-width: $small) {
+  padding-bottom:15px;
+  font-size: 24px;
+}
 }
 
 
@@ -558,9 +639,16 @@ select {
   padding: 0 .5em;
   color: #000;
   cursor: pointer;
+  @media screen and (max-width: $medium) {
+    padding: 0 .2em;
+  }
 }
 option{
-    font-size:16px;;
+    font-size:16px;
+    @media screen and (max-width: $medium) {
+      
+      font-size: 12px;
+    }
 }
 /* Arrow */
 .select::after {
@@ -590,6 +678,11 @@ option{
     width: 100%;
     font-size: 16px;
     box-sizing: border-box;
+    @media screen and (max-width: $medium) {
+      
+      font-size: 12px;
+    }
+
 }
 
 .signupbox{
@@ -611,8 +704,13 @@ h4{
   border-left:6px solid #C8102E;
   font-family:$myfont;
   padding:4px;
-  padding-left:24px;
-  font-size: 24px;;
+  padding-left:20px;
+  font-size: 24px;
+  @media screen and (max-width: $medium) {
+    border-left:3px solid #C8102E;
+    font-size: 12px;
+    padding-left:8px;
+  }
 }
 
 a{
@@ -625,3 +723,190 @@ a{
 #questiontxt:focus,#questiontxt:active{
   outline: none;
 }
+
+.form-info{
+  padding:40px 20px;color:#777;font-size: 18px;
+
+@media screen and (max-width: $medium) {
+  padding:10px;
+  font-size: 14px;
+}
+@media screen and (max-width: $small) {
+  padding:10px;
+  font-size: 14px;
+}
+}
+
+
+.flexwrapper{
+  display: flex;
+  @media screen and (max-width: $medium) {
+    display: unset;
+  }
+}
+.mt-0{
+  font-size: 14px;
+  color:#777;
+  @media screen and (max-width: $medium) {
+    font-size: 12px  !important;
+  }
+}
+.contacta{
+  color:#555;
+  font-size: 18px;
+  flex:1;
+  padding:5px 20px;
+  box-sizing: border-box;
+  @media screen and (max-width: $medium) {
+    font-size: 12px;
+    padding:0px 10px;
+  }
+}
+.contacta a{
+  text-decoration: none;;
+  color:#555;
+}
+.opentime{
+  font-size: 14px;
+  font-weight: 600;
+  @media screen and (max-width: $medium) {
+    font-size: 12px;
+  }
+}
+
+.mypoint {
+  background-repeat: no-repeat;
+  display: inline-block;
+  padding: 8px 0px;
+  background-size: contain;
+  background-image: url('/images/housebullet.png');
+  color: #fff;
+  text-align: center;
+  width: 35px;
+height: 35px;
+  box-sizing: border-box;
+  font-weight: 700;
+  vertical-align: middle;
+  font-size: 14px;
+  @media screen and (max-width: $medium) {
+    width: 30px;
+height: 30px;
+  }
+}
+  .lititle{
+      display: inline-block;
+  }
+  .bulletpoint{
+      vertical-align: middle;
+      color: #464646;
+      @media screen and (max-width: $medium) {
+        padding:0px 20px;
+      }
+  }
+  .bulletpoint>.header{
+      color: #ae3634;
+      padding:20px;
+      font-size: 18px;
+      font-weight: 700;
+      vertical-align: middle;
+      display: inline-block;
+      @media screen and (max-width: $medium) {
+        font-size: 14px;
+        font-weight: 500;
+      }
+  }
+  .bulletpoint>.comments{
+      margin-top: 12px;
+      font-size: 12px;
+      font-style: italic;
+      @media screen and (max-width: $medium) {
+        font-size: 12px;
+        font-weight: 500;
+      }
+  }
+  .bulletpoint>.details{
+      font-size: 14px;
+      @media screen and (max-width: $medium) {
+        font-size: 12px;
+      }
+  }
+
+
+  .mitem{
+    float:right;
+    padding:20px;
+    color:#777;
+    @media screen and (max-width: $medium) {
+      font-size: 12px;
+      padding:10px;
+    }
+  }
+  .mitem a{
+    color:#777;
+    font-size: 18px;
+    font-weight: 500;
+    @media screen and (max-width: $medium) {
+      font-size: 14px;
+    }
+  }
+  .mitem i{
+    display: inline-block;
+    padding-right:10px;
+    font-size: 24px;
+    color: #b82b35;
+    @media screen and (max-width: $medium) {
+      font-size: 18px;
+    }
+  }
+
+  .simpleTable{
+    width: 100%;
+  }
+  .simpleTable td{
+      
+
+      font-weight: 400;
+font-style: normal;
+line-height: 1.12;
+      font-size: 16px;
+      padding:3px 6px;
+      border-bottom: 1px solid #ddd;;
+      transform: translate3d(0, 6px, 0);
+  transition-duration: 350ms;
+  transition-property: opacity,transform;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+
+}
+
+  
+  .simpleTable th{
+      font-weight: 700;
+      font-size: 14px;
+      padding:6px 6px;
+      font-size: 18px;
+      text-align: left;
+      border-bottom: 2px solid #ccc;;
+  }
+  .simpleTable img{
+      height:34px;margin-right:5px;
+      vertical-align: middle;
+  }
+  .lotviewlink{
+    color:#777;
+    font-weight: 700;
+  }
+
+@media screen and (max-width: 800px){
+  .simpleTable td{
+  padding:1px 2px;
+    font-size: 12px;
+  }
+
+  .simpleTable th{
+    padding:5px;
+    font-size: 12px;
+  }
+  .simpleTable td>div{
+  font-size: 12px;
+  }
+  }

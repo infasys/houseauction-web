@@ -135,7 +135,7 @@ header nav li a {
   font-size: 13px;
   white-space: pre;
 }
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 1200px) {
   header nav li a {
     padding: 0.9em;
   }
@@ -152,7 +152,7 @@ header nav li a {
   content: " ";
   padding-left: 15px;
 }
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 1200px) {
   .caret:before {
     padding: 8px;
   }
@@ -294,21 +294,21 @@ header nav li a {
 }
 
 .ribbon span {
-  font-size: 20px;
+  font-size: 16px;
+  line-height: 30px;
   color: #fff;
   text-transform: uppercase;
   text-align: center;
   font-weight: bold;
-  line-height: 40px;
   transform: rotate(45deg);
-  width: 200px;
+  width: 140px;
   display: block;
   background: #79A70A;
   background: linear-gradient(#9BC90D 0%, #79A70A 100%);
   box-shadow: 0 3px 10px -5px black;
   position: absolute;
-  top: 39px;
-  right: -39px;
+  top: 24px;
+  right: -29px;
 }
 
 .ribbon2 span {
@@ -500,8 +500,15 @@ footer {
   display: block;
   box-sizing: border-box;
   text-align: center;
-  font-size: 24px;
-  font-weight: 700;
+  font-size: 20px;
+  font-weight: 500;
+}
+@media screen and (max-width: 1200px) {
+  .tab label {
+    font-size: 13px;
+    font-weight: 500;
+    padding: 8px;
+  }
 }
 
 .tab [type=radio] {
@@ -537,7 +544,7 @@ input[type=radio] {
 label.faq-question::before {
   font-family: "Font Awesome 5 Free";
   font-weight: 900;
-  font-size: 20px;
+  font-size: 16px;
   content: "   ";
   color: #b82b35;
 }
@@ -556,9 +563,15 @@ label.faq-question {
   transition: ease 0.5s;
   background-color: #fff;
   text-align: left;
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 500;
   margin-top: 30px;
+}
+@media screen and (max-width: 1200px) {
+  label.faq-question {
+    font-size: 13px;
+    font-weight: 500;
+  }
 }
 
 input + label + .faq-answer {
@@ -576,8 +589,14 @@ input:checked + label.faq-question::before {
 
 .faq-answer {
   color: #777;
-  font-size: 16px;
+  font-size: 14px;
   padding: 20px;
+}
+@media screen and (max-width: 1200px) {
+  .faq-answer {
+    font-size: 12px;
+    font-weight: 500;
+  }
 }
 
 .split-2 {
@@ -775,15 +794,22 @@ footer {
   border-radius: 5px;
   color: #444;
 }
+@media screen and (max-width: 800px) {
+  .cathighlight {
+    padding: 10px;
+    margin: 20px;
+  }
+}
 .cathighlight .cattitle {
   color: #c10303;
   margin-top: 10px;
   margin-bottom: 20px;
-  font-size: 14px;
 }
-.cathighlight .catdesc {
-  font-size: 14px;
-  font-weight: 400;
+@media screen and (max-width: 800px) {
+  .cathighlight .cattitle {
+    margin-top: 5px;
+    margin-bottom: 10px;
+  }
 }
 
 .propertytitle {
@@ -991,11 +1017,21 @@ padding-top: 32.5%;
   width: 55%;
   min-height: 300px;
 }
+@media screen and (max-width: 800px) {
+  .leftpanel {
+    width: 100%;
+  }
+}
 
 .rightpanel {
   padding: 0px 20px;
   width: 45%;
   min-height: 300px;
+}
+@media screen and (max-width: 800px) {
+  .rightpanel {
+    width: 100%;
+  }
 }
 
 .mylbl {
@@ -1008,10 +1044,57 @@ padding-top: 32.5%;
   font-weight: 600;
   font-size: 16px;
 }
+@media screen and (max-width: 800px) {
+  .cattitle {
+    font-size: 13px;
+    margin-top: 10px;
+  }
+}
 
 .catdesc {
   margin-top: 4px;
   font-size: 15px;
+}
+@media screen and (max-width: 800px) {
+  .catdesc {
+    font-size: 12px;
+    margin-top: 2px;
+  }
+}
+
+.auctionspacer {
+  margin-top: 60px;
+}
+@media screen and (max-width: 800px) {
+  .auctionspacer {
+    margin-top: 10px;
+  }
+}
+
+.infopropertyboxtitle {
+  font-weight: 600;
+  color: #000;
+  font-size: 18px;
+  max-width: 60%;
+  padding-bottom: 20px;
+  float: left;
+}
+@media screen and (max-width: 800px) {
+  .infopropertyboxtitle {
+    font-size: 14px;
+  }
+}
+
+.infoproperty {
+  padding: 30px;
+  background-color: white;
+  box-shadow: rgba(38, 38, 48, 0.24) 0px 4px 16px;
+  min-height: 400px;
+}
+@media screen and (max-width: 800px) {
+  .infoproperty {
+    padding: 16px;
+  }
 }
 
 .contactwrapper {
@@ -1032,6 +1115,11 @@ padding-top: 32.5%;
   flex: 1;
   padding: 5px 5px;
   box-sizing: border-box;
+}
+@media screen and (max-width: 800px) {
+  .inrow-25f {
+    flex: 2;
+  }
 }
 
 .outrowf {
@@ -1191,6 +1279,13 @@ body {
   width: 100%;
   border: 1px solid #ccc;
 }
+@media screen and (max-width: 450px) {
+  .inputWithIcon input[type=text] {
+    padding: 6px;
+    padding-left: 40px;
+    font-size: 14px;
+  }
+}
 
 .inputWithIcon {
   position: relative;
@@ -1205,14 +1300,19 @@ body {
   transition: 0.3s;
   border-right: 2px solid #eee;
 }
+@media screen and (max-width: 450px) {
+  .inputWithIcon i {
+    padding: 4px 6px;
+    font-size: 16px;
+  }
+}
 
 .inputWithIcon input[type=text]:focus + i {
   color: #cd1638;
 }
 
 .inputWithIconButton input[type=text] {
-  padding-left: 60px;
-  padding-right: 180px;
+  padding-left: 40px;
   box-sizing: border-box;
   box-sizing: border-box;
 }
@@ -1306,6 +1406,7 @@ body {
   .valuation-box {
     width: 100%;
     min-width: 200px;
+    padding: 20px;
   }
 }
 
@@ -1321,15 +1422,19 @@ body {
 }
 @media screen and (max-width: 800px) {
   .bannermessage {
+    padding: 7px 5px;
     width: 100%;
     font-size: 30px;
   }
 }
 @media screen and (max-width: 450px) {
   .bannermessage {
-    display: none;
+    padding: 10px 5px;
     width: 100%;
-    font-size: 26px;
+    font-size: 20px;
+    max-width: unset;
+    min-width: unset;
+    margin-bottom: 20px;
   }
 }
 
@@ -1347,6 +1452,13 @@ body {
 }
 .sitebtn-small:hover {
   background: #b82b35;
+}
+@media screen and (max-width: 450px) {
+  .sitebtn-small {
+    padding: 4px 8px;
+    font-size: 13px;
+    font-weight: 500;
+  }
 }
 
 button.full {
@@ -1367,6 +1479,12 @@ button.btn {
   -webkit-transition: all 0.4s;
   -moz-transition: all 0.4s;
   transition: all 0.4s;
+}
+@media screen and (max-width: 800px) {
+  button.btn {
+    padding: 9px 14px;
+    font-size: 12px;
+  }
 }
 
 button.btn-3 {
@@ -1430,8 +1548,8 @@ button.btn-2:active:after {
 }
 
 .tagmsg {
-  padding: 40px 20px;
-  font-size: 32px;
+  padding: 30px 20px;
+  font-size: 14px;
   color: #777;
   font-weight: 500;
 }
@@ -1443,8 +1561,8 @@ button.btn-2:active:after {
 }
 @media screen and (max-width: 450px) {
   .tagmsg {
-    padding: 20px 20px;
-    font-size: 24px;
+    padding: 8px 14px;
+    font-size: 18px;
   }
 }
 
@@ -1479,6 +1597,12 @@ button.btn-2:active:after {
   font-size: 16px;
   box-sizing: border-box;
 }
+@media screen and (max-width: 800px) {
+  .sitetxta {
+    font-size: 12px;
+    padding: 6px;
+  }
+}
 
 .sitetxta::placeholder {
   color: #ccc;
@@ -1508,7 +1632,8 @@ button.btn-2:active:after {
 }
 @media screen and (max-width: 450px) {
   .section-box {
-    width: 100%;
+    padding: 10px;
+    width: 50%;
   }
 }
 
@@ -1531,6 +1656,17 @@ button.btn-2:active:after {
   content: "→";
 }
 
+.myformrow {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.myformrowitm {
+  flex: 0 0 50%;
+  padding: 5px;
+  box-sizing: border-box;
+}
+
 .myrowaddr {
   clear: both;
 }
@@ -1540,6 +1676,18 @@ button.btn-2:active:after {
   width: 33%;
   padding: 2px 20px;
   box-sizing: border-box;
+}
+@media screen and (max-width: 800px) {
+  .inrow-33 {
+    padding: 0px;
+    width: 100%;
+  }
+}
+@media screen and (max-width: 450px) {
+  .inrow-33 {
+    padding: 0px;
+    width: 100%;
+  }
 }
 
 .inrow-30 {
@@ -1573,9 +1721,41 @@ button.btn-2:active:after {
   padding: 2px 20px;
   box-sizing: border-box;
 }
+@media screen and (max-width: 800px) {
+  .inrow-100 {
+    padding: 0px;
+  }
+}
 
 .inrow {
   padding: 20px;
+}
+@media screen and (max-width: 800px) {
+  .inrow {
+    padding: 10px;
+  }
+}
+@media screen and (max-width: 450px) {
+  .inrow {
+    padding: 10px;
+  }
+}
+
+.homecontainer {
+  width: 80%;
+  margin-top: 30px;
+  margin: 30px auto 20px auto;
+  max-width: 1200px;
+}
+@media screen and (max-width: 800px) {
+  .homecontainer {
+    width: 85%;
+  }
+}
+@media screen and (max-width: 450px) {
+  .homecontainer {
+    width: 100%;
+  }
 }
 
 .form-page-container {
@@ -1610,6 +1790,16 @@ button.btn-2:active:after {
   padding: 40px;
   font-size: 16px;
 }
+@media screen and (max-width: 800px) {
+  .form-page-content {
+    padding: 25px;
+  }
+}
+@media screen and (max-width: 450px) {
+  .form-page-content {
+    padding: 10px;
+  }
+}
 
 .form-anchor > a {
   color: #b82b35;
@@ -1620,6 +1810,18 @@ button.btn-2:active:after {
   font-size: 36px;
   color: #fff;
   padding-bottom: 30px;
+}
+@media screen and (max-width: 800px) {
+  .formtitle {
+    padding-bottom: 15px;
+    font-size: 24px;
+  }
+}
+@media screen and (max-width: 450px) {
+  .formtitle {
+    padding-bottom: 15px;
+    font-size: 24px;
+  }
 }
 
 select {
@@ -1656,9 +1858,19 @@ select {
   color: #000;
   cursor: pointer;
 }
+@media screen and (max-width: 800px) {
+  select {
+    padding: 0 0.2em;
+  }
+}
 
 option {
   font-size: 16px;
+}
+@media screen and (max-width: 800px) {
+  option {
+    font-size: 12px;
+  }
 }
 
 /* Arrow */
@@ -1691,6 +1903,11 @@ option {
   font-size: 16px;
   box-sizing: border-box;
 }
+@media screen and (max-width: 800px) {
+  #myaddropts {
+    font-size: 12px;
+  }
+}
 
 .signupbox {
   display: inline-block;
@@ -1708,8 +1925,15 @@ h4 {
   border-left: 6px solid #C8102E;
   font-family: "Merriweather Sans", sans-serif;
   padding: 4px;
-  padding-left: 24px;
+  padding-left: 20px;
   font-size: 24px;
+}
+@media screen and (max-width: 800px) {
+  h4 {
+    border-left: 3px solid #C8102E;
+    font-size: 12px;
+    padding-left: 8px;
+  }
 }
 
 a {
@@ -1723,6 +1947,232 @@ a {
 
 #questiontxt:focus, #questiontxt:active {
   outline: none;
+}
+
+.form-info {
+  padding: 40px 20px;
+  color: #777;
+  font-size: 18px;
+}
+@media screen and (max-width: 800px) {
+  .form-info {
+    padding: 10px;
+    font-size: 14px;
+  }
+}
+@media screen and (max-width: 450px) {
+  .form-info {
+    padding: 10px;
+    font-size: 14px;
+  }
+}
+
+.flexwrapper {
+  display: flex;
+}
+@media screen and (max-width: 800px) {
+  .flexwrapper {
+    display: unset;
+  }
+}
+
+.mt-0 {
+  font-size: 14px;
+  color: #777;
+}
+@media screen and (max-width: 800px) {
+  .mt-0 {
+    font-size: 12px !important;
+  }
+}
+
+.contacta {
+  color: #555;
+  font-size: 18px;
+  flex: 1;
+  padding: 5px 20px;
+  box-sizing: border-box;
+}
+@media screen and (max-width: 800px) {
+  .contacta {
+    font-size: 12px;
+    padding: 0px 10px;
+  }
+}
+
+.contacta a {
+  text-decoration: none;
+  color: #555;
+}
+
+.opentime {
+  font-size: 14px;
+  font-weight: 600;
+}
+@media screen and (max-width: 800px) {
+  .opentime {
+    font-size: 12px;
+  }
+}
+
+.mypoint {
+  background-repeat: no-repeat;
+  display: inline-block;
+  padding: 8px 0px;
+  background-size: contain;
+  background-image: url("/images/housebullet.png");
+  color: #fff;
+  text-align: center;
+  width: 35px;
+  height: 35px;
+  box-sizing: border-box;
+  font-weight: 700;
+  vertical-align: middle;
+  font-size: 14px;
+}
+@media screen and (max-width: 800px) {
+  .mypoint {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+.lititle {
+  display: inline-block;
+}
+
+.bulletpoint {
+  vertical-align: middle;
+  color: #464646;
+}
+@media screen and (max-width: 800px) {
+  .bulletpoint {
+    padding: 0px 20px;
+  }
+}
+
+.bulletpoint > .header {
+  color: #ae3634;
+  padding: 20px;
+  font-size: 18px;
+  font-weight: 700;
+  vertical-align: middle;
+  display: inline-block;
+}
+@media screen and (max-width: 800px) {
+  .bulletpoint > .header {
+    font-size: 14px;
+    font-weight: 500;
+  }
+}
+
+.bulletpoint > .comments {
+  margin-top: 12px;
+  font-size: 12px;
+  font-style: italic;
+}
+@media screen and (max-width: 800px) {
+  .bulletpoint > .comments {
+    font-size: 12px;
+    font-weight: 500;
+  }
+}
+
+.bulletpoint > .details {
+  font-size: 14px;
+}
+@media screen and (max-width: 800px) {
+  .bulletpoint > .details {
+    font-size: 12px;
+  }
+}
+
+.mitem {
+  float: right;
+  padding: 20px;
+  color: #777;
+}
+@media screen and (max-width: 800px) {
+  .mitem {
+    font-size: 12px;
+    padding: 10px;
+  }
+}
+
+.mitem a {
+  color: #777;
+  font-size: 18px;
+  font-weight: 500;
+}
+@media screen and (max-width: 800px) {
+  .mitem a {
+    font-size: 14px;
+  }
+}
+
+.mitem i {
+  display: inline-block;
+  padding-right: 10px;
+  font-size: 24px;
+  color: #b82b35;
+}
+@media screen and (max-width: 800px) {
+  .mitem i {
+    font-size: 18px;
+  }
+}
+
+.simpleTable {
+  width: 100%;
+}
+
+.simpleTable td {
+  font-weight: 400;
+  font-style: normal;
+  line-height: 1.12;
+  font-size: 16px;
+  padding: 3px 6px;
+  border-bottom: 1px solid #ddd;
+  transform: translate3d(0, 6px, 0);
+  transition-duration: 350ms;
+  transition-property: opacity, transform;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.simpleTable th {
+  font-weight: 700;
+  font-size: 14px;
+  padding: 6px 6px;
+  font-size: 18px;
+  text-align: left;
+  border-bottom: 2px solid #ccc;
+}
+
+.simpleTable img {
+  height: 34px;
+  margin-right: 5px;
+  vertical-align: middle;
+}
+
+.lotviewlink {
+  color: #777;
+  font-weight: 700;
+}
+
+@media screen and (max-width: 800px) {
+  .simpleTable td {
+    padding: 1px 2px;
+    font-size: 12px;
+  }
+
+  .simpleTable th {
+    padding: 5px;
+    font-size: 12px;
+  }
+
+  .simpleTable td > div {
+    font-size: 12px;
+  }
 }
 
 /*# sourceMappingURL=default.css.map */

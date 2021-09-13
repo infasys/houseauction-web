@@ -1,42 +1,6 @@
 <%- include('../partials/header.ejs')%>
 <%- include('../partials/banner-top.ejs')%>
 
-<style>
-  .simpleTable{
-      table-layout: fixed;width: 100%;
-  }
-  .simpleTable td{
-      
-
-      font-weight: 400;
-font-style: normal;
-line-height: 1.12;
-      font-size: 16px;
-      padding:3px 6px;
-      border-bottom: 1px solid #ddd;;
-      transform: translate3d(0, 6px, 0);
-  transition-duration: 350ms;
-  transition-property: opacity,transform;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-}
-  
-  .simpleTable th{
-      font-weight: 700;
-      font-size: 14px;
-      padding:6px 6px;
-      font-size: 18px;
-      text-align: left;
-      border-bottom: 2px solid #ccc;;
-  }
-  .simpleTable img{
-      height:34px;margin-right:5px;
-      vertical-align: middle;
-  }
-  .lotviewlink{
-    color:#777;
-    font-weight: 700;
-  }
-</style>
 <%
 function formatDate(date) {
     var weekday = new Array(7);

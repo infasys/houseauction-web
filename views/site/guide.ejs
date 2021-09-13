@@ -1,7 +1,9 @@
 <%- include('../partials/header.ejs')%>
-<%- include('../partials/banner-top.ejs')%><div class='bannerimagecen2'>
+<%- include('../partials/banner-top.ejs')%>
+
+<div class='bannerimagecen2'>
     <div class='bannerimgtint2'>
-      <div class='container'>
+      <div class='homecontainer'>
           <div style='text-align:center'>
 <div class='formtitle'>
   Your questions, answered.
@@ -19,11 +21,11 @@
   </style>
 <div class='form-page'>
   <div class="form-page-content">
-    <div style='text-align:center;font-size:18px;'>
+    <div class='form-info'>
       We pride ourselves in being your property auction experts. With teams across the country, we use our local knowledge to deliver national results, and now we want to share that knowledge with you. This information centre aims to answer all the frequently asked questions we receive about auction, debunk the myths and explain why auction is the best way to buy and sell all types of property and land.
       <br/>
       <form action='/askaquestion' method="get">
-      <div class="inputWithIconButton" style='margin:30px 0px;'><input style='font-size: 14px;;' name='question' id='questiontxt' class='mytxtboxsearch' type='text' placeholder='Ask a question'/><i class="fa fa-search fa-lg fa-fw" aria-hidden="true"></i><button id='btnAsk'>SEARCH</button></div> 
+      <div class="inputWithIconButton" style='margin:10px 0px;white-space: pre;display:flex;'><input style='font-size: 14px;;' name='question' id='questiontxt' class='mytxtboxsearch' type='text' placeholder='Ask a question'/><i class="fa fa-search fa-lg fa-fw" aria-hidden="true"></i><button id='btnAsk'>SEARCH</button></div> 
        </form>
     </div>
   </div>

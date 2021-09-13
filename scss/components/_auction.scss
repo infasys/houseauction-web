@@ -172,15 +172,18 @@ width: 100%;
     padding:20px;
     border-radius: 5px;
     color:#444;
+    @media screen and (max-width: $medium) {
+        padding:10px;
+        margin:20px;
+      }
     .cattitle{
         color:#c10303;
         margin-top:10px;
         margin-bottom: 20px;
-        font-size: 14px;
-      }
-      .catdesc{
-        font-size: 14px;
-        font-weight: 400;
+        @media screen and (max-width: $medium) {
+            margin-top:5px;
+        margin-bottom: 10px;
+          }
       }
   }
 
@@ -365,13 +368,18 @@ box-sizing: border-box;
 .leftpanel{
 width:55%;
 min-height:300px;
-
+@media screen and (max-width: $medium) {
+    width:100%;
+  }
 
 }
 .rightpanel{
 padding:0px 20px;
 width:45%;
 min-height:300px;
+@media screen and (max-width: $medium) {
+    width:100%;
+  }
 }
 .mylbl{
 display: inline-block;
@@ -382,8 +390,36 @@ min-width: 80px;;
 margin-top:30px;
 font-weight: 600;
 font-size: 16px;
+@media screen and (max-width: $medium) {
+    font-size: 13px;
+    margin-top:10px;
+  }
 }
 .catdesc{
 margin-top:4px;
 font-size: 15px;
+@media screen and (max-width: $medium) {
+    font-size: 12px;
+    margin-top:2px;
+  }
+}
+
+.auctionspacer{
+    margin-top:60px;
+    @media screen and (max-width: $medium) {
+        margin-top:10px;
+      }
+}
+
+.infopropertyboxtitle{
+    font-weight:600;color:#000;font-size: 18px; max-width:60%;padding-bottom:20px;float:left;
+    @media screen and (max-width: $medium) {
+        font-size: 14px
+      }
+}
+.infoproperty{
+    padding:30px;    background-color: rgb(255, 255, 255);box-shadow: rgb(38 38 48 / 24%) 0px 4px 16px;min-height: 400px;;
+    @media screen and (max-width: $medium) {
+        padding:16px;
+      }
 }
