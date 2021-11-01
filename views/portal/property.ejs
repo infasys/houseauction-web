@@ -1,4 +1,8 @@
-<%- include('../partials/menu-portal.ejs')%>
+<%
+activepage = 2;%>
+<%-
+include('../partials/portal-header.ejs')
+%>
 <%
 const formatToCurrency = function numberWithCommas(x) {
   return "£" +x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");

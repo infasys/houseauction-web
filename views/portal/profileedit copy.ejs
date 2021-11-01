@@ -35,14 +35,10 @@ include('../partials/portal-header.ejs')
   color:#000;
 }
 </style>
-<header class="bg-white shadow">
-  <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-    <h1 class="text-3xl font-bold text-gray-900">
-      Bidding Profile Edit
-    </h1>
-  </div>
-</header>
 <div class='main'>
+  <div class='maincontentt'>
+    <div class='pagetitle'>Edit Bidding Profile</div>
+</div>
 <div class='maincontent'>
   <div>
 
@@ -61,14 +57,21 @@ console.log(customer)
 
         <div class="px-10 py-2">
           <label class="inline-flex items-center">
-              <input type="radio" class="form-radio" name="radio-profiletype" value="1" <%if(customer.iscompany==0){ %>checked<% }%>>
+              <input type="radio" class="form-radio" name="radio" value="1" checked>
               <span class="ml-2">Bidding as an Individual</span>
           </label>
           <label class="inline-flex items-center">
-            <input type="radio" class="form-radio" name="radio-profiletype" value="2" <%if(customer.iscompany==1){ %>checked<% }%>>
+            <input type="radio" class="form-radio" name="radio" value="2" checked>
             <span class="ml-2">Bidding as an Company</span>
         </label>
       </div>
+    <div class="select">
+        <select  id='optbiddingtype' autocomplete="off"  placeholder="Title">
+        <option value='' <%if(customer.iscompany==null){ %>selected<% }%>>Please Select</option>
+        <option value='1' <%if(customer.iscompany==0){ %>selected<% }%>>Bidding as an Individual</option>
+        <option value='2'<%if(customer.iscompany==1){ %>selected<% }%> >Bidding as an Company</option>
+      </select>
+    </div>
     </div>
 </div>
 <div class='myinputsection' id='section-2'>
@@ -590,11 +593,9 @@ function processSection(id){
     var companyname = $('#txtCompanyName').val()
     var companytype = $('#optcompany').val()
     var companyaddress = $('#companyaddress').val()
-    if(companytype){
     $.post('/profile/addCompanyDetails',{companyname,companytype,companyaddress},function(data){
         moveNext()
     },'json')
-  }
   }
 
   function saveCustomerAddress(id){
@@ -615,7 +616,7 @@ function processSection(id){
 
 
   function saveBiddingType(id){
-    var biddingType = $('input[name="radio-profiletype"]:checked').val();
+    var biddingType = $('#optbiddingtype').val()
     if(!biddingType){
       $('#error-'+id).html('You are required to select One')
     }else{

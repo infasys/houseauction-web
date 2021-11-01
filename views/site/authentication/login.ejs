@@ -1,4 +1,4 @@
-<%- include('../partials/header.ejs')%>
+<%- include('../../partials/header.ejs')%>
 <title>Customer Login</title>
 <style>
 .errormsg{
@@ -7,7 +7,7 @@
     color:darkred;
 }
 body{
-  background-image: url('/images/26196821.jpg');
+  background-image: url('/images/vectorstock_922266.png');
 /*  background-image: url('/images/13520306.jpg');*/
   background-size:cover;
   
@@ -36,7 +36,16 @@ header{
     border-radius:8px;
     padding:8px 10px;
     font-size:16px;
-    border:2px solid #888;
+    border:1px solid #888;
+}
+header {
+    background: #000c;
+}
+header nav li a {
+    color: #fff;
+}
+.nav > li:hover > a, .nav > li:focus-within > a {
+    color: #ffff;
 }
 </style>
 
@@ -45,7 +54,7 @@ header{
       <div class='container'>
           <div style='text-align:center'>
 <div class='form-page-container'>
-    <div class='' style='width:380px;margin: 0px auto;padding:20px;text-align: center;background:#fffa;    max-width: 100%;box-sizing: border-box;'>
+    <div class='' style='width:380px;margin: 0px auto;padding:20px;text-align: center;background:#fffc;    max-width: 100%;box-sizing: border-box;'>
   <div style='padding:20px;box-sizing: border-box;' class='loginheader'>
         Login
     <%

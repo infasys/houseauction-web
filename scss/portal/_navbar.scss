@@ -12,7 +12,6 @@
 }
 
 .container {
-  max-width: 1200px;
   padding-left: 1.4rem;
   padding-right: 1.4rem;
   margin-left: auto;
@@ -20,7 +19,7 @@
 }
 
 #navbar {
-  --navbar-height: 64px;
+  --navbar-height: 86px;
   position: fixed;
   height: var(--navbar-height);
   background-color: var(--navbar-bg-color);

@@ -1,5 +1,8 @@
-<%- include('../partials/menu-portal.ejs')%>
-<style>
+<%
+activepage = 99;%>
+<%-
+include('../partials/portal-header.ejs')
+%><style>
     .sitebtn-small2 {
     color: #fff;
     font-family: "Open Sans", sans-serif;
@@ -15,10 +18,15 @@
     min-width: 80px;
 }
   </style>
+  <header class="bg-white shadow">
+    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+      <h1 class="text-3xl font-bold text-gray-900">
+        My Account
+      </h1>
+    </div>
+  </header>
 <div class='main'>
-  <div class='maincontentt'>
-    <div class='pagetitle'>My Account</div>
-</div>
+
   <div class='maincontent'>
     <div style=''>
   <div class='myinputrow'>

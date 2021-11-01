@@ -1,4 +1,8 @@
-<%- include('../partials/menu-portal.ejs')%>
+<%
+activepage = 3;%>
+<%-
+include('../partials/portal-header.ejs')
+%>
 <%
   function formatDate(date) {
     if(date){
@@ -15,10 +19,13 @@
     }
   }
 %>
-<div class='main'>
-  <div class='maincontentt'>
-    <div class='pagetitle'>Bidding Profile</div>
-</div>
+<header class="bg-white shadow">
+  <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+    <h1 class="text-3xl font-bold text-gray-900">
+      Bidding Profile
+    </h1>
+  </div>
+</header>
 <div class='maincontent'>
 <%
 if(members.length>1){
@@ -95,6 +102,7 @@ if(members.length>1){
     word-break: keep-all;
     margin:5px 0px;
     vertical-align: middle;
+    display: flex;
   }
   .sitebtn-small2 {
     color: #fff;
@@ -179,7 +187,7 @@ if(members.length>1){
       <%if(c.iscompany){%>
         <div class="profilebox">
          
-      <div class='row2'><div class='flbl'>Company:</div><div  class='fnameval'><%-customer.companyname%></div></div>
+      <div class='row2'><div class='flbl'>Company:</div><div  class='fnameval'><%-customer.companyname%>&nbsp;</div></div>
       <%
       entityname = ''
       if(customer.entitytypeid==1){
@@ -192,7 +200,7 @@ if(members.length>1){
       %>
 
       <div class='row2'><div class='flbl'>Entity Type:</div><div  class='fnameval'><%-entityname%></div></div>
-      <div class='row2'><div class='flbl'>Company Address:</div><div  class='fnameval'><%-customer.companyaddr%></div></div>
+      <div class='row2'><div class='flbl'>Company Address:</div><div  class='fnameval'><%-customer.companyaddr%>&nbsp;</div></div>
       <div class='row2'><div class='flbl'>All Stakeholders within the company with a share of higher then 20% must be complete a credit check to register for bidding as company
       <a href='/portal/addcompanymember'><button class='sitebtn-small2'>Add Member</button></a>
 
@@ -227,45 +235,3 @@ if(members.length>1){
       <%}%>
     </div>
   </div>
-
-
-  
-  <div class='maincontentt'>
-    <div class='pagetitle'>My Account</div>
-</div>
-  <div class='maincontent'>
-    <div class="profilecontainer">
-    <div class="profilebox">
-  <div class='myinputrow'>
-    To change your password please type enter a new Password.
-    <input id="txtpassword" class="mytxt" type="password" value="" placeholder='New Passowrd'/>
-    <input id="txtpasswordconfirm" class="mytxt" type="password" value="" placeholder='Password Confirm'/>
-  </div>
-  <div class='myinputrow'>
-    <button class="sitebtn-small2" style='float:right' id="btnupdatepassword">Update Password</button>
-  </div>
-</div>
-</div>
-<script>
-  $('#btnupdatepassword').click(function(){
-    console.log('start')
-    var pass1 = $('#txtpassword').val();
-    var pass2 = $('#txtpasswordconfirm').val();
-    var error  = false;
-    var msg = '';
-    if(pass1.length<4){
-      error= true
-      msg = 'Password length does not meet requirements'
-    }else if (pass1!=pass2){
-      error= true
-      msg = 'Passwords do not match'
-    }
-    if(!error){
-      $.post('/account/updatepassword',{password:pass1},function(){
-        $('#statusreponse').html('<div class="statusmsg">Password Updated Successfully</div>')
-      },'json')
-    }else{
-      $('#statusreponse').html('<div class="statuserr">'+msg+'</div>')
-    }
-  })
-  </script>

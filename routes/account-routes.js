@@ -16,12 +16,12 @@ router.get('/account/log-in',authCheckNoLogIn ,(req,res)=>{
 	var msg = req.session.loginmessage? req.session.loginmessage : ''
 	var tmpuser = req.session.tmpusername? req.session.tmpusername : ''
 	
-    res.render('site/login.ejs',{message:msg,tmpuser})
+    res.render('site/authentication/login.ejs',{message:msg,tmpuser})
 })
 router.get('/account/forgotten-password',authCheckNoLogIn ,(req,res)=>{
 		var tmpuser = req.session.tmpusername? req.session.tmpusername : ''
 
-    res.render('site/forgot.ejs',{tmpuser})
+    res.render('site/authentication/forgot.ejs',{tmpuser})
 })
 
 router.get('/pwa:id' ,authCheckNoLogIn,async (req,res)=>{
@@ -78,13 +78,13 @@ router.get('/account/register',authCheckNoLogIn ,(req,res)=>{
 	 myissues = req.session.issues;
 	}
 	delete req.session.issues;
-    res.render('site/register.ejs',{myissues})
+    res.render('site/authentication/register.ejs',{myissues})
 })
 
 
 router.get('/account/register_success',authCheckNoLogIn ,(req,res)=>{
 	delete res.locals.registration
-    res.render('site/regsuccess.ejs')
+    res.render('site/authentication/regsuccess.ejs')
 })
 
 

@@ -13,19 +13,9 @@ $bglight:#f4f5f8;
 $myfont: 'Roboto', sans-serif;
 $myfont_a: 'Roboto', sans-serif;
 $myfont_b: 'Roboto', sans-serif;
+$medium:700px;
 
-@import 'components/ribbons','components/layout','components/spinner','components/site','components/footer','components/guide','components/auction','components/contactform';
-
-/*
-    font-family: 'DM Mono', monospace;
-    font-family: 'Open Sans', sans-serif;
-    font-family: 'Open Sans Condensed', sans-serif;
-    font-family: 'Roboto', sans-serif;
-    font-family: 'Roboto Condensed', sans-serif;
-    font-family: 'Roboto Mono', monospace;
-    font-family: 'Roboto Slab', serif;
-
-*/
+@import 'components/ribbons','portal/dashboard','components/layout','components/spinner','components/site','components/footer','components/guide','components/auction','components/contactform';
 
 * {
     -webkit-font-smoothing: antialiased;

@@ -1,4 +1,8 @@
-<%- include('../partials/menu-portal.ejs')%>
+<%
+activepage = 4;%>
+<%-
+include('../partials/portal-header.ejs')
+%>
 <style>
   #myaddropts{
     max-width:350px;
@@ -145,11 +149,14 @@ h3{
   font-size:18px;
 }
   </style>
+  <header class="bg-white shadow">
+    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+      <h1 class="text-3xl font-bold text-gray-900">
+        Identity Verification Documents
+      </h1>
+    </div>
+  </header>
 
-<div class='main'>
-  <div class='maincontentt'>
-    <div class='pagetitle'>Identity Verification Documents</div>
-</div>
 
 <div class='maincontent'>
 <p>Everyone hoping to bid in an auction needs to have photographic ID together with a proof of residency. If you are the successful bidder, the auctions team will take copies of your ID, and they may carry out electronic ID verification as well, in order to meet the HMRC Anti-Money Laundering Regulations. Remote bidders (Telephone/Proxy/Online) will also need to provide this ID before their bid can be accepted.</p>
@@ -192,7 +199,7 @@ if(members.length>1){
 <%
 }
 %>
-<div class='maincontent' style='display:unset;'>
+<div class='maincontainer' style='display:unset;'>
 
 
 <div class="profilecontainer">
