@@ -55,17 +55,17 @@ require("fs").readdirSync(routesPath).forEach(function(file) {
      app.use('/',r)
  }); 
 
- const livereload =require('livereload')
- const livereloadMiddleware  =require('connect-livereload')
- const hotServer = livereload.createServer({
-  // Reload on changes to these file extensions.
-  exts: [ 'ejs', 'mustache','css' ],
-  // Print debug info
-  debug: false
-});
+//  const livereload =require('livereload')
+//  const livereloadMiddleware  =require('connect-livereload')
+//  const hotServer = livereload.createServer({
+//   // Reload on changes to these file extensions.
+//   exts: [ 'ejs', 'mustache','css' ],
+//   // Print debug info
+//   debug: false
+// });
 
 // Specify the folder to watch for file-changes.
-hotServer.watch(__dirname);
+// hotServer.watch(__dirname);
 
 //  app.use(livereloadMiddleware());
 
