@@ -67,7 +67,7 @@ require("fs").readdirSync(routesPath).forEach(function(file) {
 // Specify the folder to watch for file-changes.
 hotServer.watch(__dirname);
 
- app.use(livereloadMiddleware());
+//  app.use(livereloadMiddleware());
 
 app.listen(port, () => {
     console.log(`Server started on Port ${port}`);
