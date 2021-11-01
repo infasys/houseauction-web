@@ -685,7 +685,7 @@ addProperty(name,description,price){
 addnewCustomer(reg,code){
   return new Promise((resolve,reject)=>{
     let hash = crypto.createHash('md5').update(reg.Password).digest("hex");
-    db.query('insert into customers(title,forename,surname,username,password,verificationcode,isbuyer) values (?)',[[reg.title,reg.firstname,reg.lastname,reg.Email,hash,code,1]], function (err, result) {
+    db.query('insert into customers(title,forename,surname,username,password,verificationcode,isbuyer,accounttype) values (?)',[[reg.title,reg.firstname,reg.lastname,reg.Email,hash,code,1,1]], function (err, result) {
       if (err) throw err;
       resolve(result)
     })

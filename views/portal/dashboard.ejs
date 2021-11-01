@@ -29,8 +29,6 @@ include('../partials/portal-header.ejs')
        min-width: 400px;;
    }
     </style>
-<div class='main'>
-
     <div class='maincontentfull'>
     <%if(!customer.isVerified){%>
         <div class='middlepanel'>
@@ -86,35 +84,6 @@ include('../partials/portal-header.ejs')
             </div>
         </div>
 
-
-        <%if(!customer.isVerified){%>
-        <div class='dash-box' id='verifyboxmain'>
-            <div class='dash-title'>E-Mail Verification*</div>
-            <div class='dash-content'  style='text-align: center;'>
-                <div id='coderesults'></div>
-                <div id='verficationcoderequest'>
-                <p>Your account still requires verification, you should have recieved a link with a code:</p>
-                
-                <div style='width:400px;max-width:100%;margin:0px auto;text-align: center;'><div id='error-code' class='sectionError'></div>
-                
-                <div>
-                    <input type='text' class='digittxt' maxlength="1" id='d1' />
-                    <input type='text' class='digittxt' maxlength="1" id='d2' />
-                    <input type='text' class='digittxt' maxlength="1" id='d3'/>
-                    <input type='text' class='digittxt' maxlength="1" id='d4'/>
-                    <input type='text' class='digittxt' maxlength="1" id='d5'/>
-                    <input type='text' class='digittxt' maxlength="1" id='d6'/>
-        
-                </div>
-                <button class='btn btn-3 ' id='btnVerify' style='margin-top:20px;min-width: 200px;margin-bottom:20px' onclick='verifycode()'>Verify</button>
-                <p>Not recieved a code, <a href='#codereset' id='codereset'>Click Here</a> to have a new code sent to your mailbox.</p>
-                
-               </div>
-                <div style='clear:both'></div>
-                </div>
-            </div>
-        </div>
-        <%}%>
 
 
 
